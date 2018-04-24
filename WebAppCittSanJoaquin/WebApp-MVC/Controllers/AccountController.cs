@@ -39,5 +39,10 @@ namespace WebApp_MVC.Controllers
             }
             return View();
         }
+
+        public ActionResult Recuperacion()
+        {
+            return View();
+        }
     }
 }
