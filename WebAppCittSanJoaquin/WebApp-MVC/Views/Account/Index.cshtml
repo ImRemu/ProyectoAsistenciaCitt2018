@@ -1,0 +1,61 @@
+﻿@* PARA HACER COMENTARIOS VELOZMENTE USAD ctrl + k, ctrl + c
+    Y PARA DESCOMENTAR ctrl + k, ctrl + u
+*@
+@* Aqui va el modelo que usaremos para la etiqueta HTML "form"
+    Notese la palabra clave "model"
+*@
+@model WebApp_MVC.Models.FormModel
+@* Usaremos Ajax para manejar los forms
+    FormLogin es el nombre del metodo que controlara el formulario
+    AccountController es el nombre del controlador
+    Loader es la función ja'ascript que se llama mientras se carga el form
+    OnSuccess es la función ja'ascript que se llama al tener exito.
+*@
+<h2>Formulario login</h2>
+
+@using (Ajax.BeginForm("FormLogin", "Account",
+    new AjaxOptions { LoadingElementId = "Loader", OnSuccess = "Success" }))
+{
+    /**
+     * Hay un archivo de recursos en una carpeta llamada
+     * App_GlobalResources, esta carpeta es accesible en todo
+     * el proyecto web.
+     * Dentro estan los archivos de localización por defecto
+     * y el de español (Resources.resx y Resources.es.resx
+     * respectivamente)
+     * Esos archivos tienen propiedades que se inspeccionan haciendo
+     * click en los elementos y luego presionando Alt + Enter.
+     *
+     * Los archivos tienen 3 propiedades especiales.
+     * - Modificado el nombre de espacio (Value: Recursos)
+     *   Con esto podemos acceder a esos recursos usando ese nombre de espacio
+     *
+     * - Modificada la acción de compilacion (Value: Recurso Incrustado)
+     *   Recurso Incrustado modifica el comportamiento que tiene el
+     *   compilador al momento de usar intellisense y al momento de
+     *   la implementación de la aplicación
+     *
+     * - Modificado el campo "Herramienta personalizada" (Value: PublicResXFileCodeGenerator)
+     *   Asi se trata como un Resx publico, y se puede personalizar
+     *   su nivel de acceso
+     **/
+    // Campo1Label es una String presente en Resources.resx
+    <span>@Recursos.Resources.Campo1Label</span>@Html.TextBoxFor(m => m.TextBoxStringData)<br />
+
+    /** Html.TextBoxFor(m => m.TextBoxStringData)
+    *  es una expresión lambda (se acuerdan de LinQ?)
+    *  que manipula la instancia actual del modelo que se esta utilizando
+    *  que en este caso es FormModel.
+    *  El metodo entonces crea un input de type acorde al modelo definido
+    *  y además permite su manipulaje luego en el controlador con mayor facilidad
+    **/
+    <span>@Recursos.Resources.Campo2Label</span>@Html.TextBoxFor(m => m.TextBoxIntData)<br />
+    <span>@Recursos.Resources.Campo3Label</span>@Html.TextBoxFor(m => m.CheckBoxData)<br />
+    <br /><input type="submit" name="name" value="Subir datos nulos" />
+}
+
+
+@{
+
+}
+
