@@ -44,5 +44,10 @@ namespace WebApp_MVC.Controllers
         {
             return View();
         }
+
+        public ActionResult Registrarse()
+        {
+            return View();
+        }
     }
 }

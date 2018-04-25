@@ -207,6 +207,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Exito.cshtml" />
     <Content Include="Views\Account\Recuperacion.cshtml" />
+    <Content Include="Views\Account\Registrarse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
