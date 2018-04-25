@@ -87,7 +87,7 @@
                                 <div class="col-sm-offset-3 col-sm-9">
                                     <div class="olvidaste">
                                         <label>
-                                            <a href="~/Views/Account/Index.cshtml">¿Olvidaste tu contraseña?</a>
+                                            @Html.ActionLink("¿Olvidaste tu contraseña?", "Recuperacion", "Account")
                                         </label>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                         </form>
                     </div>
                     <div class="panel-footer">
-                        ¿No estas registrado? <a href="~/Views/Account/Index.cshtml">Registrate</a>
+                        @Html.ActionLink("¿No estas Registrado?", "Registrarse", "Account")
                     </div>
                 </div>
             </div>
