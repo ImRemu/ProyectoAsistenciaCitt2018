@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="carousel slide" id="carruselsito">
+    @*/**indicadores**/*@
+
+    <ol class="carousel-indicators">
+        <li data-target="#carruselsito" data-slide-to="0" class="active"></li>
+        <li data-target="#carruselsito" data-slide-to="1"></li>
+        <li data-target="#carruselsito" data-slide-to="2"></li>
+    </ol>
+    @*/*Envoltorio*/*@
+
+    <div class="carousel-inner">
+        <div class="item active">
+            <img class="imagenesre" src="@Url.Content("~/Content/img/CITT.jpg")" alt="Los Angeles">
+            <div class="carousel-caption">
+                <h3>Sumate al viaje del Citt</h3>
+                <p>Acompañanos en nuestros talleres</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img class="imagenesre" src="@Url.Content("~/Content/img/home.jpg")" alt="Chicago">
+            <div class="carousel-caption">
+                <h3>Haz Realidad tus proyectos</h3>
+                <p>Los encargados te ayudaran a realizar tus proyectos</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img class="imagenesre" src="@Url.Content("~/Content/img/duocsj.jpg")" alt="New York">
+            <div class="carousel-caption">
+                <h3>Asistencia en linea</h3>
+                <p>Ve tu asistencia a los talleres en la web cuando quieras</p>
+            </div>
+        </div>
+    </div>
+
+    <a class="left carousel-control" href="#carruselsito" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Anterior</span>
+    </a>
+    <a class="right carousel-control" href="#carruselsito" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Siguiente</span>
+    </a>
+
+</div>
+<div class="jumbotron">
+    <h1>Sistema de Asistencia Citt San Joaquin</h1>
+    @*<p class="lead">Esta pagina contiene enlaces utiles a distintos recursos utilizados en el desarrollo de la página.</p>
+    <a class="btn btn-primary btn-sm" href="https://www.codeproject.com/Articles/1078491/Creating-Forms-in-ASP-NET-MVC">Informacion de Forms</a>
+    <a class="btn btn-primary btn-sm" href="https://stackoverflow.com/questions/1257482/redirecttoaction-with-parameter">Redireccionar de un form y pasar parametros</a>
+    <a class="btn btn-primary btn-sm" href="https://stackoverflow.com/questions/9614896/asp-net-mvc-inline-razor-variable">Inline razor comands, digo, como mostrar variables en la vista</a>
+    <a class="btn btn-primary btn-sm" href="https://msdn.microsoft.com/en-us/library/ms247246.aspx">Resource files, o sea, archivos de recursos para aplicaciones asp.net</a>
+    <a class="btn btn-primary btn-sm" href="https://stackoverflow.com/questions/15047272/mvc4-localization-accessing-resx-from-view">Tutoflash para acceder a archivos de recursos de la vista</a>*@
+</div>
+
+<div class="row">
+    <div class="col-md-4 panel panel-default">
+        <a></a>
+        <h2>Conoce los Talleres</h2>
+        <p>
+            En este lugar tenemos toda la informacion acerca de los talleres que seran impartidos en el Citt.
+        </p>
+        <p><a class="btn btn-default" href="~/Views/Home/About.cshtml">Más Informacion &raquo;</a></p>
+    </div>
+    <div class="col-md-4 panel panel-default">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>

@@ -1,0 +1,120 @@
+﻿
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+@* PARA HACER COMENTARIOS VELOZMENTE USAD ctrl + k, ctrl + c
+    Y PARA DESCOMENTAR ctrl + k, ctrl + u
+*@
+@* Aqui va el modelo que usaremos para la etiqueta HTML "form"
+    Notese la palabra clave "model"
+*@
+@model WebApp_MVC.Models.FormModel
+@* Usaremos Ajax para manejar los forms
+    FormLogin es el nombre del metodo que controlara el formulario
+    AccountController es el nombre del controlador
+    Loader es la función ja'ascript que se llama mientras se carga el form
+    OnSuccess es la función ja'ascript que se llama al tener exito.
+*@
+
+
+
+@using (Ajax.BeginForm("FormLogin", "Account",
+    new AjaxOptions { LoadingElementId = "Loader", OnSuccess = "Success" }))
+{
+    /**
+     * Hay un archivo de recursos en una carpeta llamada
+     * App_GlobalResources, esta carpeta es accesible en todo
+     * el proyecto web.
+     * Dentro estan los archivos de localización por defecto
+     * y el de español (Resources.resx y Resources.es.resx
+     * respectivamente)
+     * Esos archivos tienen propiedades que se inspeccionan haciendo
+     * click en los elementos y luego presionando Alt + Enter.
+     *
+     * Los archivos tienen 3 propiedades especiales.
+     * - Modificado el nombre de espacio (Value: Recursos)
+     *   Con esto podemos acceder a esos recursos usando ese nombre de espacio
+     *
+     * - Modificada la acción de compilacion (Value: Recurso Incrustado)
+     *   Recurso Incrustado modifica el comportamiento que tiene el
+     *   compilador al momento de usar intellisense y al momento de
+     *   la implementación de la aplicación
+     *
+     * - Modificado el campo "Herramienta personalizada" (Value: PublicResXFileCodeGenerator)
+     *   Asi se trata como un Resx publico, y se puede personalizar
+     *   su nivel de acceso
+     **/
+    // Campo1Label es una String presente en Resources.resx
+    //<span>@Recursos.Resources.Campo1Label</span>@Html.TextBoxFor(m => m.TextBoxStringData)<br />
+
+    /** Html.TextBoxFor(m => m.TextBoxStringData)
+    *  es una expresión lambda (se acuerdan de LinQ?)
+    *  que manipula la instancia actual del modelo que se esta utilizando
+    *  que en este caso es FormModel.
+    *  El metodo entonces crea un input de type acorde al modelo definido
+    *  y además permite su manipulaje luego en el controlador con mayor facilidad
+    **/
+    //<span>@Recursos.Resources.Campo2Label</span>@Html.TextBoxFor(m => m.TextBoxIntData)<br />
+    //<span>@Recursos.Resources.Campo3Label</span>@Html.TextBoxFor(m => m.CheckBoxData)<br />
+    //<br /><input type="submit" name="name" value="Subir datos nulos" />
+    /**Desde este punto introduzco  login nuevo**/
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-lock"></span> <h2>Inicio de Sesion</h2>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="email" class="col-sm-3 control-label">
+                                    Email
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" id="email" placeholder="Email..." required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-3 control-label">
+                                    Password
+                                </label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" id="password" placeholder="Contraseña..." required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <div class="olvidaste">
+                                        <label>
+                                            @Html.ActionLink("¿Olvidaste tu contraseña?", "Recuperacion", "Account")
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group last">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        Ingresar
+                                    </button>
+                                    <button type="reset" class="btn btn-default btn-sm">
+                                        Limpiar
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        @Html.ActionLink("¿No estas Registrado?", "Registrarse", "Account")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@{
+
+}
+

@@ -1,0 +1,34 @@
+﻿body {
+    background: url(img/duocsj.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.panel-default {
+    opacity: 0.9;
+    margin-top: 30px;
+}
+
+.form-group.last {
+    margin-bottom: 0px;
+}
+h2{
+    
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(208, 208, 208, 0.58);
+    height: 20px;
+    text-align: right;
+}
+
+.imagenesre{
+    max-height:400px;
+    width:100%;
+ 
+}
