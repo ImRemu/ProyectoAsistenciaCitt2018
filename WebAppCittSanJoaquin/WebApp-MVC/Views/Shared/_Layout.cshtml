@@ -4,12 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/Content/loginestilo.css" rel="stylesheet" id="bootstrap-css">
+    <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
+<body>  
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -32,8 +32,8 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
+        
+        <footer class="">
             <p>&copy; @DateTime.Now.Year - Informaticos Sin Rudas</p>
         </footer>
     </div>

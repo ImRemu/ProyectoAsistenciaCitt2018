@@ -1,7 +1,52 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<div class="carousel slide" id="carruselsito">
+    @*/**indicadores**/*@
 
+    <ol class="carousel-indicators">
+        <li data-target="#carruselsito" data-slide-to="0" class="active"></li>
+        <li data-target="#carruselsito" data-slide-to="1"></li>
+        <li data-target="#carruselsito" data-slide-to="2"></li>
+    </ol>
+    @*/*Envoltorio*/*@
+
+    <div class="carousel-inner">
+        <div class="item active">
+            <img class="imagenesre" src="@Url.Content("~/Content/img/CITT.jpg")" alt="Los Angeles">
+            <div class="carousel-caption">
+                <h3>Sumate al viaje del Citt</h3>
+                <p>Acompañanos en nuestros talleres</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img class="imagenesre" src="@Url.Content("~/Content/img/home.jpg")" alt="Chicago">
+            <div class="carousel-caption">
+                <h3>Haz Realidad tus proyectos</h3>
+                <p>Los encargados te ayudaran a realizar tus proyectos</p>
+            </div>
+        </div>
+
+        <div class="item">
+            <img class="imagenesre" src="@Url.Content("~/Content/img/duocsj.jpg")" alt="New York">
+            <div class="carousel-caption">
+                <h3>Asistencia en linea</h3>
+                <p>Ve tu asistencia a los talleres en la web cuando quieras</p>
+            </div>
+        </div>
+    </div>
+
+    <a class="left carousel-control" href="#carruselsito" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+        <span class="sr-only">Anterior</span>
+    </a>
+    <a class="right carousel-control" href="#carruselsito" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        <span class="sr-only">Siguiente</span>
+    </a>
+
+</div>
 <div class="jumbotron">
     <h1>Sistema de Asistencia Citt San Joaquin</h1>
     @*<p class="lead">Esta pagina contiene enlaces utiles a distintos recursos utilizados en el desarrollo de la página.</p>
