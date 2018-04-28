@@ -8,6 +8,16 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+	<style>
+	li{
+		font-family: myriad-pro-condensed, sans-serif;
+		font-style: normal;
+		font-weight: 700;
+		font-size: 13px;
+		color: #FFFFFF;
+		src: url("~/Content/font/911Fonts.com_MyriadProSemiboldSemiExtended__-_911fonts.com_fonts_hPxq.ttf");
+	 }
+	</style>
 </head>
 <body>  
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,10 +32,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Iniciar Sesion", "Index","Account")</li>
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("INICIAR SESION", "Index","Account")</li>
+                    <li>@Html.ActionLink("INICIO", "Index", "Home")</li>
+                    <li>@Html.ActionLink("ACERCA DE", "About", "Home")</li>
+                    <li>@Html.ActionLink("CONTACTO", "Contact", "Home")</li>
                 </ul>
             </div>
         </div>

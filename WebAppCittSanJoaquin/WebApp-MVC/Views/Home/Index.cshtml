@@ -42,13 +42,45 @@ h3 {
         -2px -1px 0px #000;
 	font-size: 30px;
 	}
+	#pcarro{
+	color: #ffde48;
+	 text-shadow: 
+        /* Primer capa a 1 px */
+        -1px -1px 5px #000,
+         0px -1px 0px #000,
+         1px -1px 0px #000,
+        -1px  0px 0px #000,
+         1px  0px 0px #000,
+        -1px  1px 0px #000,
+         0px  1px 0px #000,
+         1px  1px 0px #000,
+        /* segunda capa a 2 px */
+        -2px -2px 0px #000,
+        -1px -2px 0px #000,
+         0px -2px 0px #000,
+         1px -2px 0px #000,
+         2px -2px 0px #000,
+         2px -1px 0px #000,
+         2px  0px 0px #000,
+         2px  1px 0px #000,
+         2px  2px 0px #000,
+         1px  2px 0px #000,
+         0px  2px 0px #000,
+        -1px  2px 0px #000,
+        -2px  2px 0px #000,
+        -2px  1px 0px #000,
+        -2px  0px 0px #000,
+        -2px -1px 0px #000;
+	font-size: 20px;
+	}
+
 </style>
     <div class="carousel-inner">
         <div class="item active">
             <img class="imagenesre" src="@Url.Content("~/Content/img/intento1.jpg")" alt="Los Angeles">
             <div class="carousel-caption">
                 <h3><font>Sumate al viaje del Citt</font></h3>
-                <p>Acompañanos en nuestros talleres</p>
+                <p id="pcarro">Acompañanos en nuestros talleres</p>
             </div>
         </div>
 
@@ -56,7 +88,7 @@ h3 {
             <img class="imagenesre" src="@Url.Content("~/Content/img/home.jpg")" alt="Chicago">
             <div class="carousel-caption">
                 <h3>Haz Realidad tus proyectos</h3>
-                <p>Los encargados te ayudaran a realizar tus proyectos</p>
+                <p id="pcarro">Los encargados te ayudaran a realizar tus proyectos</p>
             </div>
         </div>
 
@@ -64,7 +96,7 @@ h3 {
             <img class="imagenesre" src="@Url.Content("~/Content/img/duocsj.jpg")" alt="New York">
             <div class="carousel-caption">
                 <h3>Asistencia en linea</h3>
-                <p>Ve tu asistencia a los talleres en la web cuando quieras</p>
+                <p id="pcarro">Ve tu asistencia a los talleres en la web cuando quieras</p>
             </div>
         </div>
     </div>
@@ -103,7 +135,7 @@ h3 {
         <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 panel panel-default">
         <h2>Web Hosting</h2>
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
