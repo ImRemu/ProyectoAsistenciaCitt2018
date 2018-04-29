@@ -10,6 +10,8 @@ namespace WebApp_MVC.Controllers
     {
         public ActionResult Index()
         {
+            //ViewBag.ModalOn = "puedo poner lo que sea aca";
+            //ViewBag.ModalMessage = "Mensaje de modal ejemplo";
             return View();
         }
 
