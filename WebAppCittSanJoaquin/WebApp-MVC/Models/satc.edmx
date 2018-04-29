@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="satcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="asistencia">
+          <Key>
+            <PropertyRef Name="id_asistencia" />
+          </Key>
+          <Property Name="id_asistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="det_asist">
+          <Key>
+            <PropertyRef Name="asistencia_id_asistencia" />
+            <PropertyRef Name="usuario_id_usuario" />
+            <PropertyRef Name="horario_id_horario" />
+          </Key>
+          <Property Name="asistencia_id_asistencia" Type="int" Nullable="false" />
+          <Property Name="usuario_id_usuario" Type="int" Nullable="false" />
+          <Property Name="horario_id_horario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="horario">
+          <Key>
+            <PropertyRef Name="id_horario" />
+          </Key>
+          <Property Name="id_horario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hora_inicio" Type="datetime" Nullable="false" />
+          <Property Name="hora_termino" Type="datetime" Nullable="false" />
+          <Property Name="dia_semana" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="cupo" Type="int" Nullable="false" />
+          <Property Name="taller_id_taller" Type="int" Nullable="false" />
+          <Property Name="usuario_id_usuario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="log_acciones">
+          <Key>
+            <PropertyRef Name="id_acciones" />
+          </Key>
+          <Property Name="id_acciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="accion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nombre_ejecutor" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="id_ejecutor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="taller">
+          <Key>
+            <PropertyRef Name="id_taller" />
+          </Key>
+          <Property Name="id_taller" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="id_encargado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellidos" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="habilitado" Type="tinyint" Nullable="false" />
+          <Property Name="tipo_usuario" Type="char" MaxLength="1" Nullable="false" />
+        </EntityType>
+        <Association Name="det_asist_asistencia_fk">
+          <End Role="asistencia" Type="Self.asistencia" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="asistencia">
+              <PropertyRef Name="id_asistencia" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="asistencia_id_asistencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="det_asist_horario_fk">
+          <End Role="horario" Type="Self.horario" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="horario">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="horario_id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="det_asist_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="usuario_id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="horario_taller_fk">
+          <End Role="taller" Type="Self.taller" Multiplicity="1" />
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taller">
+              <PropertyRef Name="id_taller" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="taller_id_taller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="horario_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="usuario_id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="taller_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="taller" Type="Self.taller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="taller">
+              <PropertyRef Name="id_encargado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="satcModelStoreContainer">
+          <EntitySet Name="asistencia" EntityType="Self.asistencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="det_asist" EntityType="Self.det_asist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="horario" EntityType="Self.horario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log_acciones" EntityType="Self.log_acciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taller" EntityType="Self.taller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="det_asist_asistencia_fk" Association="Self.det_asist_asistencia_fk">
+            <End Role="asistencia" EntitySet="asistencia" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="det_asist_horario_fk" Association="Self.det_asist_horario_fk">
+            <End Role="horario" EntitySet="horario" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="det_asist_usuario_fk" Association="Self.det_asist_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="horario_taller_fk" Association="Self.horario_taller_fk">
+            <End Role="taller" EntitySet="taller" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
+          <AssociationSet Name="horario_usuario_fk" Association="Self.horario_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
+          <AssociationSet Name="taller_usuario_fk" Association="Self.taller_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="taller" EntitySet="taller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="satcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="asistencia">
+          <Key>
+            <PropertyRef Name="id_asistencia" />
+          </Key>
+          <Property Name="id_asistencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="det_asist" Relationship="Self.det_asist_asistencia_fk" FromRole="asistencia" ToRole="det_asist" />
+        </EntityType>
+        <EntityType Name="det_asist">
+          <Key>
+            <PropertyRef Name="asistencia_id_asistencia" />
+            <PropertyRef Name="usuario_id_usuario" />
+            <PropertyRef Name="horario_id_horario" />
+          </Key>
+          <Property Name="asistencia_id_asistencia" Type="Int32" Nullable="false" />
+          <Property Name="usuario_id_usuario" Type="Int32" Nullable="false" />
+          <Property Name="horario_id_horario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="asistencia" Relationship="Self.det_asist_asistencia_fk" FromRole="det_asist" ToRole="asistencia" />
+          <NavigationProperty Name="horario" Relationship="Self.det_asist_horario_fk" FromRole="det_asist" ToRole="horario" />
+          <NavigationProperty Name="usuario" Relationship="Self.det_asist_usuario_fk" FromRole="det_asist" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="horario">
+          <Key>
+            <PropertyRef Name="id_horario" />
+          </Key>
+          <Property Name="id_horario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hora_inicio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="hora_termino" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dia_semana" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cupo" Type="Int32" Nullable="false" />
+          <Property Name="taller_id_taller" Type="Int32" Nullable="false" />
+          <Property Name="usuario_id_usuario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="det_asist" Relationship="Self.det_asist_horario_fk" FromRole="horario" ToRole="det_asist" />
+          <NavigationProperty Name="taller" Relationship="Self.horario_taller_fk" FromRole="horario" ToRole="taller" />
+          <NavigationProperty Name="usuario" Relationship="Self.horario_usuario_fk" FromRole="horario" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="log_acciones">
+          <Key>
+            <PropertyRef Name="id_acciones" />
+          </Key>
+          <Property Name="id_acciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="accion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre_ejecutor" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_ejecutor" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="taller">
+          <Key>
+            <PropertyRef Name="id_taller" />
+          </Key>
+          <Property Name="id_taller" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id_encargado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="horario" Relationship="Self.horario_taller_fk" FromRole="taller" ToRole="horario" />
+          <NavigationProperty Name="usuario" Relationship="Self.taller_usuario_fk" FromRole="taller" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidos" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="habilitado" Type="Byte" Nullable="false" />
+          <Property Name="tipo_usuario" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="det_asist" Relationship="Self.det_asist_usuario_fk" FromRole="usuario" ToRole="det_asist" />
+          <NavigationProperty Name="horario" Relationship="Self.horario_usuario_fk" FromRole="usuario" ToRole="horario" />
+          <NavigationProperty Name="taller" Relationship="Self.taller_usuario_fk" FromRole="usuario" ToRole="taller" />
+        </EntityType>
+        <Association Name="det_asist_asistencia_fk">
+          <End Role="asistencia" Type="Self.asistencia" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="asistencia">
+              <PropertyRef Name="id_asistencia" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="asistencia_id_asistencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="det_asist_horario_fk">
+          <End Role="horario" Type="Self.horario" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="horario">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="horario_id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="det_asist_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="usuario_id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="horario_taller_fk">
+          <End Role="taller" Type="Self.taller" Multiplicity="1" />
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taller">
+              <PropertyRef Name="id_taller" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="taller_id_taller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="horario_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="usuario_id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="taller_usuario_fk">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+          <End Role="taller" Type="Self.taller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="taller">
+              <PropertyRef Name="id_encargado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="satcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="asistencia" EntityType="Self.asistencia" />
+          <EntitySet Name="det_asist" EntityType="Self.det_asist" />
+          <EntitySet Name="horario" EntityType="Self.horario" />
+          <EntitySet Name="log_acciones" EntityType="Self.log_acciones" />
+          <EntitySet Name="taller" EntityType="Self.taller" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="det_asist_asistencia_fk" Association="Self.det_asist_asistencia_fk">
+            <End Role="asistencia" EntitySet="asistencia" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="det_asist_horario_fk" Association="Self.det_asist_horario_fk">
+            <End Role="horario" EntitySet="horario" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="det_asist_usuario_fk" Association="Self.det_asist_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="horario_taller_fk" Association="Self.horario_taller_fk">
+            <End Role="taller" EntitySet="taller" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
+          <AssociationSet Name="horario_usuario_fk" Association="Self.horario_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
+          <AssociationSet Name="taller_usuario_fk" Association="Self.taller_usuario_fk">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="taller" EntitySet="taller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="satcModelStoreContainer" CdmEntityContainer="satcEntities">
+          <EntitySetMapping Name="asistencia">
+            <EntityTypeMapping TypeName="satcModel.asistencia">
+              <MappingFragment StoreEntitySet="asistencia">
+                <ScalarProperty Name="id_asistencia" ColumnName="id_asistencia" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="det_asist">
+            <EntityTypeMapping TypeName="satcModel.det_asist">
+              <MappingFragment StoreEntitySet="det_asist">
+                <ScalarProperty Name="asistencia_id_asistencia" ColumnName="asistencia_id_asistencia" />
+                <ScalarProperty Name="usuario_id_usuario" ColumnName="usuario_id_usuario" />
+                <ScalarProperty Name="horario_id_horario" ColumnName="horario_id_horario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="horario">
+            <EntityTypeMapping TypeName="satcModel.horario">
+              <MappingFragment StoreEntitySet="horario">
+                <ScalarProperty Name="id_horario" ColumnName="id_horario" />
+                <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+                <ScalarProperty Name="hora_termino" ColumnName="hora_termino" />
+                <ScalarProperty Name="dia_semana" ColumnName="dia_semana" />
+                <ScalarProperty Name="cupo" ColumnName="cupo" />
+                <ScalarProperty Name="taller_id_taller" ColumnName="taller_id_taller" />
+                <ScalarProperty Name="usuario_id_usuario" ColumnName="usuario_id_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_acciones">
+            <EntityTypeMapping TypeName="satcModel.log_acciones">
+              <MappingFragment StoreEntitySet="log_acciones">
+                <ScalarProperty Name="id_acciones" ColumnName="id_acciones" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="accion" ColumnName="accion" />
+                <ScalarProperty Name="nombre_ejecutor" ColumnName="nombre_ejecutor" />
+                <ScalarProperty Name="id_ejecutor" ColumnName="id_ejecutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taller">
+            <EntityTypeMapping TypeName="satcModel.taller">
+              <MappingFragment StoreEntitySet="taller">
+                <ScalarProperty Name="id_taller" ColumnName="id_taller" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_encargado" ColumnName="id_encargado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="satcModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="habilitado" ColumnName="habilitado" />
+                <ScalarProperty Name="tipo_usuario" ColumnName="tipo_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
