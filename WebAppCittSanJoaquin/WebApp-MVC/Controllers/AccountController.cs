@@ -18,9 +18,6 @@ namespace WebApp_MVC.Controllers
             return View();
         }
 
-        // Este metodo procesa el formulario
-        // luego de eso, redirecciona a otra pagina
-        #warning Notese que el parametro es de tipo FormModel
         [HttpPost]
         public ActionResult FormLogin(usuario user)
         {
@@ -40,6 +37,7 @@ namespace WebApp_MVC.Controllers
                 {
                     TempData["Error"] = "Email o constraseña incorrectos";
                     ViewBag.Error = TempData["Error"];
+                    ViewBag.ModalMessage = TempData["Error"];
                     return View("Index");
                 }
             }
