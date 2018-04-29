@@ -22,10 +22,28 @@ namespace WebApp_MVC.Controllers
         // luego de eso, redirecciona a otra pagina
         #warning Notese que el parametro es de tipo FormModel
         [HttpPost]
-        public ActionResult FormLogin(Models.FormModel formData)
+        public ActionResult FormLogin(usuario user)
         {
-            // usamos los datos del form, en este caso, textBoxData de FormModel.
-            return RedirectToAction("Exito", new { parametro = formData.TextBoxStringData });
+            if(!string.IsNullOrEmpty(user.correo) && !string.IsNullOrEmpty(user.password))
+            {
+                if (dtb.usuario.FirstOrDefault(u => u.correo.Equals(user.correo) && u.password.Equals(user.password)) != null)
+                {
+                    var userE = from u in dtb.usuario
+                                where u.correo.Equals(user.correo) & u.password.Equals(user.password)
+                                select u;
+
+                    TempData["login"] = "Login Correcto";
+                    ViewBag.Login = TempData["login"];
+                    return View("Exito");
+                }
+                else
+                {
+                    TempData["Error"] = "Email o constraseña incorrectos";
+                    ViewBag.Error = TempData["Error"];
+                    return View("Index");
+                }
+            }
+            return RedirectToAction("Exito");
         }
 
         // Este metodo recibe el parametro "parametro"
