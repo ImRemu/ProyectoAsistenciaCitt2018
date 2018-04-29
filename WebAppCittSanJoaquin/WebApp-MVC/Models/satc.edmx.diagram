@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="067ce4d3382346fa9fc341a04ba1810a" Name="Diagram1">
+        <EntityTypeShape EntityType="satcModel.asistencia" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="satcModel.det_asist" Width="1.5" PointX="3" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="satcModel.horario" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="satcModel.log_acciones" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="satcModel.taller" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="satcModel.usuario" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <AssociationConnector Association="satcModel.det_asist_asistencia_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="satcModel.det_asist_horario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="satcModel.det_asist_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="satcModel.horario_taller_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="satcModel.horario_usuario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="satcModel.taller_usuario_fk" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

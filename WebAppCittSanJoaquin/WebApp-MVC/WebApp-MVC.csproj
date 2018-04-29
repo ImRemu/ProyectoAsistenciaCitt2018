@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -56,6 +59,8 @@
     <Reference Include="System.Data.Entity.Design" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -161,7 +166,40 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\asistencia.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\det_asist.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FormModel.cs" />
+    <Compile Include="Models\horario.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\log_acciones.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\satc.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>satc.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\satc.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\satc.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>satc.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\taller.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\usuario.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -176,12 +214,29 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Models\satc.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>satc.Context.cs</LastGenOutput>
+      <DependentUpon>satc.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\satc.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>satc.edmx</DependentUpon>
+      <LastGenOutput>satc.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\font\911Fonts.com_MyriadProSemiboldSemiExtended__-_911fonts.com_fonts_hPxq.ttf" />
+    <EntityDeploy Include="Models\satc.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>satc.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\satc.edmx.diagram">
+      <DependentUpon>satc.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -240,6 +295,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Recursos</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
