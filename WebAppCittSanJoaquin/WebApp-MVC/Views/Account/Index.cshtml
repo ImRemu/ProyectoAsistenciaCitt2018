@@ -6,7 +6,12 @@
 @* Aqui va el modelo que usaremos para la etiqueta HTML "form"
     Notese la palabra clave "model"
 *@
-@model WebApp_MVC.Models.FormModel
+@model WebApp_MVC.Models.usuario
+
+@{
+    ViewBag.Title = "Login";
+}
+
 @* Usaremos Ajax para manejar los forms
     FormLogin es el nombre del metodo que controlara el formulario
     AccountController es el nombre del controlador
@@ -67,18 +72,20 @@
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
                                 <label for="email" class="col-sm-3 control-label">
-                                    Email
+                                    Email:
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="email" placeholder="Email..." required>
+                                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", placeholder = "email..." } })
+                                    @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password" class="col-sm-3 control-label">
-                                    Password
+                                    Password:
                                 </label>
                                 <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="password" placeholder="Contraseña..." required>
+                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", placeholder = "password..." } })
+                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
@@ -98,6 +105,13 @@
                                     <button type="reset" class="btn btn-default btn-sm">
                                         Limpiar
                                     </button>
+                                </div>
+                            </div>
+                            <div class="form-group last">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <label for="error">
+                                        @ViewBag.Error
+                                    </label>
                                 </div>
                             </div>
                         </form>
