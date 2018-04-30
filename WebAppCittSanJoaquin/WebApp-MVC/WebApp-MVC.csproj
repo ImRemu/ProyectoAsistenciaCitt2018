@@ -267,6 +267,7 @@
     <Content Include="Views\Account\Exito.cshtml" />
     <Content Include="Views\Account\Recuperacion.cshtml" />
     <Content Include="Views\Account\Registrarse.cshtml" />
+    <Content Include="Views\Account\Perfil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

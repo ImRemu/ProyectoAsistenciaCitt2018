@@ -29,9 +29,12 @@ namespace WebApp_MVC.Controllers
                                 where u.correo.Equals(user.correo) & u.password.Equals(user.password)
                                 select u;
 
+                    Session["correo"] = user.correo;
+
                     TempData["login"] = "Login Correcto";
                     ViewBag.Login = TempData["login"];
-                    return View("Exito");
+                    
+                    return RedirectToAction("Exito","Account", new { email = user.correo});
                 }
                 else
                 {
@@ -44,19 +47,18 @@ namespace WebApp_MVC.Controllers
             return RedirectToAction("Exito");
         }
 
-        // Este metodo recibe el parametro "parametro"
-        // comprueba que no este vacio, y luego,
-        // se lo pasa a la vista
+
 #warning Notese que el parametro que se entrega tiene el mismo nombre que la clase anonima pasada por metodo RedirectToAction
 
-        public ActionResult Exito(string parametro)
+        public ActionResult Exito(string email)
         {
-            // Si no esta vacia, entonces pasamos el parametro a la vista
-            if (!string.IsNullOrEmpty(parametro))
+            if (Session["correo"] != null)
             {
-                ViewBag.Resultado = parametro;
+                ViewBag.Correo = email;
+                return View("Exito");
             }
-            return View();
+            
+            return View("Exito");
         }
 
         public ActionResult Recuperacion()
@@ -98,6 +100,16 @@ namespace WebApp_MVC.Controllers
 
             }
             return View();
+        }
+
+        public ActionResult Perfil(string correo)
+        {
+            usuario userE = (from u in dtb.usuario
+                        where u.correo.Equals(correo)
+                        select u).FirstOrDefault();
+
+
+            return View("Perfil", userE);
         }
     }
 }
