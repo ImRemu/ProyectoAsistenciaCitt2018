@@ -6,7 +6,14 @@
 
 <div style="background-color:white">
     <h3>@(ViewBag.Registrado)</h3>
-    <h3>@(ViewBag.Login)</h3>
+    <h3>Bienvenido, @(ViewBag.Correo)</h3>
+
+    @{ 
+        <h4>@Html.ActionLink("Perfil usuario", "Perfil", "Account", new { correo = (string)ViewBag.Correo }, new { correo = (string)ViewBag.Correo })</h4>
+    }
+
+    
+
 </div>
 
 
