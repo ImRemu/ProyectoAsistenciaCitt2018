@@ -21,23 +21,24 @@ namespace WebApp_MVC.Controllers
         [HttpPost]
         public ActionResult FormLogin(usuario user)
         {
+            //verifica q la info del usuario no este vacia.
             if(!string.IsNullOrEmpty(user.correo) && !string.IsNullOrEmpty(user.password))
             {
+                //busca al usuario segun su correo y password.
                 if (dtb.usuario.FirstOrDefault(u => u.correo.Equals(user.correo) && u.password.Equals(user.password)) != null)
                 {
+                    //busca al usuario y lo selecciona.
                     var userE = from u in dtb.usuario
                                 where u.correo.Equals(user.correo) & u.password.Equals(user.password)
                                 select u;
-
+                    //se guarda la session con el correo del usuario.
                     Session["correo"] = user.correo;
-
-                    TempData["login"] = "Login Correcto";
-                    ViewBag.Login = TempData["login"];
-                    
+                    //redireccion hacia exito con el correo del usuario.
                     return RedirectToAction("Exito","Account", new { email = user.correo});
                 }
                 else
                 {
+                    //en caso de error del login te devuelve a la pagina y muestra el error.
                     TempData["Error"] = "Email o constraseña incorrectos";
                     ViewBag.Error = TempData["Error"];
                     ViewBag.ModalMessage = TempData["Error"];
@@ -52,9 +53,12 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult Exito(string email)
         {
+            //verifica que la session no sea nula.
             if (Session["correo"] != null)
             {
+                //envia el correo hacia la vista como un viewbag
                 ViewBag.Correo = email;
+                //redirecciona a exito.
                 return View("Exito");
             }
             
@@ -69,11 +73,13 @@ namespace WebApp_MVC.Controllers
         public ActionResult Registrarse(usuario user)
         {
             log_acciones log = new log_acciones();
+            //verifica si recibe nulos o vacios.
             if(!string.IsNullOrEmpty(user.nombre) && !string.IsNullOrEmpty(user.apellidos) &&
                !string.IsNullOrEmpty(user.correo) && !string.IsNullOrEmpty(user.password))
             {
                 if(dtb.usuario.FirstOrDefault(u => u.correo.Equals(user.correo)) != null)
                 {
+                    //en el caso de algun error manda un mensaje que se muestra en la vista registrarse.
                     TempData["error"] = "El email ya esta en uso";
                     ViewBag.Error = TempData["error"];
                     return View("Registrarse");
@@ -104,11 +110,12 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult Perfil(string correo)
         {
+            //busca al usuario y muestra su informacion.
             usuario userE = (from u in dtb.usuario
                         where u.correo.Equals(correo)
                         select u).FirstOrDefault();
 
-
+            //redireccion a perfil.
             return View("Perfil", userE);
         }
     }
