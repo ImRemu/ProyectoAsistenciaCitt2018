@@ -179,6 +179,7 @@
     <Compile Include="Models\log_acciones.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModeloUsuario.cs" />
     <Compile Include="Models\satc.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
