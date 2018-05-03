@@ -34,7 +34,14 @@ namespace WebApp_MVC.Controllers
                     //se guarda la session con el correo del usuario.
                     Session["correo"] = user.correo;
                     //redireccion hacia exito con el correo del usuario.
-                    return RedirectToAction("Exito","Account", new { email = user.correo});
+                    Session["user"] = new ModeloUsuario {
+                        apellidos = userE.FirstOrDefault().apellidos,
+                        nombre = userE.FirstOrDefault().nombre,
+                        correo = userE.FirstOrDefault().correo,
+                        id_usuario = userE.FirstOrDefault().id_usuario
+                    } ;
+
+                    return RedirectToAction("Exito","Account");
                 }
                 else
                 {
@@ -50,7 +57,7 @@ namespace WebApp_MVC.Controllers
 
 
 #warning Notese que el parametro que se entrega tiene el mismo nombre que la clase anonima pasada por metodo RedirectToAction
-
+        
         public ActionResult Exito(string email)
         {
             //verifica que la session no sea nula.
@@ -108,15 +115,16 @@ namespace WebApp_MVC.Controllers
             return View();
         }
 
-        public ActionResult Perfil(string correo)
+        public ActionResult Perfil()
         {
-            //busca al usuario y muestra su informacion.
-            usuario userE = (from u in dtb.usuario
-                        where u.correo.Equals(correo)
-                        select u).FirstOrDefault();
+            
+            ////busca al usuario y muestra su informacion.
+            //usuario userE = (from u in dtb.usuario
+            //            where u.correo.Equals(correo)
+            //            select u).FirstOrDefault();
 
             //redireccion a perfil.
-            return View("Perfil", userE);
+            return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
         }
     }
 }
