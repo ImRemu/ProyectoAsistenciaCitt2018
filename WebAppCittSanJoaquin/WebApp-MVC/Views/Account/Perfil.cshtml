@@ -4,44 +4,48 @@
     ViewBag.Title = "Perfil";
 }
 
-<div style="background-color:white">
-    <h2>Perfil</h2>
-    <hr>
-    <h4>usuario</h4>
-    <hr />
-    <dl class="dl-horizontal">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
 
 
-        <dt>
-            @Html.DisplayNameFor(model => model.nombre)
-        </dt>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@Html.DisplayFor(model => model.nombre)</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 " align="center"> <img alt="User Pic" src="~/Content/img/user.png" class="img-circle img-responsive"> </div>
+                        <div class=" col-md-10 col-lg-10 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>Nombre:</td>
+                                        <td>@Html.DisplayFor(model => model.nombre)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Apellidos: </td>
+                                        <td>@Html.DisplayFor(model => model.apellidos)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Email: </td>
+                                        <td><a>@Html.DisplayFor(model => model.correo)</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.nombre)
-        </dd>
+                            <a href="#" class="btn btn-primary">Mis talleres inscritos</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <a data-original-title="Cerrar Sesion" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-remove"></i></a>
+                    <span class="pull-right">
+                        <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>                     
+                    </span>
+                </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.apellidos)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.apellidos)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.correo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.correo)
-        </dd>
-
-
-
-
-    </dl>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
