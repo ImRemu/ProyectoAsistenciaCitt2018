@@ -75,7 +75,7 @@
                                     Email:
                                 </label>
                                 <div class="col-sm-9">
-                                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", placeholder = "email..." } })
+                                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", placeholder = "email...", Type="emailaddress" } })
                                     @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
                                 </div>
                             </div>

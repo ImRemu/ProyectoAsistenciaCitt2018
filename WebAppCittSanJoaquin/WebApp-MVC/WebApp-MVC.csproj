@@ -323,6 +323,9 @@
     <Content Include="Views\Account\Recuperacion.cshtml" />
     <Content Include="Views\Account\Registrarse.cshtml" />
     <Content Include="Views\Account\Perfil.cshtml" />
+    <Content Include="Views\Home\ListaTalleres.cshtml" />
+    <Content Include="Views\Home\Errores\LTaV.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -69,7 +69,7 @@ namespace WebApp_MVC.Controllers
                 return View("Exito");
             }
             
-            return View("Exito");
+            return View("Index");
         }
 
         public ActionResult Recuperacion()
@@ -117,14 +117,12 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult Perfil()
         {
-            
-            ////busca al usuario y muestra su informacion.
-            //usuario userE = (from u in dtb.usuario
-            //            where u.correo.Equals(correo)
-            //            select u).FirstOrDefault();
-
-            //redireccion a perfil.
-            return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
+            if(Session["user"] != null)
+            {
+                //redireccion a perfil con la session q contiene al usuario.
+                return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
+            }
+            return View("Index");
         }
     }
 }
