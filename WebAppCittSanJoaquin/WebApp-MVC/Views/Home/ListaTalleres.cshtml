@@ -1,0 +1,46 @@
+﻿@using WebApp_MVC.Models;
+
+@{
+    ViewBag.Title = "ListaTalleres";
+}
+
+<div style="background-color:white">
+    <h2>ListaTalleres</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                Id Taller:
+            </th>
+            <th>
+                Nombre:
+            </th>
+            <th>
+                Descripcion:
+            </th>
+            <th>
+                Id Encargado:
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (taller item in ViewBag.Lista)
+         {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.id_taller)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.id_encargado)
+                </td>
+            </tr>
+         }
+    </table>
+</div>
+

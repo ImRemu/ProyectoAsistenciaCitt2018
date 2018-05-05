@@ -69,7 +69,7 @@ namespace WebApp_MVC.Controllers
                 return View("Exito");
             }
             
-            return View("Exito");
+            return View("Index");
         }
 
         public ActionResult Recuperacion()
@@ -123,9 +123,6 @@ namespace WebApp_MVC.Controllers
                 return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
             }
             return View("Index");
-            
-
-            
         }
     }
 }

@@ -179,6 +179,7 @@
     <Compile Include="Models\log_acciones.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModeloTaller.cs" />
     <Compile Include="Models\ModeloUsuario.cs" />
     <Compile Include="Models\satc.Context.cs">
       <AutoGen>True</AutoGen>
@@ -273,6 +274,9 @@
     <Content Include="Views\Account\Recuperacion.cshtml" />
     <Content Include="Views\Account\Registrarse.cshtml" />
     <Content Include="Views\Account\Perfil.cshtml" />
+    <Content Include="Views\Home\ListaTalleres.cshtml" />
+    <Content Include="Views\Home\Errores\LTaV.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
