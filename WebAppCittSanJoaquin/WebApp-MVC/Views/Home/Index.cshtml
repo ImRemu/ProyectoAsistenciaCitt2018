@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<link href="~/Content/baseestilo.css" rel="stylesheet" />
 <div class="carousel slide" id="carruselsito">
     @*/**indicadores**/*@
 
@@ -111,33 +112,129 @@ h3 {
     </a>
 
 </div>
-<div class="jumbotron">
-    <h1>Sistema de Asistencia Citt San Joaquin</h1>
-    @*<p class="lead">Esta pagina contiene enlaces utiles a distintos recursos utilizados en el desarrollo de la página.</p>
-    <a class="btn btn-primary btn-sm" href="https://www.codeproject.com/Articles/1078491/Creating-Forms-in-ASP-NET-MVC">Informacion de Forms</a>
-    <a class="btn btn-primary btn-sm" href="https://stackoverflow.com/questions/1257482/redirecttoaction-with-parameter">Redireccionar de un form y pasar parametros</a>
-    <a class="btn btn-primary btn-sm" href="https://stackoverflow.com/questions/9614896/asp-net-mvc-inline-razor-variable">Inline razor comands, digo, como mostrar variables en la vista</a>
-    <a class="btn btn-primary btn-sm" href="https://msdn.microsoft.com/en-us/library/ms247246.aspx">Resource files, o sea, archivos de recursos para aplicaciones asp.net</a>
-    <a class="btn btn-primary btn-sm" href="https://stackoverflow.com/questions/15047272/mvc4-localization-accessing-resx-from-view">Tutoflash para acceder a archivos de recursos de la vista</a>*@
-</div>
+<body>
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
 
-<div class="row">
-    <div class="col-md-4 panel panel-default">
-        <a></a>
-        <h2>Conoce los Talleres</h2>
-        <p>
-            En este lugar tenemos toda la informacion acerca de los talleres que seran impartidos en el Citt.
-        </p>
-        <p><a class="btn btn-default" href="~/Views/Home/About.cshtml">Más Informacion &raquo;</a></p>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Landing Page</h1>
+                        <h3>A Template by Start Bootstrap</h3>
+                        <hr class="intro-divider">
+                        <ul class="list-inline intro-social-buttons">
+                            <li>
+                                <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                            </li>
+                            <li>
+                                <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="btn btn-default btn-lg"><i class="fa fa-linkedin fa-fw"></i> <span class="network-name">Linkedin</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
     </div>
-    <div class="col-md-4 panel panel-default">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <!-- /.intro-header -->
+    <!-- Page Content -->
+
+    <a name="services"></a>
+    <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Death to the Stock Photo:<br>Special Thanks</h2>
+                    <p class="lead">A special thanks to <a target="_blank" href="http://join.deathtothestockphoto.com/">Death to the Stock Photo</a> for providing the photographs that you see in this template. Visit their website to become a member.</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="~/Content/img/home.jpg" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
     </div>
-    <div class="col-md-4 panel panel-default">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <!-- /.content-section-a -->
+
+    <div class="content-section-b">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">3D Device Mockups<br>by PSDCovers</h2>
+                    <p class="lead">Turn your 2D designs into high quality, 3D product shots in seconds using free Photoshop actions by <a target="_blank" href="http://www.psdcovers.com/">PSDCovers</a>! Visit their website to download some of their awesome, free photoshop actions!</p>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <img class="img-responsive" src="~/Content/img/duocsj.jpg" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
     </div>
-</div>
+    <!-- /.content-section-b -->
+
+    <div class="content-section-a">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Google Web Fonts and<br>Font Awesome Icons</h2>
+                    <p class="lead">This template features the 'Lato' font, part of the <a target="_blank" href="http://www.google.com/fonts">Google Web Font library</a>, as well as <a target="_blank" href="http://fontawesome.io">icons from Font Awesome</a>.</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="~/Content/img/CITT.jpg" alt="">
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <a name="contact"></a>
+    <div class="banner">
+
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2>Conectate con nuestro proyecto</h2>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-inline banner-social-buttons">
+                        <li>
+                            <a href="https://github.com/ImRamButBlue/ProyectoAsistenciaCitt2018" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.banner -->
+
+
+</body>
