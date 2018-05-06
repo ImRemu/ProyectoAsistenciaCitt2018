@@ -326,6 +326,8 @@
     <Content Include="Views\Home\ListaTalleres.cshtml" />
     <Content Include="Views\Home\Errores\LTaV.cshtml" />
     <Content Include="Views\Home\View.cshtml" />
+    <Content Include="Views\Account\Registrado.cshtml" />
+    <Content Include="Views\Account\CambioPass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
