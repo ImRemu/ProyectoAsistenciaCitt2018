@@ -6,7 +6,8 @@
 <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
 
 <div style="background-color:white">
-    <h3>@(ViewBag.Registrado)</h3>
+    @Html.ActionLink("Cerrar Sesion", "LogOut", "Account")
+    @Html.ActionLink("Cambiar Contraseña", "CambioPass", "Account")
     <h3>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).correo)</h3>
 
     
