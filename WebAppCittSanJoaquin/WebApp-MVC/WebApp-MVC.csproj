@@ -178,6 +178,7 @@
     <Compile Include="Models\horario.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\joinTallUsHr.cs" />
     <Compile Include="Models\log_acciones.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
