@@ -39,10 +39,34 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult ListaTalleres()
         {
-            /*IList<WebApp_MVC.Models.ModeloTaller> listTalleres = new IList<Models.ModeloTaller>();*/
-            var lista = (from l in dtb.taller
-                         select l).ToList();
-            ViewBag.Lista = lista;
+            List<joinTallUsHr> Model = new List<joinTallUsHr>();
+            var lista = (from u in dtb.usuario join t in dtb.taller on u.id_usuario equals t.id_encargado
+                         join h in dtb.horario on t.id_taller equals h.taller_id_taller
+                         select new
+                         {
+                             uNombre = u.nombre,
+                             uAps = u.apellidos,
+                             idTaller = t.id_taller,
+                             tNombre = t.nombre,
+                             tDesc = t.descripcion,
+                             hInicio = h.hora_inicio,
+                             hTerm = h.hora_termino
+
+                         }).ToList();
+            foreach(var item in lista)
+            {
+                Model.Add(new joinTallUsHr()
+                {
+                    nombre = item.uNombre+" "+item.uAps,
+                    id_taller = item.idTaller,
+                    nombreTaller = item.tNombre,
+                    descripcion = item.tDesc,
+                    hora_inicio = item.hInicio,
+                    hora_termino = item.hTerm
+                });
+            }
+
+            ViewBag.Lista = Model;
             if (ViewBag.Lista != null)
             {
                 return View("ListaTalleres");
