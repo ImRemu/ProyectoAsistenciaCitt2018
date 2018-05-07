@@ -135,6 +135,7 @@ namespace WebApp_MVC.Controllers
         {
             if(Session["user"] != null)
             {
+                //confirmacion de session.
                 return View("CambioPass", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
             }
             return View("Index");
@@ -144,13 +145,14 @@ namespace WebApp_MVC.Controllers
         {
             if(p1.Equals(p2))
             {
+                //en caso de que las constraseñas p1 y p2 sean igual se hara el cambio en la bdd.
                 var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
 
-
+                //selecion del usuario que tiene inicida la sesion.
                 usuario usE = (from u in dtb.usuario
                                where u.id_usuario == id
                                select u).FirstOrDefault();
-
+                //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
                 usE.password = p1;
                 dtb.SaveChanges();
 
@@ -159,11 +161,12 @@ namespace WebApp_MVC.Controllers
             }
             else
             {
+                //en caso de que las contraseñas p1 y p2 de los text no sea igual tirara error.
                 TempData["error"] = "las contraseñas deben ser iguales";
                 ViewBag.Error = TempData["error"];
                 return View("CambioPass");
             }
-            return View("");
+            
         }
     }
 }
