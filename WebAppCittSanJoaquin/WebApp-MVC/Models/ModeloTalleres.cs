@@ -4,8 +4,8 @@ using System.Linq;
 using System.Web;
 
 namespace WebApp_MVC.Models
-{
-    public class joinTallUsHr
+{   //modelo de mostreo en la vista talleres
+    public class ModeloTalleres
     {
         public string nombre { get; set; }
         public string apellidos { get; set; }

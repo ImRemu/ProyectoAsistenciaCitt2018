@@ -39,7 +39,7 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult ListaTalleres()
         {
-            List<joinTallUsHr> Model = new List<joinTallUsHr>();
+            List<ModeloTalleres> Model = new List<ModeloTalleres>();
             var lista = (from u in dtb.usuario join t in dtb.taller on u.id_usuario equals t.id_encargado
                          join h in dtb.horario on t.id_taller equals h.taller_id_taller
                          select new
@@ -55,7 +55,7 @@ namespace WebApp_MVC.Controllers
                          }).ToList();
             foreach(var item in lista)
             {
-                Model.Add(new joinTallUsHr()
+                Model.Add(new ModeloTalleres()
                 {
                     nombre = item.uNombre+" "+item.uAps,
                     id_taller = item.idTaller,
