@@ -31,8 +31,7 @@ namespace WebApp_MVC.Controllers
                     var userE = from u in dtb.usuario
                                 where u.correo.Equals(user.correo) & u.password.Equals(user.password)
                                 select u;
-                    //se guarda la session con el correo del usuario.
-                    Session["correo"] = user.correo;
+                    
                     //redireccion hacia exito con el correo del usuario.
                     Session["user"] = new ModeloUsuario {
                         apellidos = userE.FirstOrDefault().apellidos,
@@ -61,7 +60,7 @@ namespace WebApp_MVC.Controllers
         public ActionResult Exito(string email)
         {
             //verifica que la session no sea nula.
-            if (Session["correo"] != null)
+            if (Session["user"] != null)
             {
                 //envia el correo hacia la vista como un viewbag
                 ViewBag.Correo = email;
@@ -108,7 +107,7 @@ namespace WebApp_MVC.Controllers
                     //se retorna el mensaje correspondiente.
                     TempData["creado"] = "El Usuario se ha registrado exitosamente.";
                     ViewBag.Registrado = TempData["creado"];
-                    return View("Exito");
+                    return View("Registrado");
                 }
 
             }
@@ -123,6 +122,51 @@ namespace WebApp_MVC.Controllers
                 return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
             }
             return View("Index");
+        }
+
+        public ActionResult LogOut()
+        {
+            //desloguea al usuario conectado, vuelve la session nula.
+            Session["user"] = null;
+            return View("Index");
+        }
+
+        public ActionResult CambioPass()
+        {
+            if(Session["user"] != null)
+            {
+                //confirmacion de session.
+                return View("CambioPass", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
+            }
+            return View("Index");
+        }
+
+        public ActionResult CPassConfirmacion(string p1, string p2)
+        {
+            if(p1.Equals(p2))
+            {
+                //en caso de que las constraseñas p1 y p2 sean igual se hara el cambio en la bdd.
+                var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+
+                //selecion del usuario que tiene inicida la sesion.
+                usuario usE = (from u in dtb.usuario
+                               where u.id_usuario == id
+                               select u).FirstOrDefault();
+                //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
+                usE.password = p1;
+                dtb.SaveChanges();
+
+                ViewBag.Hecho = "Cambio de contraseña hecho correctamente.";
+                return View("CambioPass");
+            }
+            else
+            {
+                //en caso de que las contraseñas p1 y p2 de los text no sea igual tirara error.
+                TempData["error"] = "las contraseñas deben ser iguales";
+                ViewBag.Error = TempData["error"];
+                return View("CambioPass");
+            }
+            
         }
     }
 }

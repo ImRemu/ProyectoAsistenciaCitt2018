@@ -178,6 +178,7 @@
     <Compile Include="Models\horario.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModeloTalleres.cs" />
     <Compile Include="Models\log_acciones.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
@@ -326,6 +327,8 @@
     <Content Include="Views\Home\ListaTalleres.cshtml" />
     <Content Include="Views\Home\Errores\LTaV.cshtml" />
     <Content Include="Views\Home\View.cshtml" />
+    <Content Include="Views\Account\Registrado.cshtml" />
+    <Content Include="Views\Account\CambioPass.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
