@@ -13,31 +13,42 @@
                 Id Taller:
             </th>
             <th>
-                Nombre:
+                Nombre Taller:
             </th>
             <th>
                 Descripcion:
             </th>
             <th>
-                Id Encargado:
+                Nombre Encargado:
             </th>
-            <th></th>
+            <th>
+                Hora inicio:
+            </th>
+            <th>
+                Hora Termino:
+            </th>
         </tr>
 
-        @foreach (taller item in ViewBag.Lista)
+        @foreach (ModeloTalleres item in ViewBag.Lista)
          {
             <tr>
                 <td>
                     @Html.DisplayFor(x => item.id_taller)
                 </td>
                 <td>
-                    @Html.DisplayFor(x => item.nombre)
+                    @Html.DisplayFor(x => item.nombreTaller)
                 </td>
                 <td>
                     @Html.DisplayFor(x => item.descripcion)
                 </td>
                 <td>
-                    @Html.DisplayFor(x => item.id_encargado)
+                    @Html.DisplayFor(x => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.hora_inicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.hora_termino)
                 </td>
             </tr>
          }
