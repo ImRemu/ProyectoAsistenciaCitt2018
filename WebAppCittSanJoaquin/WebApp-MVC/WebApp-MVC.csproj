@@ -329,6 +329,7 @@
     <Content Include="Views\Home\View.cshtml" />
     <Content Include="Views\Account\Registrado.cshtml" />
     <Content Include="Views\Account\CambioPass.cshtml" />
+    <Content Include="Views\Account\DesactCuenta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

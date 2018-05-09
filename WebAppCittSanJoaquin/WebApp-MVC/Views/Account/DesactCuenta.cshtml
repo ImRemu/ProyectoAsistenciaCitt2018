@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "DesactCuenta";
+}
+
+<h2>Desactivar Cuenta</h2>
+@using (Html.BeginForm("CuentaDesct", "Account"))
+{
+    <div>
+        <h2>¿Esta seguro de Desactiva la cuenta?</h2>
+        <div>
+            <table>
+                <tr>
+                    <td><label>Ingrese la contraseña:</label></td>
+                    <td>
+                        <input type="password" name="txt_pass" />
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" class="btn btn-primary" name="btn_desactivar" value="Descactivar Cuenta" />
+                    </td>
+                </tr>
+            </table>
+            @ViewBag.Error
+        </div>
+    </div>
+}
+

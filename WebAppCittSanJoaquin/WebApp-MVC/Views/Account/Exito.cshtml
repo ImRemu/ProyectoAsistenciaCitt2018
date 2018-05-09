@@ -6,12 +6,14 @@
 <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
 
 <div style="background-color:white">
-    @Html.ActionLink("Cerrar Sesion", "LogOut", "Account")
-    @Html.ActionLink("Cambiar Contraseña", "CambioPass", "Account")
+    <a class="btn btn-primary" @Html.ActionLink("Cerrar Sesion", "LogOut", "Account")</a>
+    <a class="btn btn-primary" @Html.ActionLink("Cambiar Contraseña", "CambioPass", "Account")</a>
+    
     <h3>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).correo)</h3>
 
     
-    @Html.Raw(Html.ActionLink("Perfil usuario", "Perfil", "Account", new { correo = (string)ViewBag.Correo }, new { correo = (string)ViewBag.Correo }))
+    <a class="btn btn-primary" @Html.ActionLink("Perfil usuario", "Perfil", "Account")</a>
+    
     
 
     
