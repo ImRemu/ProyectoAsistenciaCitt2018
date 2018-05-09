@@ -37,7 +37,8 @@ namespace WebApp_MVC.Controllers
                         apellidos = userE.FirstOrDefault().apellidos,
                         nombre = userE.FirstOrDefault().nombre,
                         correo = userE.FirstOrDefault().correo,
-                        id_usuario = userE.FirstOrDefault().id_usuario
+                        id_usuario = userE.FirstOrDefault().id_usuario,
+                        password = userE.FirstOrDefault().password
                     } ;
 
                     return RedirectToAction("Exito","Account");
@@ -166,6 +167,48 @@ namespace WebApp_MVC.Controllers
                 ViewBag.Error = TempData["error"];
                 return View("CambioPass");
             }
+            
+        }
+
+        public ActionResult DesactCuenta()
+        {
+            if(Session["user"] != null)
+            {
+                return View("DesactCuenta");
+            }
+            return View("Index");
+        }
+        //action que confirma la desactivacion de la cuenta.
+        public ActionResult CuentaDesct(string txt_pass)
+        {
+            //se saca la pass de la session para compararla
+            string p2 = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).password;
+            p2 = p2.Replace(" ","");
+            if (p2.Equals(txt_pass))
+            {
+                //seteo de id de usuario en session
+                var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+                //selecion del usuario que tiene inicida la sesion.
+                usuario usE = (from u in dtb.usuario
+                               where u.id_usuario == id
+                               select u).FirstOrDefault();
+                //se deshabilita el usuario
+                usE.habilitado = 0;
+                dtb.SaveChanges();
+                //la session user se vuelve nula
+                Session["user"] = null;
+                //retorna al index de Account
+                return View("Index");
+            }
+            else
+            {
+                //la contraseña no es la correcta, muestra error
+                TempData["error"] = "La contraseña no es correcta.";
+                ViewBag.Error = TempData["error"];
+                //devuelve a la vista
+                return View("DesactCuenta");
+            }
+            
             
         }
     }
