@@ -9,7 +9,7 @@ namespace WebApp_MVC.Controllers
 {
     public class HomeController : Controller
     {
-        satcEntities dtb = new satcEntities();
+        satc2Entities dtb = new satc2Entities();
 
         public ActionResult Index()
         {

@@ -17,7 +17,6 @@ namespace WebApp_MVC.Models
         public usuario()
         {
             this.det_asist = new HashSet<det_asist>();
-            this.horario = new HashSet<horario>();
             this.taller = new HashSet<taller>();
         }
     
@@ -30,7 +29,6 @@ namespace WebApp_MVC.Models
         public string tipo_usuario { get; set; }
     
         public virtual ICollection<det_asist> det_asist { get; set; }
-        public virtual ICollection<horario> horario { get; set; }
         public virtual ICollection<taller> taller { get; set; }
     }
 }

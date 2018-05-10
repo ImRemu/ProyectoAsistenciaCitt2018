@@ -22,13 +22,11 @@ namespace WebApp_MVC.Models
         public int id_horario { get; set; }
         public System.DateTime hora_inicio { get; set; }
         public System.DateTime hora_termino { get; set; }
-        public string dia_semana { get; set; }
+        public System.DateTime dia_semana { get; set; }
         public int cupo { get; set; }
         public int taller_id_taller { get; set; }
-        public int usuario_id_usuario { get; set; }
     
         public virtual ICollection<det_asist> det_asist { get; set; }
         public virtual taller taller { get; set; }
-        public virtual usuario usuario { get; set; }
     }
 }

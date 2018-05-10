@@ -178,10 +178,10 @@
     <Compile Include="Models\horario.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ModeloTalleres.cs" />
     <Compile Include="Models\log_acciones.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModeloTalleres.cs" />
     <Compile Include="Models\ModeloTaller.cs" />
     <Compile Include="Models\ModeloUsuario.cs" />
     <Compile Include="Models\satc.Context.cs">
@@ -228,27 +228,19 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\satc.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>satc.Context.cs</LastGenOutput>
-      <DependentUpon>satc.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\satc.edmx.sql" />
-    <Content Include="Models\satc.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>satc.edmx</DependentUpon>
-      <LastGenOutput>satc.cs</LastGenOutput>
-    </Content>
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\font\911Fonts.com_MyriadProSemiboldSemiExtended__-_911fonts.com_fonts_hPxq.ttf" />
-    <EntityDeploy Include="Models\satc.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>satc.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\satc.edmx.diagram">
+    <Content Include="Models\satc.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>satc.edmx</DependentUpon>
+      <LastGenOutput>satc.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\satc.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>satc.edmx</DependentUpon>
+      <LastGenOutput>satc.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -278,6 +270,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <EntityDeploy Include="Models\satc.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>satc.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\satc.edmx.diagram">
+      <DependentUpon>satc.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
