@@ -211,5 +211,36 @@ namespace WebApp_MVC.Controllers
             
             
         }
+
+        public ActionResult VerifTomaRamo( int id)
+        {
+            
+            if(Session["user"] != null)
+            {
+                int idTaller = id;
+                return RedirectToAction("TomaRamo",new { id = idTaller});
+            }
+            else
+            {
+                TempData["LogNecesario"] = "Necesita conectarse para tomar el taller.";
+                ViewBag.Error = TempData["LogNecesario"];
+                return View("Index");
+            }
+        }
+
+        public ActionResult TomaRamo(int id)
+        {
+            int idTaller = id;
+            int userId = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+
+            var verifTaller = (from dt in dtb.det_asist
+                               join h in dtb.horario on dt.horario_id_horario equals h.id_horario
+                               where h.taller_id_taller == id && dt.usuario_id_usuario == userId
+                               select dt).FirstOrDefault();
+
+            return View();
+        }
+
+
     }
 }
