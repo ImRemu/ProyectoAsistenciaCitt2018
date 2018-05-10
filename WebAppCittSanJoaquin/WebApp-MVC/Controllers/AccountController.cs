@@ -9,7 +9,7 @@ namespace WebApp_MVC.Controllers
 {
     public class AccountController : Controller
     {
-        satcEntities dtb = new satcEntities();
+        satc2Entities dtb = new satc2Entities();
 
         // El index se accesa cuando no se
         // tiene ningun parametro cuando se accede al controlador
