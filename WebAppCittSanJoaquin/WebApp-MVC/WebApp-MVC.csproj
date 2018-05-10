@@ -217,6 +217,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\img\back.jpg" />
+    <Content Include="Content\img\back.png" />
     <Content Include="Content\img\CITT.jpg" />
     <Content Include="Content\img\duocsj.jpg" />
     <Content Include="Content\img\fondo-azul.jpg" />
