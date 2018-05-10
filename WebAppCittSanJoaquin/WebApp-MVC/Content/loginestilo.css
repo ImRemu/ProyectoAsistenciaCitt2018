@@ -1,20 +1,29 @@
 ﻿body {
-    background: url(img/duocsj.jpg) no-repeat center center fixed;
+    background-image: url(img/back.jpg);
+    background-repeat: repeat-x;
+    /*
     -webkit-background-size: cover;
-    -moz-background-size: cover;
+    -moz-background-size: cover;*/
     -o-background-size: cover;
     background-size: cover;
 }
 #navgeneral {
-    background-color: #00263E;
+    background-color: rgba(0,38,62,0.5);
+    border-color: transparent;
 }
 .panel-default {
     opacity: 0.9;
     margin-top: 30px;
+    border-radius: 10px;    
+}
+#panels{
+    background-color: transparent;
+    border-radius: 10px;
 }
 
 .form-group.last {
     margin-bottom: 0px;
+    
 }
 h2{
     
