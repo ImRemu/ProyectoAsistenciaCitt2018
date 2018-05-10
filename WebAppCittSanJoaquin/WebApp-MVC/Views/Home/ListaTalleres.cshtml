@@ -5,7 +5,7 @@
 }
 
 <div style="background-color:white">
-    <h2>ListaTalleres</h2>
+    <h2>Lista de Talleres</h2>
 
     <table class="table">
         <tr>
@@ -27,30 +27,34 @@
             <th>
                 Hora Termino:
             </th>
+            <th></th>
         </tr>
 
         @foreach (ModeloTalleres item in ViewBag.Lista)
          {
-            <tr>
-                <td>
-                    @Html.DisplayFor(x => item.id_taller)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => item.nombreTaller)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => item.descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => item.nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => item.hora_inicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(x => item.hora_termino)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(x => item.id_taller)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.nombreTaller)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.hora_inicio)
+            </td>
+            <td>
+                @Html.DisplayFor(x => item.hora_termino)
+            </td>
+            <td>
+                <a class="btn btn-primary" style="padding:3px"@Html.ActionLink("Tomar Taller","../Account/VerifTomaRamo", new { id = item.id_taller})
+            </td>
+        </tr>
          }
     </table>
 </div>

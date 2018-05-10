@@ -7,7 +7,7 @@
 @using (Html.BeginForm("CuentaDesct", "Account"))
 {
     <div>
-        <h2>¿Esta seguro de Desactiva la cuenta?</h2>
+        <h2>¿Esta seguro de Desactivar la cuenta?</h2>
         <div>
             <table>
                 <tr>
@@ -21,6 +21,9 @@
                     <td></td>
                     <td>
                         <input type="submit" class="btn btn-primary" name="btn_desactivar" value="Descactivar Cuenta" />
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" @Html.ActionLink("Regresar", "Perfil", "Account")
                     </td>
                 </tr>
             </table>
