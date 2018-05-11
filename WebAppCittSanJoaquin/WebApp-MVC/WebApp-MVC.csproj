@@ -168,6 +168,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\administrador.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\alumno.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\asistencia.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
@@ -184,6 +190,9 @@
     <Compile Include="Models\ModeloTalleres.cs" />
     <Compile Include="Models\ModeloTaller.cs" />
     <Compile Include="Models\ModeloUsuario.cs" />
+    <Compile Include="Models\profesor.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\satc.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -200,9 +209,6 @@
       <DependentUpon>satc.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\taller.cs">
-      <DependentUpon>satc.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\usuario.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

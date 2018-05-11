@@ -9,7 +9,7 @@ namespace WebApp_MVC.Controllers
 {
     public class HomeController : Controller
     {
-        satc2Entities dtb = new satc2Entities();
+        satcEntities dtb = new satcEntities();
 
         public ActionResult Index()
         {
@@ -40,12 +40,12 @@ namespace WebApp_MVC.Controllers
         public ActionResult ListaTalleres()
         {
             List<ModeloTalleres> Model = new List<ModeloTalleres>();
-            var lista = (from u in dtb.usuario join t in dtb.taller on u.id_usuario equals t.id_encargado
+            var lista = (from u in dtb.alumno join t in dtb.taller on u.id_alumno equals t.profesor_id_profesor
                          join h in dtb.horario on t.id_taller equals h.taller_id_taller
                          select new
                          {
                              uNombre = u.nombre,
-                             uAps = u.apellidos,
+                             uAps = u.apellido,
                              idTaller = t.id_taller,
                              tNombre = t.nombre,
                              tDesc = t.descripcion,

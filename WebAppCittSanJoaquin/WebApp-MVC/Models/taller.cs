@@ -22,9 +22,9 @@ namespace WebApp_MVC.Models
         public int id_taller { get; set; }
         public string nombre { get; set; }
         public string descripcion { get; set; }
-        public int id_encargado { get; set; }
+        public int profesor_id_profesor { get; set; }
     
         public virtual ICollection<horario> horario { get; set; }
-        public virtual usuario usuario { get; set; }
+        public virtual profesor profesor { get; set; }
     }
 }

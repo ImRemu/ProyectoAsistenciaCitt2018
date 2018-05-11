@@ -9,7 +9,7 @@ namespace WebApp_MVC.Controllers
 {
     public class AccountController : Controller
     {
-        satc2Entities dtb = new satc2Entities();
+        satcEntities dtb = new satcEntities();
 
         // El index se accesa cuando no se
         // tiene ningun parametro cuando se accede al controlador
@@ -19,25 +19,25 @@ namespace WebApp_MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult FormLogin(usuario user)
+        public ActionResult FormLogin(ModeloUsuario user)
         {
             //verifica q la info del usuario no este vacia.
             if(!string.IsNullOrEmpty(user.correo) && !string.IsNullOrEmpty(user.password))
             {
                 //busca al usuario segun su correo y password.
-                if (dtb.usuario.FirstOrDefault(u => u.correo.Equals(user.correo) && u.password.Equals(user.password)) != null)
+                if (dtb.alumno.FirstOrDefault(u => u.correo.Equals(user.correo) && u.password.Equals(user.password)) != null)
                 {
                     //busca al usuario y lo selecciona.
-                    var userE = from u in dtb.usuario
+                    var userE = from u in dtb.alumno
                                 where u.correo.Equals(user.correo) & u.password.Equals(user.password)
                                 select u;
                     
                     //redireccion hacia exito con el correo del usuario.
                     Session["user"] = new ModeloUsuario {
-                        apellidos = userE.FirstOrDefault().apellidos,
+                        apellidos = userE.FirstOrDefault().apellido,
                         nombre = userE.FirstOrDefault().nombre,
                         correo = userE.FirstOrDefault().correo,
-                        id_usuario = userE.FirstOrDefault().id_usuario,
+                        id_usuario = userE.FirstOrDefault().id_alumno,
                         password = userE.FirstOrDefault().password
                     } ;
 
@@ -77,14 +77,14 @@ namespace WebApp_MVC.Controllers
             return View();
         }
 
-        public ActionResult Registrarse(usuario user)
+        public ActionResult Registrarse(alumno user)
         {
             log_acciones log = new log_acciones();
             //verifica si recibe nulos o vacios.
-            if(!string.IsNullOrEmpty(user.nombre) && !string.IsNullOrEmpty(user.apellidos) &&
+            if(!string.IsNullOrEmpty(user.nombre) && !string.IsNullOrEmpty(user.apellido) &&
                !string.IsNullOrEmpty(user.correo) && !string.IsNullOrEmpty(user.password))
             {
-                if(dtb.usuario.FirstOrDefault(u => u.correo.Equals(user.correo)) != null)
+                if(dtb.alumno.FirstOrDefault(u => u.correo.Equals(user.correo)) != null)
                 {
                     //en el caso de algun error manda un mensaje que se muestra en la vista registrarse.
                     TempData["error"] = "El email ya esta en uso";
@@ -96,13 +96,13 @@ namespace WebApp_MVC.Controllers
                     //se genera un log de accion
                     log.fecha = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy hh:mm:ss"));
                     log.accion = "Creacion de Usuario Alumno";
-                    log.nombre_ejecutor = "Usuario Nuevo";
+                    log.nombre_ejecucion = "Usuario Nuevo";
                     log.id_ejecutor = 0;
                     //se le da la habilitacion, 0 = no habilitado, y el tipo usuario.
                     user.habilitado = 0;
-                    user.tipo_usuario = "a";
+                    
                     //se guardan los cambios en la base de datos.
-                    dtb.usuario.Add(user);
+                    dtb.alumno.Add(user);
                     dtb.log_acciones.Add(log);
                     dtb.SaveChanges();
                     //se retorna el mensaje correspondiente.
@@ -150,8 +150,8 @@ namespace WebApp_MVC.Controllers
                 var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
 
                 //selecion del usuario que tiene inicida la sesion.
-                usuario usE = (from u in dtb.usuario
-                               where u.id_usuario == id
+                alumno usE = (from u in dtb.alumno
+                               where u.id_alumno == id
                                select u).FirstOrDefault();
                 //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
                 usE.password = p1;
@@ -189,8 +189,8 @@ namespace WebApp_MVC.Controllers
                 //seteo de id de usuario en session
                 var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
                 //selecion del usuario que tiene inicida la sesion.
-                usuario usE = (from u in dtb.usuario
-                               where u.id_usuario == id
+                alumno usE = (from u in dtb.alumno
+                               where u.id_alumno == id
                                select u).FirstOrDefault();
                 //se deshabilita el usuario
                 usE.habilitado = 0;
@@ -235,7 +235,7 @@ namespace WebApp_MVC.Controllers
 
             var verifTaller = (from dt in dtb.det_asist
                                join h in dtb.horario on dt.horario_id_horario equals h.id_horario
-                               where h.taller_id_taller == id && dt.usuario_id_usuario == userId
+                               where h.taller_id_taller == id && dt.alumno_id_alumno == userId
                                select dt).FirstOrDefault();
 
             return View();

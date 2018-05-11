@@ -15,12 +15,12 @@ namespace WebApp_MVC.Models
     public partial class det_asist
     {
         public int id_detalle { get; set; }
-        public int usuario_id_usuario { get; set; }
-        public int horario_id_horario { get; set; }
+        public int alumno_id_alumno { get; set; }
         public Nullable<int> asistencia_id_asistencia { get; set; }
+        public int horario_id_horario { get; set; }
     
+        public virtual alumno alumno { get; set; }
         public virtual asistencia asistencia { get; set; }
         public virtual horario horario { get; set; }
-        public virtual usuario usuario { get; set; }
     }
 }

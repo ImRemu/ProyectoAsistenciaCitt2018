@@ -12,12 +12,20 @@ namespace WebApp_MVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class log_acciones
+    public partial class profesor
     {
-        public int id_acciones { get; set; }
-        public System.DateTime fecha { get; set; }
-        public string accion { get; set; }
-        public string nombre_ejecucion { get; set; }
-        public int id_ejecutor { get; set; }
+        public profesor()
+        {
+            this.taller = new HashSet<taller>();
+        }
+    
+        public int id_profesor { get; set; }
+        public string nombre { get; set; }
+        public string apellidos { get; set; }
+        public string correo { get; set; }
+        public string password { get; set; }
+        public byte habilitado { get; set; }
+    
+        public virtual ICollection<taller> taller { get; set; }
     }
 }
