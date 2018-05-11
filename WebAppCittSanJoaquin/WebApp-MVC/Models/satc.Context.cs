@@ -13,10 +13,10 @@ namespace WebApp_MVC.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class satc2Entities : DbContext
+    public partial class satcEntities : DbContext
     {
-        public satc2Entities()
-            : base("name=satc2Entities")
+        public satcEntities()
+            : base("name=satcEntities")
         {
         }
     
@@ -25,11 +25,13 @@ namespace WebApp_MVC.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<administrador> administrador { get; set; }
+        public DbSet<alumno> alumno { get; set; }
         public DbSet<asistencia> asistencia { get; set; }
         public DbSet<det_asist> det_asist { get; set; }
         public DbSet<horario> horario { get; set; }
         public DbSet<log_acciones> log_acciones { get; set; }
+        public DbSet<profesor> profesor { get; set; }
         public DbSet<taller> taller { get; set; }
-        public DbSet<usuario> usuario { get; set; }
     }
 }
