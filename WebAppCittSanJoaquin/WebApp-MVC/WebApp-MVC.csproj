@@ -231,6 +231,7 @@
     <Content Include="Content\img\fondo-azul.jpg" />
     <Content Include="Content\img\home.jpg" />
     <Content Include="Content\img\intento1.jpg" />
+    <Content Include="Content\img\skull_normal1.cur" />
     <Content Include="Content\img\user.png" />
     <Content Include="Content\loginestilo.css" />
     <Content Include="favicon.ico" />
