@@ -40,12 +40,12 @@ namespace WebApp_MVC.Controllers
         public ActionResult ListaTalleres()
         {
             List<ModeloTalleres> Model = new List<ModeloTalleres>();
-            var lista = (from u in dtb.alumno join t in dtb.taller on u.id_alumno equals t.profesor_id_profesor
+            var lista = (from p in dtb.profesor join t in dtb.taller on p.id_profesor equals t.profesor_id_profesor
                          join h in dtb.horario on t.id_taller equals h.taller_id_taller
                          select new
                          {
-                             uNombre = u.nombre,
-                             uAps = u.apellido,
+                             uNombre = p.nombre,
+                             uAps = p.apellidos,
                              idTaller = t.id_taller,
                              tNombre = t.nombre,
                              tDesc = t.descripcion,
