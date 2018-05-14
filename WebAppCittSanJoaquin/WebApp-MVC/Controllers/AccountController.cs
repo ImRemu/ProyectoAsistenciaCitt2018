@@ -77,14 +77,14 @@ namespace WebApp_MVC.Controllers
             return View();
         }
 
-        public ActionResult Registrarse(alumno user)
+        public ActionResult Registrarse(string txt_nombre, string txt_apell, string txt_email, string txt_pass )
         {
             log_acciones log = new log_acciones();
             //verifica si recibe nulos o vacios.
-            if(!string.IsNullOrEmpty(user.nombre) && !string.IsNullOrEmpty(user.apellido) &&
-               !string.IsNullOrEmpty(user.correo) && !string.IsNullOrEmpty(user.password))
+            if(!string.IsNullOrEmpty(txt_nombre) && !string.IsNullOrEmpty(txt_apell) &&
+               !string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
             {
-                if(dtb.alumno.FirstOrDefault(u => u.correo.Equals(user.correo)) != null)
+                if(dtb.alumno.FirstOrDefault(u => u.correo.Equals(txt_email)) != null)
                 {
                     //en el caso de algun error manda un mensaje que se muestra en la vista registrarse.
                     TempData["error"] = "El email ya esta en uso";
@@ -99,10 +99,15 @@ namespace WebApp_MVC.Controllers
                     log.nombre_ejecucion = "Usuario Nuevo";
                     log.id_ejecutor = 0;
                     //se le da la habilitacion, 0 = no habilitado, y el tipo usuario.
-                    user.habilitado = 0;
+                    alumno userAl = new alumno();
+                    userAl.nombre = txt_nombre;
+                    userAl.apellido = txt_apell;
+                    userAl.correo = txt_email;
+                    userAl.password = txt_pass;
+                    userAl.habilitado = 0;
                     
                     //se guardan los cambios en la base de datos.
-                    dtb.alumno.Add(user);
+                    dtb.alumno.Add(userAl);
                     dtb.log_acciones.Add(log);
                     dtb.SaveChanges();
                     //se retorna el mensaje correspondiente.

@@ -11,32 +11,34 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            @ViewBag.Hecho
-            <hr />
+    <div class="form-horizontal">
+        @ViewBag.Hecho
+        <hr />
 
-            <div class="form-group">
-                <div class="col-md-10">
-                    Contraseña nueva:
-                    <input type="password" name="p1" id="p">
-                </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                Contraseña nueva:
+                <input class="form-control" type="password" name="p1" id="p">
             </div>
-            <div class="form-group">
-                <div class="col-md-10">
-                    Repita Contraseña:
-                    <input type="password" name="p2" id="p2">
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                Repita Contraseña:
+                <input class="form-control" type="password" name="p2" id="p2">
 
-                </div>
             </div>
-            <input type="submit" class="dASButton" value="Cambiar Contraseña" />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Cambiar Contraseña" />
+        <a class="btn btn-primary" @Html.ActionLink("Regresar", "Exito")
+            
             <br>
             @ViewBag.Error
-        </div>
+    </div>
 
     }
 
     <div>
-        @Html.ActionLink("Regresar", "Exito")
+        
     </div>
 </div>
 
