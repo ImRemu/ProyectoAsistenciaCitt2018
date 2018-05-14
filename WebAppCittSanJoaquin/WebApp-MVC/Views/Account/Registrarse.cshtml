@@ -2,7 +2,7 @@
 <script src="~/Scripts/bootstrap.min.js"></script>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 
-@model WebApp_MVC.Models.usuario
+
 
 @{
     ViewBag.Title = "Registrarse";
@@ -14,64 +14,63 @@
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-lock"></span> <h2>Registrate</h2>
-                </div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="nombre" class="col-sm-3 control-label">
-                                Nombre:
-                            </label>
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre..." } })
-                                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                @using (Html.BeginForm())
+                 {
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-lock"></span> <h2>Registrate</h2>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="nombre" class="col-sm-3 control-label">
+                                    Nombre:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" name="txt_nombre" id="txt_nombre" placeholder="Nombre..." required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="apellidos" class="col-sm-3 control-label">
-                                Apellidos:
-                            </label>
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.apellidos, new { htmlAttributes = new { @class = "form-control", placeholder = "Apellidos..." } })
-                                @Html.ValidationMessageFor(model => model.apellidos, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label for="apellidos" class="col-sm-3 control-label">
+                                    Apellidos:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" name="txt_apell" id="txt_apell" placeholder="Apellido/s..." required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="col-sm-3 control-label">
-                                Email:
-                            </label>
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", placeholder = "Email...", Type ="emailaddress" } })
-                                @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <label for="email" class="col-sm-3 control-label">
+                                    Email:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="email" name="txt_email" id="txt_email" placeholder="Email..." required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="password" class="col-sm-3 control-label">
-                                Password:
-                            </label>
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", placeholder = "password...", Type="password" } })
-                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group last">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    Registrarse
-                                </button>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-3 control-label">
+                                    Password:
+                                </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="password" name="txt_pass" id="txt_pass" placeholder="Contraseña..." required>
+                                </div>
                             </div>
                             <div class="form-group last">
                                 <div class="col-sm-offset-3 col-sm-9">
-                                    <label for="mensaje">@ViewBag.Error</label>
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        Registrarse
+                                    </button>
+                                </div>
+                                <div class="form-group last">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <label for="mensaje">@ViewBag.Error</label>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="panel-footer">
-                    @Html.ActionLink("¿Ya tienes cuenta?", "Index", "Account")
-                </div>
+                        </form>
+                    </div>
+                    <div class="panel-footer">
+                        @Html.ActionLink("¿Ya tienes cuenta?", "Index", "Account")
+                  </div>
+                 }
             </div>
         </div>
     </div>
