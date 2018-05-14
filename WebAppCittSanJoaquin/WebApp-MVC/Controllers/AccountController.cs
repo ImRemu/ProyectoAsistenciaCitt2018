@@ -19,17 +19,17 @@ namespace WebApp_MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult FormLogin(ModeloUsuario user)
+        public ActionResult FormLogin(string txt_email, string txt_pass)
         {
             //verifica q la info del usuario no este vacia.
-            if(!string.IsNullOrEmpty(user.correo) && !string.IsNullOrEmpty(user.password))
+            if(!string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
             {
                 //busca al usuario segun su correo y password.
-                if (dtb.alumno.FirstOrDefault(u => u.correo.Equals(user.correo) && u.password.Equals(user.password)) != null)
+                if (dtb.alumno.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
                 {
                     //busca al usuario y lo selecciona.
                     var userE = from u in dtb.alumno
-                                where u.correo.Equals(user.correo) & u.password.Equals(user.password)
+                                where u.correo.Equals(txt_email) & u.password.Equals(txt_pass)
                                 select u;
                     
                     //redireccion hacia exito con el correo del usuario.
@@ -42,6 +42,44 @@ namespace WebApp_MVC.Controllers
                     } ;
 
                     return RedirectToAction("Exito","Account");
+                }
+                else if(dtb.profesor.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
+                {
+                    //busca al usuario y lo selecciona.
+                    var userE = from u in dtb.profesor
+                                where u.correo.Equals(txt_email) & u.password.Equals(txt_pass)
+                                select u;
+
+                    //redireccion hacia exito con el correo del usuario.
+                    Session["user"] = new ModeloUsuario
+                    {
+                        apellidos = userE.FirstOrDefault().apellidos,
+                        nombre = userE.FirstOrDefault().nombre,
+                        correo = userE.FirstOrDefault().correo,
+                        id_usuario = userE.FirstOrDefault().id_profesor,
+                        password = userE.FirstOrDefault().password
+                    };
+
+                    return RedirectToAction("Exito", "Account");
+                } 
+                else if(dtb.administrador.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
+                {
+                    //busca al usuario y lo selecciona.
+                    var userE = from u in dtb.administrador
+                                where u.correo.Equals(txt_email) & u.password.Equals(txt_pass)
+                                select u;
+
+                    //redireccion hacia exito con el correo del usuario.
+                    Session["user"] = new ModeloUsuario
+                    {
+                        apellidos = userE.FirstOrDefault().apellidos,
+                        nombre = userE.FirstOrDefault().nombre,
+                        correo = userE.FirstOrDefault().correo,
+                        id_usuario = userE.FirstOrDefault().id_admin,
+                        password = userE.FirstOrDefault().password
+                    };
+
+                    return RedirectToAction("Exito", "Account");
                 }
                 else
                 {
@@ -243,9 +281,80 @@ namespace WebApp_MVC.Controllers
                                where h.taller_id_taller == id && dt.alumno_id_alumno == userId
                                select dt).FirstOrDefault();
 
-            return View();
+            if( verifTaller == null)
+            {
+                det_asist tTomado = new det_asist();
+                int idHorario = (from h in dtb.horario
+                                 where h.taller_id_taller.Equals(idTaller)
+                                 select h.id_horario).FirstOrDefault(); 
+                tTomado.alumno_id_alumno = userId;
+                tTomado.horario_id_horario = idHorario;
+                dtb.det_asist.Add(tTomado);
+                dtb.SaveChanges();
+
+                TempData["tomado"] = "Taller tomado con exito.";
+                ViewBag.Error = TempData["tomado"];
+                return View("../Home/TallerTomado");
+            }
+            else
+            {
+                TempData["yaTomo"] = "Usted ya tiene tomado este taller.";
+                ViewBag.Error = TempData["yaTomo"];
+                return View("../Home/TallerTomado");
+            }
         }
 
+        public ActionResult TalleresTomados()
+        {
+            if (Session["user"] != null)
+            {
 
+
+                int userId = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+
+                List<ModeloTalleresTomados> Model = new List<ModeloTalleresTomados>();
+                var lista = (from dt in dtb.det_asist
+                             join h in dtb.horario on dt.horario_id_horario equals h.id_horario
+                             join t in dtb.taller on h.taller_id_taller equals t.id_taller
+                             where dt.alumno_id_alumno == userId
+                             select new
+                             {
+                                 nombre = t.nombre,
+                                 descripcion = t.descripcion,
+                                 horaInicio = h.hora_inicio,
+                                 horaTermino = h.hora_termino,
+                                 diaSemana = h.dia_semana
+
+                             }).ToList();
+                foreach (var item in lista)
+                {
+                    Model.Add(new ModeloTalleresTomados()
+                    {
+                        nombre = item.nombre,
+                        descripcion = item.descripcion,
+                        hora_inicio = item.horaInicio,
+                        hora_termino = item.horaTermino,
+                        dia_semana = item.diaSemana
+                    });
+                }
+
+                ViewBag.Lista = Model;
+                if (ViewBag.Lista != null)
+                {
+                    return View("TalleresTomados");
+                }
+                else
+                {
+
+                    return View("TalleresTomados");
+                }
+            }
+            else
+            {
+                return View("Index");
+            }
+
+            
+        }
     }
 }

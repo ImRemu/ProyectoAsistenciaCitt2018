@@ -1,0 +1,55 @@
+﻿@using WebApp_MVC.Models;
+
+@{
+    ViewBag.Title = "TalleresTomados";
+}
+
+<div style="background-color:white">
+    <h2>Talleres que has tomado:</h2>
+    <a class="btn btn-primary" @Html.ActionLink("Regresar", "Exito", "Account") </a>
+    <table class="table">
+        <tr>
+            <th>
+                Nombre Taller:
+            </th>
+            <th>
+                Descripcion:
+            </th>
+            <th>
+                Dia:
+            </th>
+            <th>
+                Hora inicio:
+            </th>
+            <th>
+                Hora Termino:
+            </th>
+
+        </tr>
+
+        @foreach (ModeloTalleresTomados item in ViewBag.Lista)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.dia_semana)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.hora_inicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.hora_termino)
+                </td>
+
+            </tr>
+        }
+    </table>
+
+
+</div>
+

@@ -70,53 +70,54 @@
                         <span class="glyphicon glyphicon-lock"></span> <h2>Inicio de Sesion</h2>
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label for="email" class="col-sm-3 control-label">
-                                    Email:
-                                </label>
-                                <div class="col-sm-9">
-                                    @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @class = "form-control", placeholder = "email...", Type="emailaddress" } })
-                                    @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+                        @using (Html.BeginForm())
+                        {
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-3 control-label">
+                                        Email:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="email" name="txt_email" id="txt_email" placeholder="Email..." required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="col-sm-3 control-label">
-                                    Password:
-                                </label>
-                                <div class="col-sm-9">
-                                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", placeholder = "password...", Type = "password" } })
-                                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-3 control-label">
+                                        Password:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="password" name="txt_pass" id="txt_pass" placeholder="Constraseña..." required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <div class="olvidaste">
-                                        <label>
-                                            @Html.ActionLink("¿Olvidaste tu contraseña?", "Recuperacion", "Account")
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <div class="olvidaste">
+                                            <label>
+                                                @Html.ActionLink("¿Olvidaste tu contraseña?", "Recuperacion", "Account")
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group last">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            Ingresar
+                                        </button>
+                                        <button type="reset" class="btn btn-default btn-sm">
+                                            Limpiar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group last">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <label for="error">
+                                            @ViewBag.Error
+
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group last">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-success btn-sm">
-                                        Ingresar
-                                    </button>
-                                    <button type="reset" class="btn btn-default btn-sm">
-                                        Limpiar
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group last">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <label for="error">
-                                        @ViewBag.Error
-                                        
-                                    </label>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        }
                     </div>
                     <div class="panel-footer">
                         @Html.ActionLink("¿No estas Registrado?", "Registrarse", "Account")

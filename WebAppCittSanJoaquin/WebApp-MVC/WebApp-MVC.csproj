@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="Models\ModeloTalleres.cs" />
     <Compile Include="Models\ModeloTaller.cs" />
+    <Compile Include="Models\ModeloTalleresTomados.cs" />
     <Compile Include="Models\ModeloUsuario.cs" />
     <Compile Include="Models\profesor.cs">
       <DependentUpon>satc.tt</DependentUpon>
@@ -335,10 +336,11 @@
     <Content Include="Views\Account\Perfil.cshtml" />
     <Content Include="Views\Home\ListaTalleres.cshtml" />
     <Content Include="Views\Home\Errores\LTaV.cshtml" />
-    <Content Include="Views\Home\View.cshtml" />
     <Content Include="Views\Account\Registrado.cshtml" />
     <Content Include="Views\Account\CambioPass.cshtml" />
     <Content Include="Views\Account\DesactCuenta.cshtml" />
+    <Content Include="Views\Home\TallerTomado.cshtml" />
+    <Content Include="Views\Account\TalleresTomados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
