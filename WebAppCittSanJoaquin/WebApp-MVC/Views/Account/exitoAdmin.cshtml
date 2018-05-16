@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "exitoAdmin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container body-content">
+    <a class="btn btn-primary" @Html.ActionLink("Cerrar Sesion", "LogOut", "Account")</a>
+    <a class="btn btn-primary" @Html.ActionLink("Cambiar Contraseña", "CambioPass", "Account")</a>
+
+    <h2>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).correo)</h2>
+
+
+    <a class="btn btn-primary" @Html.ActionLink("Perfil usuario", "perfilAdm", "Account")</a>
+</div>
+
