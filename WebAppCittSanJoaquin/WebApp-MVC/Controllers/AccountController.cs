@@ -60,7 +60,7 @@ namespace WebApp_MVC.Controllers
                         password = userE.FirstOrDefault().password
                     };
 
-                    return RedirectToAction("Exito", "Account");
+                    return RedirectToAction("exitoP", "Account");
                 } 
                 else if(dtb.administrador.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
                 {
@@ -79,7 +79,7 @@ namespace WebApp_MVC.Controllers
                         password = userE.FirstOrDefault().password
                     };
 
-                    return RedirectToAction("Exito", "Account");
+                    return RedirectToAction("exitoAdmin", "Account");
                 }
                 else
                 {
@@ -101,13 +101,38 @@ namespace WebApp_MVC.Controllers
             //verifica que la session no sea nula.
             if (Session["user"] != null)
             {
-                //envia el correo hacia la vista como un viewbag
-                ViewBag.Correo = email;
+                
                 //redirecciona a exito.
                 return View("Exito");
             }
             
             return View("Index");
+        }
+
+        public ActionResult exitoAdmin()
+        {
+            if(Session["user"] != null)
+            {
+                return View("exitoAdmin");
+            }
+            else
+            {
+                return View("Index");
+            }
+            
+        }
+
+        public ActionResult exitoP()
+        {
+            if (Session["user"] != null)
+            {
+                return View("exitoP");
+            }
+            else
+            {
+                return View("Index");
+            }
+
         }
 
         public ActionResult Recuperacion()
@@ -163,7 +188,27 @@ namespace WebApp_MVC.Controllers
             if(Session["user"] != null)
             {
                 //redireccion a perfil con la session q contiene al usuario.
-                return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
+                return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
+            }
+            return View("Index");
+        }
+
+        public ActionResult perfilAdm()
+        {
+            if (Session["user"] != null)
+            {
+                //redireccion a perfil con la session q contiene al usuario.
+                return View("perfilAdm", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
+            }
+            return View("Index");
+        }
+
+        public ActionResult perfilP()
+        {
+            if (Session["user"] != null)
+            {
+                //redireccion a perfil con la session q contiene al usuario.
+                return View("perfilP", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
             }
             return View("Index");
         }
