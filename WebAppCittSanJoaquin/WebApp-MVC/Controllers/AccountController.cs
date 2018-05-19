@@ -38,7 +38,8 @@ namespace WebApp_MVC.Controllers
                         nombre = userE.FirstOrDefault().nombre,
                         correo = userE.FirstOrDefault().correo,
                         id_usuario = userE.FirstOrDefault().id_alumno,
-                        password = userE.FirstOrDefault().password
+                        password = userE.FirstOrDefault().password,
+                        tipo_usuario = "a"
                     } ;
 
                     return RedirectToAction("Exito","Account");
@@ -57,7 +58,8 @@ namespace WebApp_MVC.Controllers
                         nombre = userE.FirstOrDefault().nombre,
                         correo = userE.FirstOrDefault().correo,
                         id_usuario = userE.FirstOrDefault().id_profesor,
-                        password = userE.FirstOrDefault().password
+                        password = userE.FirstOrDefault().password,
+                        tipo_usuario = "p"
                     };
 
                     return RedirectToAction("exitoP", "Account");
@@ -76,7 +78,8 @@ namespace WebApp_MVC.Controllers
                         nombre = userE.FirstOrDefault().nombre,
                         correo = userE.FirstOrDefault().correo,
                         id_usuario = userE.FirstOrDefault().id_admin,
-                        password = userE.FirstOrDefault().password
+                        password = userE.FirstOrDefault().password,
+                        tipo_usuario = "A"
                     };
 
                     return RedirectToAction("exitoAdmin", "Account");
@@ -93,44 +96,85 @@ namespace WebApp_MVC.Controllers
             return RedirectToAction("Exito");
         }
 
+        public ActionResult redirectPerfil()
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("Perfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("perfilP");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                return RedirectToAction("perfilAdm");
+            }
+            else
+            {
+                return View("Index");
+            }
+        }
 
+        public ActionResult redirectExito()
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("Exito");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("exitoP");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                return RedirectToAction("exitoAdm");
+            }
+            else
+            {
+                return View("Index");
+            }
+        }
 #warning Notese que el parametro que se entrega tiene el mismo nombre que la clase anonima pasada por metodo RedirectToAction
         
-        public ActionResult Exito(string email)
+        public ActionResult Exito()
         {
             //verifica que la session no sea nula.
-            if (Session["user"] != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
-                
                 //redirecciona a exito.
                 return View("Exito");
             }
+            else
+            {
+                return RedirectToAction("redirectExito");
+            }
             
-            return View("Index");
+            
         }
 
         public ActionResult exitoAdmin()
         {
-            if(Session["user"] != null)
+            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 return View("exitoAdmin");
             }
             else
             {
-                return View("Index");
+                return RedirectToAction("redirectExito");
             }
-            
+
         }
 
         public ActionResult exitoP()
         {
-            if (Session["user"] != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return View("exitoP");
             }
             else
             {
-                return View("Index");
+                return RedirectToAction("redirectExito");
             }
 
         }
@@ -185,32 +229,41 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult Perfil()
         {
-            if(Session["user"] != null)
+            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 //redireccion a perfil con la session q contiene al usuario.
                 return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
             }
-            return View("Index");
+            else
+            {
+                return RedirectToAction("redirectPerfil");
+            }
         }
 
         public ActionResult perfilAdm()
         {
-            if (Session["user"] != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 //redireccion a perfil con la session q contiene al usuario.
                 return View("perfilAdm", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
             }
-            return View("Index");
+            else
+            {
+                return RedirectToAction("redirectPerfil");
+            }
         }
 
         public ActionResult perfilP()
         {
-            if (Session["user"] != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 //redireccion a perfil con la session q contiene al usuario.
                 return View("perfilP", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
             }
-            return View("Index");
+            else
+            {
+                return RedirectToAction("redirectPerfil");
+            }
         }
 
         public ActionResult LogOut()
