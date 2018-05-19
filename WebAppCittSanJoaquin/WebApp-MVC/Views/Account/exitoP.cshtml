@@ -7,6 +7,8 @@
     <a class="btn btn-primary" @Html.ActionLink("Cerrar Sesion", "LogOut", "Account")</a>
     <a class="btn btn-primary" @Html.ActionLink("Cambiar Contraseña", "CambioPass", "Account")</a>
 
+    @ViewBag.Error
+
     <h2>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).correo)</h2>
 
 

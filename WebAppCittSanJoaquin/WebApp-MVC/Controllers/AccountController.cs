@@ -128,7 +128,7 @@ namespace WebApp_MVC.Controllers
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
-                return RedirectToAction("exitoAdm");
+                return RedirectToAction("exitoAdmin");
             }
             else
             {
@@ -227,6 +227,58 @@ namespace WebApp_MVC.Controllers
             return View();
         }
 
+        public ActionResult registrarP(string txt_nombre, string txt_apell, string txt_email, string txt_pass)
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                if (!string.IsNullOrEmpty(txt_nombre) && !string.IsNullOrEmpty(txt_apell) &&
+              !string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
+                {
+                    if (dtb.profesor.FirstOrDefault(u => u.correo.Equals(txt_email)) != null)
+                    {
+                        //en el caso de algun error manda un mensaje que se muestra en la vista registrarse.
+                        TempData["error"] = "El email ya esta en uso";
+                        ViewBag.Error = TempData["error"];
+                        return View("registrarP");
+                    }
+                    else
+                    {
+
+                        //se le da la habilitacion, 0 = no habilitado, y el tipo usuario.
+                        profesor userP = new profesor();
+                        userP.nombre = txt_nombre;
+                        userP.apellidos = txt_apell;
+                        userP.correo = txt_email;
+                        userP.password = txt_pass;
+                        userP.habilitado = 0;
+
+                        //se guardan los cambios en la base de datos.
+                        dtb.profesor.Add(userP);
+                        dtb.SaveChanges();
+                        //se retorna el mensaje correspondiente.
+                        TempData["creado"] = "El Usuario se ha registrado exitosamente.";
+                        ViewBag.Registrado = TempData["creado"];
+                        return View("registrarP");
+                    }
+
+                }
+                return View();
+            }
+            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Perfil()
         {
             if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
@@ -285,30 +337,91 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult CPassConfirmacion(string p1, string p2)
         {
-            if(p1.Equals(p2))
+            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a") )
             {
-                //en caso de que las constraseñas p1 y p2 sean igual se hara el cambio en la bdd.
-                var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+                if (p1.Equals(p2))
+                {
+                    //en caso de que las constraseñas p1 y p2 sean igual se hara el cambio en la bdd.
+                    var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
 
-                //selecion del usuario que tiene inicida la sesion.
-                alumno usE = (from u in dtb.alumno
-                               where u.id_alumno == id
-                               select u).FirstOrDefault();
-                //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
-                usE.password = p1;
-                dtb.SaveChanges();
+                    //selecion del usuario que tiene inicida la sesion.
+                    alumno usE = (from u in dtb.alumno
+                                  where u.id_alumno == id
+                                  select u).FirstOrDefault();
+                    //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
+                    usE.password = p1;
+                    dtb.SaveChanges();
 
-                ViewBag.Hecho = "Cambio de contraseña hecho correctamente.";
-                return View("CambioPass");
+                    ViewBag.Hecho = "Cambio de contraseña hecho correctamente.";
+                    return View("CambioPass");
+                }
+                else
+                {
+                    //en caso de que las contraseñas p1 y p2 de los text no sea igual tirara error.
+                    TempData["error"] = "las contraseñas deben ser iguales";
+                    ViewBag.Error = TempData["error"];
+                    return View("CambioPass");
+                }
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p") )
+            {
+                if (p1.Equals(p2))
+                {
+                    //en caso de que las constraseñas p1 y p2 sean igual se hara el cambio en la bdd.
+                    var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+
+                    //selecion del usuario que tiene inicida la sesion.
+                    profesor usE = (from u in dtb.profesor
+                                  where u.id_profesor == id
+                                  select u).FirstOrDefault();
+                    //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
+                    usE.password = p1;
+                    dtb.SaveChanges();
+
+                    ViewBag.Hecho = "Cambio de contraseña hecho correctamente.";
+                    return View("CambioPass");
+                }
+                else
+                {
+                    //en caso de que las contraseñas p1 y p2 de los text no sea igual tirara error.
+                    TempData["error"] = "las contraseñas deben ser iguales";
+                    ViewBag.Error = TempData["error"];
+                    return View("CambioPass");
+                }
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                if (p1.Equals(p2))
+                {
+                    //en caso de que las constraseñas p1 y p2 sean igual se hara el cambio en la bdd.
+                    var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+
+                    //selecion del usuario que tiene inicida la sesion.
+                    administrador usE = (from u in dtb.administrador
+                                    where u.id_admin == id
+                                    select u).FirstOrDefault();
+                    //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
+                    usE.password = p1;
+                    dtb.SaveChanges();
+
+                    ViewBag.Hecho = "Cambio de contraseña hecho correctamente.";
+                    return View("CambioPass");
+                }
+                else
+                {
+                    //en caso de que las contraseñas p1 y p2 de los text no sea igual tirara error.
+                    TempData["error"] = "las contraseñas deben ser iguales";
+                    ViewBag.Error = TempData["error"];
+                    return View("CambioPass");
+                }
             }
             else
             {
-                //en caso de que las contraseñas p1 y p2 de los text no sea igual tirara error.
-                TempData["error"] = "las contraseñas deben ser iguales";
-                ViewBag.Error = TempData["error"];
-                return View("CambioPass");
+                return View("Index");
             }
-            
+
+
+
         }
 
         public ActionResult DesactCuenta()
@@ -322,33 +435,101 @@ namespace WebApp_MVC.Controllers
         //action que confirma la desactivacion de la cuenta.
         public ActionResult CuentaDesct(string txt_pass)
         {
-            //se saca la pass de la session para compararla
-            string p2 = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).password;
-            p2 = p2.Replace(" ","");
-            if (p2.Equals(txt_pass))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
-                //seteo de id de usuario en session
-                var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
-                //selecion del usuario que tiene inicida la sesion.
-                alumno usE = (from u in dtb.alumno
-                               where u.id_alumno == id
-                               select u).FirstOrDefault();
-                //se deshabilita el usuario
-                usE.habilitado = 0;
-                dtb.SaveChanges();
-                //la session user se vuelve nula
-                Session["user"] = null;
-                //retorna al index de Account
-                return View("Index");
+                //se saca la pass de la session para compararla
+                string p2 = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).password;
+                p2 = p2.Replace(" ", "");
+                if (p2.Equals(txt_pass))
+                {
+                    //seteo de id de usuario en session
+                    var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+                    //selecion del usuario que tiene inicida la sesion.
+                    alumno usE = (from u in dtb.alumno
+                                  where u.id_alumno == id
+                                  select u).FirstOrDefault();
+                    //se deshabilita el usuario
+                    usE.habilitado = 0;
+                    dtb.SaveChanges();
+                    //la session user se vuelve nula
+                    Session["user"] = null;
+                    //retorna al index de Account
+                    return View("Index");
+                }
+                else
+                {
+                    //la contraseña no es la correcta, muestra error
+                    TempData["error"] = "La contraseña no es correcta.";
+                    ViewBag.Error = TempData["error"];
+                    //devuelve a la vista
+                    return View("DesactCuenta");
+                }
+            }
+            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                //se saca la pass de la session para compararla
+                string p2 = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).password;
+                p2 = p2.Replace(" ", "");
+                if (p2.Equals(txt_pass))
+                {
+                    //seteo de id de usuario en session
+                    var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+                    //selecion del usuario que tiene inicida la sesion.
+                    profesor usE = (from u in dtb.profesor
+                                  where u.id_profesor == id
+                                  select u).FirstOrDefault();
+                    //se deshabilita el usuario
+                    usE.habilitado = 0;
+                    dtb.SaveChanges();
+                    //la session user se vuelve nula
+                    Session["user"] = null;
+                    //retorna al index de Account
+                    return View("Index");
+                }
+                else
+                {
+                    //la contraseña no es la correcta, muestra error
+                    TempData["error"] = "La contraseña no es correcta.";
+                    ViewBag.Error = TempData["error"];
+                    //devuelve a la vista
+                    return View("DesactCuenta");
+                }
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                //se saca la pass de la session para compararla
+                string p2 = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).password;
+                p2 = p2.Replace(" ", "");
+                if (p2.Equals(txt_pass))
+                {
+                    //seteo de id de usuario en session
+                    var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+                    //selecion del usuario que tiene inicida la sesion.
+                    administrador usE = (from u in dtb.administrador
+                                  where u.id_admin == id
+                                  select u).FirstOrDefault();
+                    //se deshabilita el usuario
+                    usE.habilitado = 0;
+                    dtb.SaveChanges();
+                    //la session user se vuelve nula
+                    Session["user"] = null;
+                    //retorna al index de Account
+                    return View("Index");
+                }
+                else
+                {
+                    //la contraseña no es la correcta, muestra error
+                    TempData["error"] = "La contraseña no es correcta.";
+                    ViewBag.Error = TempData["error"];
+                    //devuelve a la vista
+                    return View("DesactCuenta");
+                }
             }
             else
             {
-                //la contraseña no es la correcta, muestra error
-                TempData["error"] = "La contraseña no es correcta.";
-                ViewBag.Error = TempData["error"];
-                //devuelve a la vista
-                return View("DesactCuenta");
+                return View("Index");
             }
+            
             
             
         }
@@ -356,10 +537,22 @@ namespace WebApp_MVC.Controllers
         public ActionResult VerifTomaRamo( int id)
         {
             
-            if(Session["user"] != null)
+            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 int idTaller = id;
                 return RedirectToAction("TomaRamo",new { id = idTaller});
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                TempData["tipoUser"] = "para tomar un taller debe ser un Alumno";
+                ViewBag.Error = TempData["tipoUser"];
+                return View("exitoP");
+            }
+            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                TempData["tipoUser"] = "para tomar un taller debe ser un Alumno";
+                ViewBag.Error = TempData["tipoUser"];
+                return View("exitoAdmin");
             }
             else
             {
@@ -371,40 +564,63 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult TomaRamo(int id)
         {
-            int idTaller = id;
-            int userId = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
-
-            var verifTaller = (from dt in dtb.det_asist
-                               join h in dtb.horario on dt.horario_id_horario equals h.id_horario
-                               where h.taller_id_taller == id && dt.alumno_id_alumno == userId
-                               select dt).FirstOrDefault();
-
-            if( verifTaller == null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
-                det_asist tTomado = new det_asist();
-                int idHorario = (from h in dtb.horario
-                                 where h.taller_id_taller.Equals(idTaller)
-                                 select h.id_horario).FirstOrDefault(); 
-                tTomado.alumno_id_alumno = userId;
-                tTomado.horario_id_horario = idHorario;
-                dtb.det_asist.Add(tTomado);
-                dtb.SaveChanges();
+                int idTaller = id;
+                int userId = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
 
-                TempData["tomado"] = "Taller tomado con exito.";
-                ViewBag.Error = TempData["tomado"];
-                return View("../Home/TallerTomado");
+                var verifTaller = (from dt in dtb.det_asist
+                                   join h in dtb.horario on dt.horario_id_horario equals h.id_horario
+                                   where h.taller_id_taller == id && dt.alumno_id_alumno == userId
+                                   select dt).FirstOrDefault();
+
+                if (verifTaller == null)
+                {
+                    det_asist tTomado = new det_asist();
+                    int idHorario = (from h in dtb.horario
+                                     where h.taller_id_taller.Equals(idTaller)
+                                     select h.id_horario).FirstOrDefault();
+                    tTomado.alumno_id_alumno = userId;
+                    tTomado.horario_id_horario = idHorario;
+                    dtb.det_asist.Add(tTomado);
+                    dtb.SaveChanges();
+
+                    TempData["tomado"] = "Taller tomado con exito.";
+                    ViewBag.Error = TempData["tomado"];
+                    return View("../Home/TallerTomado");
+                }
+                else
+                {
+                    TempData["yaTomo"] = "Usted ya tiene tomado este taller.";
+                    ViewBag.Error = TempData["yaTomo"];
+                    return View("../Home/TallerTomado");
+                }
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                TempData["tipoUser"] = "para tomar un taller debe ser un Alumno";
+                ViewBag.Error = TempData["tipoUser"];
+                return View("exitoP");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                TempData["tipoUser"] = "para tomar un taller debe ser un Alumno";
+                ViewBag.Error = TempData["tipoUser"];
+                return View("exitoAdmin");
             }
             else
             {
-                TempData["yaTomo"] = "Usted ya tiene tomado este taller.";
-                ViewBag.Error = TempData["yaTomo"];
-                return View("../Home/TallerTomado");
+                TempData["LogNecesario"] = "Necesita conectarse para tomar el taller.";
+                ViewBag.Error = TempData["LogNecesario"];
+                return View("Index");
             }
+
+            
         }
 
         public ActionResult TalleresTomados()
         {
-            if (Session["user"] != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
 
 
@@ -447,12 +663,76 @@ namespace WebApp_MVC.Controllers
                     return View("TalleresTomados");
                 }
             }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
             else
             {
                 return View("Index");
             }
 
             
+        }
+
+        public ActionResult talleresACargo()
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                int userId = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
+
+                List<ModeloTalleresTomados> Model = new List<ModeloTalleresTomados>();
+                var lista = (from t in dtb.taller
+                             join h in dtb.horario on t.id_taller equals h.taller_id_taller
+                             where t.profesor_id_profesor == userId
+                             select new
+                             {
+                                 nombre = t.nombre,
+                                 descripcion = t.descripcion,
+                                 horaInicio = h.hora_inicio,
+                                 horaTermino = h.hora_termino,
+                                 diaSemana = h.dia_semana
+
+                             }).ToList();
+                foreach (var item in lista)
+                {
+                    Model.Add(new ModeloTalleresTomados()
+                    {
+                        nombre = item.nombre,
+                        descripcion = item.descripcion,
+                        hora_inicio = item.horaInicio,
+                        hora_termino = item.horaTermino,
+                        dia_semana = item.diaSemana
+                    });
+                }
+
+                ViewBag.Lista = Model;
+                if (ViewBag.Lista != null)
+                {
+                    return View("TalleresTomados");
+                }
+                else
+                {
+
+                    return View("TalleresTomados");
+                }
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return View("Index");
+            }
         }
     }
 }
