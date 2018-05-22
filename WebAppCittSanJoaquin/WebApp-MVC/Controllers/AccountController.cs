@@ -15,6 +15,10 @@ namespace WebApp_MVC.Controllers
         // tiene ningun parametro cuando se accede al controlador
         public ActionResult Index()
         {
+            if(Session["user"] != null)
+            {
+                return RedirectToAction("redirectExito");
+            }
             return View();
         }
 
