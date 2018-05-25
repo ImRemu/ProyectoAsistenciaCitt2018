@@ -1,0 +1,62 @@
+﻿@using WebApp_MVC.Models;
+@{
+    ViewBag.Title = "CRUDTalleres";
+}
+
+
+<div style="background-color:white">
+    <h2>CRUD Talleres</h2>
+    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Volver al Perfil", "redirectPerfil","Account")
+    <table class="table">
+        <tr>
+            <th>
+                Id Taller:
+            </th>
+            <th>
+                Nombre Taller:
+            </th>
+            <th>
+                Descripcion:
+            </th>
+            <th>
+                Nombre Encargado:
+            </th>
+            <th>
+                Hora inicio:
+            </th>
+            <th>
+                Hora Termino:
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (ModeloTalleres item in ViewBag.Lista)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => item.id_taller)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.nombreTaller)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.hora_inicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => item.hora_termino)
+                </td>
+                <td>
+                    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Eliminar", "eliminarTaller", new { id = item.id_taller })
+                    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Modificar Taller", "Account", new { id = item.id_taller })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

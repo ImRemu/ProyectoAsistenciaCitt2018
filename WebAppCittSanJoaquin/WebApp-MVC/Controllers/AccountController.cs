@@ -738,5 +738,99 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
         }
+
+        public ActionResult CRUDTalleres()
+        {
+            if (Session["user"] != null && ((ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                List<ModeloTalleres> Model = new List<ModeloTalleres>();
+                var lista = (from p in dtb.profesor
+                             join t in dtb.taller on p.id_profesor equals t.profesor_id_profesor
+                             join h in dtb.horario on t.id_taller equals h.taller_id_taller
+                             select new
+                             {
+                                 uNombre = p.nombre,
+                                 uAps = p.apellidos,
+                                 idTaller = t.id_taller,
+                                 tNombre = t.nombre,
+                                 tDesc = t.descripcion,
+                                 hInicio = h.hora_inicio,
+                                 hTerm = h.hora_termino
+
+                             }).ToList();
+                foreach (var item in lista)
+                {
+                    Model.Add(new ModeloTalleres()
+                    {
+                        nombre = item.uNombre + " " + item.uAps,
+                        id_taller = item.idTaller,
+                        nombreTaller = item.tNombre,
+                        descripcion = item.tDesc,
+                        hora_inicio = item.hInicio,
+                        hora_termino = item.hTerm
+                    });
+                }
+
+                ViewBag.Lista = Model;
+                if (ViewBag.Lista != null)
+                {
+                    return View("CRUDTalleres");
+                }
+            }
+            else if(Session["user"] != null && ((ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectExito");
+            }
+            else if (Session["user"] != null && ((ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectExito");
+            }
+            else
+            {
+                return View("Index");
+            }
+
+
+
+                return View();
+            
+        }
+
+        public ActionResult eliminarTaller(int id)
+        {
+            var asistencias = (from a in dtb.asistencia
+                               join dt in dtb.det_asist on a.id_asistencia equals dt.asistencia_id_asistencia
+                               join h in dtb.horario on dt.horario_id_horario equals h.id_horario
+                               join t in dtb.taller on h.taller_id_taller equals t.id_taller
+                               where t.id_taller == id
+                               select new
+                               {
+                                   idAs = a.id_asistencia,
+                                   idT = t.id_taller
+                               }).ToList();
+            if(asistencias != null)
+            {
+                foreach (var asis in asistencias)
+                {
+                    det_asist dt = new det_asist();
+                    asistencia asist = new asistencia();
+                    horario hr = new horario();
+                    taller tall = new taller();
+
+                    hr.taller_id_taller = asis.idT;
+                    tall.id_taller = asis.idT;
+                    dt.asistencia_id_asistencia = asis.idAs;
+                    asist.id_asistencia = asis.idAs;
+
+                    dtb.det_asist.Remove(dt);
+                    dtb.asistencia.Remove(asist);
+                    dtb.horario.Remove(hr);
+                    dtb.taller.Remove(tall);
+                    dtb.SaveChanges();
+                }
+                return RedirectToAction("CRUDTalleres");
+            }
+            return View();
+        }
     }
 }
