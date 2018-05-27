@@ -808,19 +808,27 @@ namespace WebApp_MVC.Controllers
                                    idAs = a.id_asistencia,
                                    idT = t.id_taller
                                }).ToList();
-            if(asistencias != null)
+            if(asistencias.Count() != 0)
             {
                 foreach (var asis in asistencias)
                 {
-                    det_asist dt = new det_asist();
-                    asistencia asist = new asistencia();
-                    horario hr = new horario();
-                    taller tall = new taller();
 
-                    hr.taller_id_taller = asis.idT;
-                    tall.id_taller = asis.idT;
-                    dt.asistencia_id_asistencia = asis.idAs;
-                    asist.id_asistencia = asis.idAs;
+                    asistencia asist = (from ast in dtb.asistencia
+                                        where ast.id_asistencia == asis.idAs
+                                        select ast).FirstOrDefault();
+
+                    taller tall = (from t in dtb.taller
+                                   where t.id_taller == id
+                                   select t).FirstOrDefault();
+
+                    horario hr = (from h in dtb.horario
+                                  where h.taller_id_taller == tall.id_taller
+                                  select h).FirstOrDefault();
+
+                    det_asist dt = (from dta in dtb.det_asist
+                                    where dta.horario_id_horario == hr.id_horario
+                                    select dta).FirstOrDefault();
+
 
                     dtb.det_asist.Remove(dt);
                     dtb.asistencia.Remove(asist);
@@ -828,9 +836,32 @@ namespace WebApp_MVC.Controllers
                     dtb.taller.Remove(tall);
                     dtb.SaveChanges();
                 }
+                
+            }
+            else
+            {
+                 
+                
+                taller tall = (from t in dtb.taller
+                               where t.id_taller == id
+                               select t).FirstOrDefault();
+
+                horario hr = (from h in dtb.horario
+                              where h.taller_id_taller == tall.id_taller
+                              select h).FirstOrDefault();
+
+                det_asist dt = (from dta in dtb.det_asist
+                                where dta.horario_id_horario == hr.id_horario
+                                select dta).FirstOrDefault();
+                    
+                dtb.det_asist.Remove(dt);
+                dtb.horario.Remove(hr);
+                dtb.taller.Remove(tall);
+                dtb.SaveChanges();
+                
                 return RedirectToAction("CRUDTalleres");
             }
-            return View();
+            return RedirectToAction("CRUDTalleres");
         }
     }
 }
