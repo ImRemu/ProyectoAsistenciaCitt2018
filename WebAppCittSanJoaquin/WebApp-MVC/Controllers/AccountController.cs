@@ -139,8 +139,7 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
         }
-#warning Notese que el parametro que se entrega tiene el mismo nombre que la clase anonima pasada por metodo RedirectToAction
-        
+                
         public ActionResult Exito()
         {
             //verifica que la session no sea nula.
@@ -798,24 +797,60 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult eliminarTaller(int id)
         {
-            var asistencias = (from a in dtb.asistencia
-                               join dt in dtb.det_asist on a.id_asistencia equals dt.asistencia_id_asistencia
-                               join h in dtb.horario on dt.horario_id_horario equals h.id_horario
-                               join t in dtb.taller on h.taller_id_taller equals t.id_taller
-                               where t.id_taller == id
-                               select new
-                               {
-                                   idAs = a.id_asistencia,
-                                   idT = t.id_taller
-                               }).ToList();
-            if(asistencias.Count() != 0)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
-                foreach (var asis in asistencias)
+                var asistencias = (from a in dtb.asistencia
+                                   join dt in dtb.det_asist on a.id_asistencia equals dt.asistencia_id_asistencia
+                                   join h in dtb.horario on dt.horario_id_horario equals h.id_horario
+                                   join t in dtb.taller on h.taller_id_taller equals t.id_taller
+                                   where t.id_taller == id
+                                   select new
+                                   {
+                                       idAs = a.id_asistencia,
+                                       idT = t.id_taller
+                                   }).ToList();
+                var dts = (from dt in dtb.det_asist
+                           join h in dtb.horario on dt.horario_id_horario equals h.id_horario
+                           join t in dtb.taller on h.taller_id_taller equals t.id_taller
+                           where t.id_taller == id
+                           select new
+                           {
+                               idDts = dt.id_detalle
+                           }).ToList();
+
+                if (asistencias.Count() != 0)
+                {
+                    foreach (var asis in asistencias)
+                    {
+
+                        asistencia asist = (from ast in dtb.asistencia
+                                            where ast.id_asistencia == asis.idAs
+                                            select ast).FirstOrDefault();
+
+                        taller tall = (from t in dtb.taller
+                                       where t.id_taller == id
+                                       select t).FirstOrDefault();
+
+                        horario hr = (from h in dtb.horario
+                                      where h.taller_id_taller == tall.id_taller
+                                      select h).FirstOrDefault();
+
+                        det_asist dt = (from dta in dtb.det_asist
+                                        where dta.horario_id_horario == hr.id_horario
+                                        select dta).FirstOrDefault();
+
+
+                        dtb.det_asist.Remove(dt);
+                        dtb.asistencia.Remove(asist);
+                        dtb.horario.Remove(hr);
+                        dtb.taller.Remove(tall);
+                        dtb.SaveChanges();
+                    }
+
+                }
+                else if (dts.Count() != 0)
                 {
 
-                    asistencia asist = (from ast in dtb.asistencia
-                                        where ast.id_asistencia == asis.idAs
-                                        select ast).FirstOrDefault();
 
                     taller tall = (from t in dtb.taller
                                    where t.id_taller == id
@@ -829,39 +864,122 @@ namespace WebApp_MVC.Controllers
                                     where dta.horario_id_horario == hr.id_horario
                                     select dta).FirstOrDefault();
 
-
                     dtb.det_asist.Remove(dt);
-                    dtb.asistencia.Remove(asist);
                     dtb.horario.Remove(hr);
                     dtb.taller.Remove(tall);
                     dtb.SaveChanges();
+
+                    return RedirectToAction("CRUDTalleres");
                 }
-                
+                else
+                {
+                    taller tall = (from t in dtb.taller
+                                   where t.id_taller == id
+                                   select t).FirstOrDefault();
+
+                    horario hr = (from h in dtb.horario
+                                  where h.taller_id_taller == tall.id_taller
+                                  select h).FirstOrDefault();
+
+                    dtb.horario.Remove(hr);
+                    dtb.taller.Remove(tall);
+                    dtb.SaveChanges();
+
+                    return RedirectToAction("CRUDTalleres");
+                }
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
             }
             else
             {
-                 
-                
-                taller tall = (from t in dtb.taller
-                               where t.id_taller == id
-                               select t).FirstOrDefault();
+                return View("Index");
+            }
 
-                horario hr = (from h in dtb.horario
-                              where h.taller_id_taller == tall.id_taller
-                              select h).FirstOrDefault();
+            return RedirectToAction("CRUDTalleres");
+        }
 
-                det_asist dt = (from dta in dtb.det_asist
-                                where dta.horario_id_horario == hr.id_horario
-                                select dta).FirstOrDefault();
-                    
-                dtb.det_asist.Remove(dt);
-                dtb.horario.Remove(hr);
-                dtb.taller.Remove(tall);
+        public ActionResult crearTaller()
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                List<modeloProfesores> Model = new List<modeloProfesores>();
+
+                var lista = (from p in dtb.profesor
+                             select p).ToList();
+
+                foreach (var item in lista)
+                {
+                    Model.Add(new modeloProfesores()
+                    {
+                        id_profesor = item.id_profesor,
+                        nombre = item.nombre + " " + item.apellidos
+                    });
+                }
+
+                ViewBag.lista = Model;
+                return View();
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return View("Index");
+            }
+
+            
+        }
+
+        public ActionResult creacionTaller(string txt_nombreTaller, string txt_descripcion, int? opt_encargado, DateTime? dt_inicio,
+                                            DateTime? dt_termino, string opt_diaSemana, int? txt_cupos)
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A")
+                && opt_encargado == null && txt_cupos == null)
+            {
+                taller nTaller = new taller();
+                horario nHora = new horario();
+
+                nTaller.nombre = txt_nombreTaller;
+                nTaller.descripcion = txt_descripcion;
+                nTaller.profesor_id_profesor = (int)opt_encargado;
+                dtb.taller.Add(nTaller);
+
+                nHora.hora_inicio = (DateTime)dt_inicio;
+                nHora.hora_termino = (DateTime)dt_termino;
+                nHora.dia_semana = opt_diaSemana;
+                nHora.cupo = (int)txt_cupos;
+                nHora.taller_id_taller = nTaller.id_taller;
+
+                dtb.horario.Add(nHora);
                 dtb.SaveChanges();
-                
+
+                ViewBag.exito = "taller creado exitosamente.";
                 return RedirectToAction("CRUDTalleres");
             }
-            return RedirectToAction("CRUDTalleres");
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return View("Index");
+            }
+
         }
     }
 }

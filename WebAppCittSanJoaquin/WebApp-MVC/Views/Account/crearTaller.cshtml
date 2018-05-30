@@ -1,0 +1,81 @@
+﻿@using WebApp_MVC.Models;
+
+@{
+    ViewBag.Title = "crearTaller";
+}
+
+<div>
+    <div class="radio media-middle" align="center">
+        <a class="btn btn-primary" @Html.ActionLink("Volver", "CRUDTalleres", "Account")</a>
+        <h2>Creacion de Taller</h2>
+        @using (Html.BeginForm("creacionTaller","Account"))
+        {
+            @ViewBag.exito
+            <hr />
+            <table class="table-condensed">
+                <tr>
+                    <td>Nombre Taller: </td>
+                    <td>
+                        <input class="form-control" type="text" name="txt_nombreTaller" id="txt_nombreTaller" required />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Descripcion: </td>
+                    <td>
+                        <input class="form-control" type="text" name="txt_descripcion" id="txt_descripcion" required />
+                    </td>
+                </tr>
+                <tr></tr>
+                <tr>
+                    <td>Seleccione el encargado: </td>
+                    <td>
+                        <select name="opt_encargado" id="encargado" class="form-control" required>
+                            <option disabled selected value="">Elija un encargado</option>
+                            @foreach (modeloProfesores item in ViewBag.lista)
+                        {
+                            <option value="@item.id_profesor">@item.nombre</option>
+                    }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hora inicio con fecha: </td>
+                    <td>
+                        <input class="form-control" type="datetime-local" name="dt_inicio" id="dt_inicio" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hora termino con fecha: </td>
+                    <td>
+                        <input class="form-control" type="datetime-local" name="dt_termino" id="dt_termino" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Día de la semana: </td>
+                    <td>
+                        <select name="opt_diaSemana" id="opt_diaSemana" required class="form-control">
+                            <option disabled selected value="">Seleccione un día</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miercoles">Miercoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cupos: </td>
+                    <td>
+                        <input class="form-control" type="number" name="txt_cupos" id="txt_cupos" required max="6" min="2" />
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input class="btn btn-primary" type="submit" value="Crear Taller" name="btn_crearTaller" id="btn_crearTaller" /></td>
+                </tr>
+            </table>
+        }
+    </div>
+    
+</div>
