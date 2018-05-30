@@ -187,6 +187,7 @@
     <Compile Include="Models\log_acciones.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\modeloProfesores.cs" />
     <Compile Include="Models\ModeloTalleres.cs" />
     <Compile Include="Models\ModeloTaller.cs" />
     <Compile Include="Models\ModeloTalleresTomados.cs" />
@@ -348,6 +349,7 @@
     <Content Include="Views\Account\registrarP.cshtml" />
     <Content Include="Views\Account\talleresACargo.cshtml" />
     <Content Include="Views\Account\CRUDTalleres.cshtml" />
+    <Content Include="Views\Account\crearTaller.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
