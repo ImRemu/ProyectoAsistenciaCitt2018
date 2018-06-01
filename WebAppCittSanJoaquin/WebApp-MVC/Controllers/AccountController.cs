@@ -945,7 +945,7 @@ namespace WebApp_MVC.Controllers
                                             DateTime? dt_termino, string opt_diaSemana, int? txt_cupos)
         {
             if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A")
-                && opt_encargado == null && txt_cupos == null)
+                && opt_encargado != null && txt_cupos != null)
             {
                 taller nTaller = new taller();
                 horario nHora = new horario();
@@ -980,6 +980,63 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
 
+        }
+
+        public ActionResult modTaller(int? id)
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
+            {
+                List<ModeloTaller> list = new List<ModeloTaller>();
+                var eTall = (from t in dtb.taller
+                                            where t.id_taller == id
+                                            select t).ToList();
+
+                List<modeloProfesores> profesores = new List<modeloProfesores>();
+
+                var lista = (from p in dtb.profesor
+                             select p).ToList();
+
+                foreach (var item in lista)
+                {
+                    profesores.Add(new modeloProfesores()
+                    {
+                        id_profesor = item.id_profesor,
+                        nombre = item.nombre + " " + item.apellidos
+                    });
+                }
+
+                
+
+                foreach (var i in eTall)
+                {
+                    list.Add(new ModeloTaller()
+                    {
+                        id_taller = i.id_taller,
+                        descripcion = i.descripcion,
+                        nombre = i.nombre,
+                        id_encargado = i.profesor_id_profesor
+                    });
+                }
+
+                ViewBag.lP = profesores;
+                ViewBag.lTall = list;
+
+                return View();
+
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return View("Index");
+            }
+            return View();
         }
     }
 }

@@ -350,6 +350,7 @@
     <Content Include="Views\Account\talleresACargo.cshtml" />
     <Content Include="Views\Account\CRUDTalleres.cshtml" />
     <Content Include="Views\Account\crearTaller.cshtml" />
+    <Content Include="Views\Account\modTaller.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
