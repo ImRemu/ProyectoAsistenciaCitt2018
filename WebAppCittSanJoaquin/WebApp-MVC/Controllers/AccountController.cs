@@ -1038,5 +1038,36 @@ namespace WebApp_MVC.Controllers
             }
             return View();
         }
+
+        public ActionResult modificTaller(int? txt_idT, string txt_nombre, string txt_descripcion, int? opt_encargado)
+        {
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A")
+                && txt_idT != null && opt_encargado != null)
+            {
+                taller eTaller = (from t in dtb.taller
+                                  where t.id_taller == txt_idT
+                                  select t).FirstOrDefault();
+
+                eTaller.nombre = txt_nombre;
+                eTaller.descripcion = txt_descripcion;
+                eTaller.profesor_id_profesor = (int)opt_encargado;
+
+                dtb.SaveChanges();
+                return RedirectToAction("CRUDTalleres");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return View("Index");
+            }
+            return View();
+        }
     }
 }
