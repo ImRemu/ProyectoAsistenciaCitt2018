@@ -9,7 +9,7 @@ namespace WebApp_MVC.Controllers
 {
     public class AccountController : Controller
     {
-        satcEntities dtb = new satcEntities();
+        SatcEntities dtb = new SatcEntities();
 
         // El index se accesa cuando no se
         // tiene ningun parametro cuando se accede al controlador
@@ -698,7 +698,8 @@ namespace WebApp_MVC.Controllers
                                  descripcion = t.descripcion,
                                  horaInicio = h.hora_inicio,
                                  horaTermino = h.hora_termino,
-                                 diaSemana = h.dia_semana
+                                 diaSemana = h.dia_semana,
+                                 id = t.id_taller
 
                              }).ToList();
                 foreach (var item in lista)
@@ -709,19 +710,20 @@ namespace WebApp_MVC.Controllers
                         descripcion = item.descripcion,
                         hora_inicio = item.horaInicio,
                         hora_termino = item.horaTermino,
-                        dia_semana = item.diaSemana
+                        dia_semana = item.diaSemana,
+                        id = item.id
                     });
                 }
 
                 ViewBag.Lista = Model;
                 if (ViewBag.Lista != null)
                 {
-                    return View("TalleresTomados");
+                    return View("talleresACargo");
                 }
                 else
                 {
 
-                    return View("TalleresTomados");
+                    return View("talleresACargo");
                 }
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
@@ -738,7 +740,7 @@ namespace WebApp_MVC.Controllers
             }
         }
 
-        public ActionResult CRUDTalleres()
+        public ActionResult OperacionesTalleres()
         {
             if (Session["user"] != null && ((ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
@@ -773,7 +775,7 @@ namespace WebApp_MVC.Controllers
                 ViewBag.Lista = Model;
                 if (ViewBag.Lista != null)
                 {
-                    return View("CRUDTalleres");
+                    return View("OperacionesTalleres");
                 }
             }
             else if(Session["user"] != null && ((ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
@@ -869,7 +871,7 @@ namespace WebApp_MVC.Controllers
                     dtb.taller.Remove(tall);
                     dtb.SaveChanges();
 
-                    return RedirectToAction("CRUDTalleres");
+                    return RedirectToAction("OperacionesTalleres");
                 }
                 else
                 {
@@ -885,7 +887,7 @@ namespace WebApp_MVC.Controllers
                     dtb.taller.Remove(tall);
                     dtb.SaveChanges();
 
-                    return RedirectToAction("CRUDTalleres");
+                    return RedirectToAction("OperacionesTalleres");
                 }
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
@@ -901,7 +903,7 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
 
-            return RedirectToAction("CRUDTalleres");
+            return RedirectToAction("OperacionesTalleres");
         }
 
         public ActionResult crearTaller()
@@ -941,8 +943,8 @@ namespace WebApp_MVC.Controllers
             
         }
 
-        public ActionResult creacionTaller(string txt_nombreTaller, string txt_descripcion, int? opt_encargado, DateTime? dt_inicio,
-                                            DateTime? dt_termino, string opt_diaSemana, int? txt_cupos)
+        public ActionResult creacionTaller(string txt_nombreTaller, string txt_descripcion, int? opt_encargado, TimeSpan? tm_inicio,
+                                            TimeSpan? tm_termino, string opt_diaSemana, int? txt_cupos)
         {
             if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A")
                 && opt_encargado != null && txt_cupos != null)
@@ -955,8 +957,8 @@ namespace WebApp_MVC.Controllers
                 nTaller.profesor_id_profesor = (int)opt_encargado;
                 dtb.taller.Add(nTaller);
 
-                nHora.hora_inicio = (DateTime)dt_inicio;
-                nHora.hora_termino = (DateTime)dt_termino;
+                nHora.hora_inicio = (TimeSpan)tm_inicio;
+                nHora.hora_termino = (TimeSpan)tm_termino;
                 nHora.dia_semana = opt_diaSemana;
                 nHora.cupo = (int)txt_cupos;
                 nHora.taller_id_taller = nTaller.id_taller;
@@ -965,7 +967,7 @@ namespace WebApp_MVC.Controllers
                 dtb.SaveChanges();
 
                 ViewBag.exito = "taller creado exitosamente.";
-                return RedirectToAction("CRUDTalleres");
+                return RedirectToAction("OperacionesTalleres");
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
@@ -1053,7 +1055,7 @@ namespace WebApp_MVC.Controllers
                 eTaller.profesor_id_profesor = (int)opt_encargado;
 
                 dtb.SaveChanges();
-                return RedirectToAction("CRUDTalleres");
+                return RedirectToAction("OperacionesTalleres");
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
