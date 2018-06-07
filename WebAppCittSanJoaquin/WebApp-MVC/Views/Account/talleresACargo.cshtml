@@ -6,7 +6,7 @@
 
 
 <div style="background-color:white">
-    <h2>Talleres que tienes a cargo</h2>
+    <h2>Talleres que tienes a cargo:</h2>
     <a class="btn btn-primary" @Html.ActionLink("Regresar", "redirectPerfil", "Account") </a>
     <table class="table">
         <tr>
@@ -24,6 +24,9 @@
             </th>
             <th>
                 Hora Termino:
+            </th>
+            <th>
+                Acciones:
             </th>
 
         </tr>
@@ -45,6 +48,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(x => item.hora_termino)
+                </td>
+                <td>
+                    <a class="btn btn-primary" @Html.ActionLink("Tomar asistencia", "../Account/VerifTomaRamo", new { id = item.id })
                 </td>
 
             </tr>

@@ -13,10 +13,10 @@ namespace WebApp_MVC.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class satcEntities : DbContext
+    public partial class SatcEntities : DbContext
     {
-        public satcEntities()
-            : base("name=satcEntities")
+        public SatcEntities()
+            : base("name=SatcEntities")
         {
         }
     
