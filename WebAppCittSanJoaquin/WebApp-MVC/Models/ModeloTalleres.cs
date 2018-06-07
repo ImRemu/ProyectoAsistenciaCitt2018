@@ -12,7 +12,7 @@ namespace WebApp_MVC.Models
         public int id_taller { get; set; }
         public string nombreTaller { get; set; }
         public string descripcion { get; set; }
-        public System.DateTime hora_inicio { get; set; }
-        public System.DateTime hora_termino { get; set; }
+        public System.TimeSpan hora_inicio { get; set; }
+        public System.TimeSpan hora_termino { get; set; }
     }
 }

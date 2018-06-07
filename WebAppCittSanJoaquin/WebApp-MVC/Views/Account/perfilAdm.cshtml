@@ -1,7 +1,7 @@
 ﻿@model WebApp_MVC.Models.ModeloUsuario
 
 @{
-    ViewBag.Title = "perfilAdm";
+    ViewBag.Title = "Perfil de Administrador";
 }
 
 <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
@@ -35,7 +35,7 @@
                                 </tbody>
                             </table>
                             <a class="btn btn-primary" @Html.ActionLink("Desactivar Cuenta", "DesactCuenta", "Account")</a>
-                            <a class="btn btn-primary" @Html.ActionLink("Modificar Talleres", "CRUDTalleres", "Account")</a>
+                            <a class="btn btn-primary" @Html.ActionLink("Modificar Talleres", "OperacionesTalleres", "Account")</a>
                             <a class="btn btn-primary" @Html.ActionLink("Registrar Profesor", "registrarP", "Account")</a>
                             <a class="btn btn-primary" @Html.ActionLink("Volver a inicio", "redirectExito", "Account")</a>
                             @ViewBag.exito
