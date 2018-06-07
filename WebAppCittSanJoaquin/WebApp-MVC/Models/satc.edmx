@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="satcModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Satc2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="administrador">
           <Key>
             <PropertyRef Name="id_admin" />
@@ -48,8 +48,8 @@
             <PropertyRef Name="id_horario" />
           </Key>
           <Property Name="id_horario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="hora_inicio" Type="datetime" Nullable="false" />
-          <Property Name="hora_termino" Type="datetime" Nullable="false" />
+          <Property Name="hora_inicio" Type="time" Precision="7" Nullable="false" />
+          <Property Name="hora_termino" Type="time" Precision="7" Nullable="false" />
           <Property Name="dia_semana" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="cupo" Type="int" Nullable="false" />
           <Property Name="taller_id_taller" Type="int" Nullable="false" />
@@ -144,7 +144,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="satcModelStoreContainer">
+        <EntityContainer Name="Satc2ModelStoreContainer">
           <EntitySet Name="administrador" EntityType="Self.administrador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="alumno" EntityType="Self.alumno" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="asistencia" EntityType="Self.asistencia" Schema="dbo" store:Type="Tables" />
@@ -178,7 +178,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="satcModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Satc2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="administrador">
           <Key>
             <PropertyRef Name="id_admin" />
@@ -227,8 +227,8 @@
             <PropertyRef Name="id_horario" />
           </Key>
           <Property Name="id_horario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="hora_inicio" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="hora_termino" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="hora_inicio" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="hora_termino" Type="Time" Nullable="false" Precision="7" />
           <Property Name="dia_semana" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="cupo" Type="Int32" Nullable="false" />
           <Property Name="taller_id_taller" Type="Int32" Nullable="false" />
@@ -328,7 +328,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="satcEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SatcEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="administrador" EntityType="Self.administrador" />
           <EntitySet Name="alumno" EntityType="Self.alumno" />
           <EntitySet Name="asistencia" EntityType="Self.asistencia" />
@@ -363,9 +363,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="satcModelStoreContainer" CdmEntityContainer="satcEntities">
+        <EntityContainerMapping StorageEntityContainer="Satc2ModelStoreContainer" CdmEntityContainer="SatcEntities">
           <EntitySetMapping Name="administrador">
-            <EntityTypeMapping TypeName="satcModel.administrador">
+            <EntityTypeMapping TypeName="Satc2Model.administrador">
               <MappingFragment StoreEntitySet="administrador">
                 <ScalarProperty Name="id_admin" ColumnName="id_admin" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -377,7 +377,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="alumno">
-            <EntityTypeMapping TypeName="satcModel.alumno">
+            <EntityTypeMapping TypeName="Satc2Model.alumno">
               <MappingFragment StoreEntitySet="alumno">
                 <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -389,7 +389,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="asistencia">
-            <EntityTypeMapping TypeName="satcModel.asistencia">
+            <EntityTypeMapping TypeName="Satc2Model.asistencia">
               <MappingFragment StoreEntitySet="asistencia">
                 <ScalarProperty Name="id_asistencia" ColumnName="id_asistencia" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
@@ -397,7 +397,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="det_asist">
-            <EntityTypeMapping TypeName="satcModel.det_asist">
+            <EntityTypeMapping TypeName="Satc2Model.det_asist">
               <MappingFragment StoreEntitySet="det_asist">
                 <ScalarProperty Name="id_detalle" ColumnName="id_detalle" />
                 <ScalarProperty Name="alumno_id_alumno" ColumnName="alumno_id_alumno" />
@@ -407,7 +407,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="horario">
-            <EntityTypeMapping TypeName="satcModel.horario">
+            <EntityTypeMapping TypeName="Satc2Model.horario">
               <MappingFragment StoreEntitySet="horario">
                 <ScalarProperty Name="id_horario" ColumnName="id_horario" />
                 <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
@@ -419,7 +419,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="log_acciones">
-            <EntityTypeMapping TypeName="satcModel.log_acciones">
+            <EntityTypeMapping TypeName="Satc2Model.log_acciones">
               <MappingFragment StoreEntitySet="log_acciones">
                 <ScalarProperty Name="id_acciones" ColumnName="id_acciones" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
@@ -430,7 +430,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="profesor">
-            <EntityTypeMapping TypeName="satcModel.profesor">
+            <EntityTypeMapping TypeName="Satc2Model.profesor">
               <MappingFragment StoreEntitySet="profesor">
                 <ScalarProperty Name="id_profesor" ColumnName="id_profesor" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
@@ -442,7 +442,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="taller">
-            <EntityTypeMapping TypeName="satcModel.taller">
+            <EntityTypeMapping TypeName="Satc2Model.taller">
               <MappingFragment StoreEntitySet="taller">
                 <ScalarProperty Name="id_taller" ColumnName="id_taller" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
