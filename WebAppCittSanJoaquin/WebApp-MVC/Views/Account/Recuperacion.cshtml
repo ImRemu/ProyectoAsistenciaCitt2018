@@ -15,26 +15,31 @@
                     <h5>Se enviara un link para poder modificar tu contraseña</h5>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form">
-                        <div class="form-group">
-                            <label for="email" class="col-sm-3 control-label">
-                                Email
-                            </label>
-                            <div class="col-sm-9">
-                                <input type="email" class="form-control" id="email" placeholder="Email..." required>
+                    @using (Html.BeginForm("CrearIdMail", "Mail"))
+                    {
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="email" class="col-sm-3 control-label">
+                                    Email
+                                </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text"
+                                           name="txtMail"
+                                           placeholder="Mail" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group last">
-                            <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    Enviar link de Recuperacion
-                                </button>
+                            <div class="form-group last">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        Enviar link de Recuperacion
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    }
                 </div>
                 <div class="panel-footer">
-                    @Html.ActionLink("Volver Atras <..","Index","Account")
+                    @Html.ActionLink("Volver Atras <..", "Index", "Account")
                 </div>
             </div>
         </div>

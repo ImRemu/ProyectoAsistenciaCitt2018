@@ -10,8 +10,7 @@ namespace Testing
     {
         static void Main(string[] args)
         {
-            Librerias.MailClient.EjemploAPI().Wait();
-            Console.ReadKey();
+
         }
     }
 }

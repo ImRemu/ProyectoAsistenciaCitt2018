@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -178,6 +179,9 @@
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\asistencia.cs">
+      <DependentUpon>satc.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\confirmacion.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\det_asist.cs">
@@ -355,6 +359,8 @@
     <Content Include="Views\Account\OperacionesTalleres.cshtml" />
     <Content Include="Views\Account\crearTaller.cshtml" />
     <Content Include="Views\Account\modTaller.cshtml" />
+    <Content Include="Views\Mail\IngresarCorreo.cshtml" />
+    <Content Include="Views\Mail\Confirmar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -380,6 +386,12 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Librerias\Librerias.csproj">
+      <Project>{b16b4a4e-6587-475e-8e09-d63e29405e72}</Project>
+      <Name>Librerias</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
