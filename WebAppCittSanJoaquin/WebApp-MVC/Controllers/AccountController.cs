@@ -1071,5 +1071,51 @@ namespace WebApp_MVC.Controllers
             }
             return View();
         }
+
+        public ActionResult tomarAsistencia(int? id)
+        {
+            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            {
+                List<ModeloUsuario> model = new List<ModeloUsuario>();
+
+                var lAl = (from a in dtb.alumno
+                           join dt in dtb.det_asist on a.id_alumno equals dt.alumno_id_alumno
+                           join h in dtb.horario on dt.horario_id_horario equals h.id_horario
+                           join t in dtb.taller on h.taller_id_taller equals t.id_taller
+                           where t.id_taller == id
+                           select new
+                           {
+                               id = a.id_alumno,
+                               nombre = a.nombre + " " + a.apellido
+                           }).ToList();
+
+                foreach (var item in lAl)
+                {
+                    model.Add(new ModeloUsuario()
+                    {
+                        id_usuario = item.id,
+                        nombre = item.nombre
+                    });
+
+                }
+
+                ViewBag.listaAl = model;
+                return View("tomarAsistencia");
+            }
+            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+            
+            return View();
+        }
     }
 }

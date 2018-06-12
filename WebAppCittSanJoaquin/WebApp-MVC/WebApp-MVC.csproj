@@ -351,6 +351,7 @@
     <Content Include="Views\Account\OperacionesTalleres.cshtml" />
     <Content Include="Views\Account\crearTaller.cshtml" />
     <Content Include="Views\Account\modTaller.cshtml" />
+    <Content Include="Views\Account\tomarAsistencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

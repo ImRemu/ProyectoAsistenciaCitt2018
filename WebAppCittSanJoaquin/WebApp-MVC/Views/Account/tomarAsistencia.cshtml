@@ -1,0 +1,41 @@
+﻿@using WebApp_MVC.Models;
+@{
+    ViewBag.Title = "tomarAsistencia";
+}
+
+<div>
+    <h2>Toma de Asistencia</h2>
+    @using (Html.BeginForm())
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    id:
+                </th>
+                <th>
+                    Nombre:
+                </th>
+                <th>
+                    Asistencia:
+                </th>
+            </tr>
+            @foreach (ModeloUsuario al in ViewBag.listaAl)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(x => al.id_usuario)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(x => al.nombre)
+                    </td>
+                    <td>
+                        <input  type="checkbox" id="@al.id_usuario" name="@al.id_usuario" />
+                    </td>
+                </tr>
+            }
+        </table>
+        <input class="btn btn-primary" type="submit" name="btn_ingAsist" id="btn_ingAsist" value="Ingresar Asistencia"/>
+    }
+</div>
+
+
