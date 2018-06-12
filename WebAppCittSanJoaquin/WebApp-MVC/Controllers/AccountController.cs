@@ -12,9 +12,15 @@ namespace WebApp_MVC.Controllers
         SatcEntities dtb = new SatcEntities();
 
         // El index se accesa cuando no se
-        // tiene ningun parametro cuando se accede al controlador
+        // tiene ningun parametro cuando se acchgede al controlador
         public ActionResult Index()
         {
+            if (TempData["ModalMessage"]!= null)
+            {
+                ViewBag.ModalMessage = TempData["ModalMessage"].ToString();
+                TempData.Remove("ModalMessage");
+            }
+
             if(Session["user"] != null)
             {
                 return RedirectToAction("redirectExito");
@@ -187,9 +193,21 @@ namespace WebApp_MVC.Controllers
             return View();
         }
 
-        public ActionResult Registrarse(string txt_nombre, string txt_apell, string txt_email, string txt_pass )
+        public ActionResult Registrarse()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async System.Threading.Tasks.Task<ActionResult> Registrarse(string txt_nombre,
+            string txt_apell, string txt_email, string txt_pass )
         {
             log_acciones log = new log_acciones();
+
+            if (!FuncionesEmail.IsValidEmail(txt_email))
+            {
+                throw new Exception("Email invalido");
+            }
+
             //verifica si recibe nulos o vacios.
             if(!string.IsNullOrEmpty(txt_nombre) && !string.IsNullOrEmpty(txt_apell) &&
                !string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
@@ -209,20 +227,51 @@ namespace WebApp_MVC.Controllers
                     log.nombre_ejecucion = "Usuario Nuevo";
                     log.id_ejecutor = 0;
                     //se le da la habilitacion, 0 = no habilitado, y el tipo usuario.
-                    alumno userAl = new alumno();
-                    userAl.nombre = txt_nombre;
-                    userAl.apellido = txt_apell;
-                    userAl.correo = txt_email;
-                    userAl.password = txt_pass;
-                    userAl.habilitado = 0;
+                    alumno userAl = new alumno
+                    {
+                        nombre = txt_nombre,
+                        apellido = txt_apell,
+                        correo = txt_email,
+                        password = txt_pass,
+                        habilitado = 0
+                    };
+                    #region confirmacion email
+                    Guid guid = Guid.NewGuid();
+
+                    string url = "http://" + this.Request.Url.Authority + "/Confirmar/";
+                    System.Diagnostics.Trace.WriteLine($"[{DateTime.Now}] Enviando mail con URL {url + guid}");
+
+                    confirmacion conf = new confirmacion
+                    {
+                        alumno = new List<alumno>() { userAl },
+                        fecha = DateTime.Now,
+                        guid = guid,
+                        habilitado = true,
+                        tipo = (int)TipoConfirmacion.ConfirmacionMail,
+                    };
+                    var tarea = await Librerias.MailClient.EnviarMensajeRegistro(txt_email, url, guid.ToString().ToUpper());
+
+                    if (!tarea)
+                    {
+                        throw new Exception("Error al enviar el mail al correo especificado");
+                    }
+
                     
+
+                    #endregion
+
+
                     //se guardan los cambios en la base de datos.
                     dtb.alumno.Add(userAl);
+                    dtb.confirmacion.Add(conf);
+
                     dtb.log_acciones.Add(log);
                     dtb.SaveChanges();
                     //se retorna el mensaje correspondiente.
                     TempData["creado"] = "El Usuario se ha registrado exitosamente.";
                     ViewBag.Registrado = TempData["creado"];
+                    ViewBag.ModalMessage = "Verifica tu cuenta haciendo click en el vinculo enviado a tu correo electronico<br>" +
+                        "¡Asegúrate de revisar la carpeta de Spam!";
                     return View("Registrado");
                 }
 

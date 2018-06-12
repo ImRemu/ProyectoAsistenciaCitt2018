@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="e8214601f6aa4f9893c431ecc8ab93fc" Name="Diagram1">
         <EntityTypeShape EntityType="Satc2Model.administrador" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Satc2Model.alumno" Width="1.5" PointX="5.25" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.alumno" Width="1.5" PointX="6.25" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Satc2Model.asistencia" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Satc2Model.det_asist" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="Satc2Model.horario" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
@@ -18,6 +18,9 @@
         <AssociationConnector Association="Satc2Model.det_asist_horario_fk" ManuallyRouted="false" />
         <AssociationConnector Association="Satc2Model.horario_taller_fk" ManuallyRouted="false" />
         <AssociationConnector Association="Satc2Model.taller_profesor_fk" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Satc2Model.confirmacion" Width="1.5" PointX="3.375" PointY="5.75" FillColor="192, 255, 192" />
+        <AssociationConnector Association="Satc2Model.alumno_confirmacion" ManuallyRouted="false" >
+        </AssociationConnector>
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
