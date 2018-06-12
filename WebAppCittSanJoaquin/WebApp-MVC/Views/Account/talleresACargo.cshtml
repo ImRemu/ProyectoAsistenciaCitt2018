@@ -50,7 +50,7 @@
                     @Html.DisplayFor(x => item.hora_termino)
                 </td>
                 <td>
-                    <a class="btn btn-primary" @Html.ActionLink("Tomar asistencia", "../Account/VerifTomaRamo", new { id = item.id })
+                    <a class="btn btn-primary" @Html.ActionLink("Tomar asistencia", "tomarAsistencia", new { id = item.id })
                 </td>
 
             </tr>
