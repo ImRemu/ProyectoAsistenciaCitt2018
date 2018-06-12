@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Satc2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Satc2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="administrador">
           <Key>
             <PropertyRef Name="id_admin" />
@@ -27,12 +27,30 @@
           <Property Name="password" Type="char" MaxLength="32" Nullable="false" />
           <Property Name="habilitado" Type="tinyint" Nullable="false" />
         </EntityType>
+        <EntityType Name="alumno_confirmacion">
+          <Key>
+            <PropertyRef Name="id_alumno" />
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_alumno" Type="int" Nullable="false" />
+          <Property Name="id_confirmacion" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="asistencia">
           <Key>
             <PropertyRef Name="id_asistencia" />
           </Key>
           <Property Name="id_asistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="confirmacion">
+          <Key>
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_confirmacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="fecha" Type="date" Nullable="false" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="habilitado" Type="bit" Nullable="false" />
+          <Property Name="tipo" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="det_asist">
           <Key>
@@ -84,7 +102,31 @@
           <Property Name="descripcion" Type="varchar" MaxLength="100" />
           <Property Name="profesor_id_profesor" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="det_asist_alumno_fk">
+        <Association Name="FK_alumno_confirmacion_alumno">
+          <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
+          <End Role="alumno_confirmacion" Type="Self.alumno_confirmacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="id_alumno" />
+            </Principal>
+            <Dependent Role="alumno_confirmacion">
+              <PropertyRef Name="id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_alumno_confirmacion_confirmacion">
+          <End Role="confirmacion" Type="Self.confirmacion" Multiplicity="1" />
+          <End Role="alumno_confirmacion" Type="Self.alumno_confirmacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="confirmacion">
+              <PropertyRef Name="id_confirmacion" />
+            </Principal>
+            <Dependent Role="alumno_confirmacion">
+              <PropertyRef Name="id_confirmacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_det_asist_alumno_fk">
           <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
           <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
           <ReferentialConstraint>
@@ -96,7 +138,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="det_asist_asistencia_fk">
+        <Association Name="FK_det_asist_asistencia_fk">
           <End Role="asistencia" Type="Self.asistencia" Multiplicity="0..1" />
           <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
           <ReferentialConstraint>
@@ -108,7 +150,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="det_asist_horario_fk">
+        <Association Name="FK_det_asist_horario_fk">
           <End Role="horario" Type="Self.horario" Multiplicity="1" />
           <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
           <ReferentialConstraint>
@@ -120,7 +162,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="horario_taller_fk">
+        <Association Name="FK_horario_taller_fk">
           <End Role="taller" Type="Self.taller" Multiplicity="1" />
           <End Role="horario" Type="Self.horario" Multiplicity="*" />
           <ReferentialConstraint>
@@ -132,7 +174,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="taller_profesor_fk">
+        <Association Name="FK_taller_profesor_fk">
           <End Role="profesor" Type="Self.profesor" Multiplicity="1" />
           <End Role="taller" Type="Self.taller" Multiplicity="*" />
           <ReferentialConstraint>
@@ -147,35 +189,44 @@
         <EntityContainer Name="Satc2ModelStoreContainer">
           <EntitySet Name="administrador" EntityType="Self.administrador" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="alumno" EntityType="Self.alumno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="alumno_confirmacion" EntityType="Self.alumno_confirmacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="asistencia" EntityType="Self.asistencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="confirmacion" EntityType="Self.confirmacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="det_asist" EntityType="Self.det_asist" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="horario" EntityType="Self.horario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="log_acciones" EntityType="Self.log_acciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="profesor" EntityType="Self.profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="taller" EntityType="Self.taller" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="det_asist_alumno_fk" Association="Self.det_asist_alumno_fk">
+          <AssociationSet Name="FK_alumno_confirmacion_alumno" Association="Self.FK_alumno_confirmacion_alumno">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="alumno_confirmacion" EntitySet="alumno_confirmacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_alumno_confirmacion_confirmacion" Association="Self.FK_alumno_confirmacion_confirmacion">
+            <End Role="confirmacion" EntitySet="confirmacion" />
+            <End Role="alumno_confirmacion" EntitySet="alumno_confirmacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_det_asist_alumno_fk" Association="Self.FK_det_asist_alumno_fk">
             <End Role="alumno" EntitySet="alumno" />
             <End Role="det_asist" EntitySet="det_asist" />
           </AssociationSet>
-          <AssociationSet Name="det_asist_asistencia_fk" Association="Self.det_asist_asistencia_fk">
+          <AssociationSet Name="FK_det_asist_asistencia_fk" Association="Self.FK_det_asist_asistencia_fk">
             <End Role="asistencia" EntitySet="asistencia" />
             <End Role="det_asist" EntitySet="det_asist" />
           </AssociationSet>
-          <AssociationSet Name="det_asist_horario_fk" Association="Self.det_asist_horario_fk">
+          <AssociationSet Name="FK_det_asist_horario_fk" Association="Self.FK_det_asist_horario_fk">
             <End Role="horario" EntitySet="horario" />
             <End Role="det_asist" EntitySet="det_asist" />
           </AssociationSet>
-          <AssociationSet Name="horario_taller_fk" Association="Self.horario_taller_fk">
+          <AssociationSet Name="FK_horario_taller_fk" Association="Self.FK_horario_taller_fk">
             <End Role="taller" EntitySet="taller" />
             <End Role="horario" EntitySet="horario" />
           </AssociationSet>
-          <AssociationSet Name="taller_profesor_fk" Association="Self.taller_profesor_fk">
+          <AssociationSet Name="FK_taller_profesor_fk" Association="Self.FK_taller_profesor_fk">
             <End Role="profesor" EntitySet="profesor" />
             <End Role="taller" EntitySet="taller" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Satc2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -201,13 +252,14 @@
           <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="habilitado" Type="Byte" Nullable="false" />
           <NavigationProperty Name="det_asist" Relationship="Self.det_asist_alumno_fk" FromRole="alumno" ToRole="det_asist" />
+          <NavigationProperty Name="confirmacion" Relationship="Satc2Model.alumno_confirmacion" FromRole="alumno" ToRole="confirmacion" />
         </EntityType>
         <EntityType Name="asistencia">
           <Key>
             <PropertyRef Name="id_asistencia" />
           </Key>
           <Property Name="id_asistencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="det_asist" Relationship="Self.det_asist_asistencia_fk" FromRole="asistencia" ToRole="det_asist" />
         </EntityType>
         <EntityType Name="det_asist">
@@ -357,7 +409,27 @@
             <End Role="profesor" EntitySet="profesor" />
             <End Role="taller" EntitySet="taller" />
           </AssociationSet>
+          <EntitySet Name="confirmacion" EntityType="Satc2Model.confirmacion" />
+          <AssociationSet Name="alumno_confirmacion" Association="Satc2Model.alumno_confirmacion">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="confirmacion" EntitySet="confirmacion" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="confirmacion">
+          <Key>
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_confirmacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="habilitado" Type="Boolean" Nullable="false" />
+          <Property Name="tipo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="alumno" Relationship="Satc2Model.alumno_confirmacion" FromRole="confirmacion" ToRole="alumno" />
+        </EntityType>
+        <Association Name="alumno_confirmacion">
+          <End Type="Satc2Model.alumno" Role="alumno" Multiplicity="*" />
+          <End Type="Satc2Model.confirmacion" Role="confirmacion" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -451,6 +523,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="confirmacion">
+            <EntityTypeMapping TypeName="Satc2Model.confirmacion">
+              <MappingFragment StoreEntitySet="confirmacion">
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="habilitado" ColumnName="habilitado" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="id_confirmacion" ColumnName="id_confirmacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="alumno_confirmacion" TypeName="Satc2Model.alumno_confirmacion" StoreEntitySet="alumno_confirmacion">
+            <EndProperty Name="confirmacion">
+              <ScalarProperty Name="id_confirmacion" ColumnName="id_confirmacion" />
+            </EndProperty>
+            <EndProperty Name="alumno">
+              <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -464,11 +555,13 @@
     </Connection>
     <Options>
       <DesignerInfoPropertySet>
-        <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="ValidateOnBuild" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="True" />
+        <DesignerProperty Name="SynchronizePropertyFacets" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

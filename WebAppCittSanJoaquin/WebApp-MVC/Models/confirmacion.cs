@@ -12,22 +12,19 @@ namespace WebApp_MVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class alumno
+    public partial class confirmacion
     {
-        public alumno()
+        public confirmacion()
         {
-            this.det_asist = new HashSet<det_asist>();
-            this.confirmacion = new HashSet<confirmacion>();
+            this.alumno = new HashSet<alumno>();
         }
     
-        public int id_alumno { get; set; }
-        public string nombre { get; set; }
-        public string apellido { get; set; }
-        public string correo { get; set; }
-        public string password { get; set; }
-        public byte habilitado { get; set; }
+        public int id_confirmacion { get; set; }
+        public System.DateTime fecha { get; set; }
+        public System.Guid guid { get; set; }
+        public bool habilitado { get; set; }
+        public int tipo { get; set; }
     
-        public virtual ICollection<det_asist> det_asist { get; set; }
-        public virtual ICollection<confirmacion> confirmacion { get; set; }
+        public virtual ICollection<alumno> alumno { get; set; }
     }
 }

@@ -33,5 +33,6 @@ namespace WebApp_MVC.Models
         public DbSet<log_acciones> log_acciones { get; set; }
         public DbSet<profesor> profesor { get; set; }
         public DbSet<taller> taller { get; set; }
+        public DbSet<confirmacion> confirmacion { get; set; }
     }
 }

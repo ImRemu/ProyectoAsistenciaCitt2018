@@ -25,6 +25,7 @@
 @using (Ajax.BeginForm("FormLogin", "Account",
     new AjaxOptions { LoadingElementId = "Loader", OnSuccess = "Success" }))
 {
+    #region codigo antiguo
     /**
      * Hay un archivo de recursos en una carpeta llamada
      * App_GlobalResources, esta carpeta es accesible en todo
@@ -62,6 +63,7 @@
     //<span>@Recursos.Resources.Campo3Label</span>@Html.TextBoxFor(m => m.CheckBoxData)<br />
     //<br /><input type="submit" name="name" value="Subir datos nulos" />
     /**Desde este punto introduzco  login nuevo**/
+    #endregion
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
