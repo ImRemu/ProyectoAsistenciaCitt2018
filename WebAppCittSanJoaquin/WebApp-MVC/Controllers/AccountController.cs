@@ -1126,6 +1126,23 @@ namespace WebApp_MVC.Controllers
             if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 List<ModeloUsuario> model = new List<ModeloUsuario>();
+                List<ModeloTaller> mTall = new List<ModeloTaller>();
+                var tall = (from t in dtb.taller
+                                     where t.id_taller == id
+                                     select t).ToList();
+
+                foreach (var item in tall)
+                {
+                    mTall.Add(new ModeloTaller()
+                    {
+                        id_taller = item.id_taller,
+                        nombre = item.nombre,
+                        descripcion = item.descripcion
+
+                    });
+                }
+
+                ViewBag.iTall = mTall;
 
                 var lAl = (from a in dtb.alumno
                            join dt in dtb.det_asist on a.id_alumno equals dt.alumno_id_alumno
@@ -1165,6 +1182,47 @@ namespace WebApp_MVC.Controllers
             }
             
             return View();
+        }
+
+        public ActionResult tomaAsistencia(List<int> chk_asist, int? hddn_id)
+        {
+            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p")
+                && hddn_id != null)
+            {
+                foreach (int x in chk_asist)
+                {
+                    det_asist dtAs = new det_asist();
+                    asistencia asist = new asistencia();
+
+                    asist.fecha = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy hh:mm:ss"));
+                    dtb.asistencia.Add(asist);
+
+                    int idHr = (from h in dtb.horario
+                                where h.taller_id_taller == hddn_id
+                                select h.id_horario).FirstOrDefault();
+
+                    dtAs.alumno_id_alumno = x;
+                    dtAs.asistencia_id_asistencia = asist.id_asistencia;
+                    dtAs.horario_id_horario = idHr;
+                    dtb.det_asist.Add(dtAs);
+                    dtb.SaveChanges();
+                }
+                return RedirectToAction("talleresACargo");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            {
+                return RedirectToAction("redirectPerfil");
+            }
+            else
+            {
+                return View("Index");
+            }
+
+            
         }
     }
 }
