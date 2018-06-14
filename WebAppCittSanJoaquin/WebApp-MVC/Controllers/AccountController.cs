@@ -1224,5 +1224,29 @@ namespace WebApp_MVC.Controllers
 
             
         }
+
+        public ActionResult OperacionesHorarios()
+        {
+            List<modeloHorario> model = new List<modeloHorario>();
+
+            var lH = (from h in dtb.horario
+                      select h).ToList();
+
+            foreach(var h in lH)
+            {
+                model.Add(new modeloHorario
+                {
+                    id_horario = h.id_horario,
+                    cupo = h.cupo,
+                    dia_semana = h.dia_semana,
+                    hora_inicio = h.hora_inicio,
+                    hora_termino = h.hora_termino,
+                    taller_id_taller = h.taller_id_taller
+                });
+            }
+
+            ViewBag.lHor = model;
+            return View("OperacionesHorarios");
+        }
     }
 }

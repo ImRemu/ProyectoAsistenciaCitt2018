@@ -194,6 +194,7 @@
     <Compile Include="Models\log_acciones.cs">
       <DependentUpon>satc.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\modeloHorario.cs" />
     <Compile Include="Models\modeloProfesores.cs" />
     <Compile Include="Models\ModeloTalleres.cs" />
     <Compile Include="Models\ModeloTaller.cs" />
@@ -362,6 +363,7 @@
     <Content Include="Views\Mail\IngresarCorreo.cshtml" />
     <Content Include="Views\Mail\Confirmar.cshtml" />
     <Content Include="Views\Account\tomarAsistencia.cshtml" />
+    <Content Include="Views\Account\OperacionesHorarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
