@@ -1,0 +1,49 @@
+﻿@using WebApp_MVC.Models;
+
+@{
+    ViewBag.Title = "Operaciones Horarios";
+}
+<div>
+    <h2>Operaciones de horarios</h2>
+    
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Dia de la semana
+            </th>
+            <th>
+                Hora Inicio
+            </th>
+            <th>
+                Hora Termino
+            </th>
+            <th>
+                Id Taller
+            </th>
+        </tr>
+        @foreach(modeloHorario h in ViewBag.lHor)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => h.id_horario)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => h.dia_semana)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => h.hora_inicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => h.hora_termino)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => h.taller_id_taller)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
