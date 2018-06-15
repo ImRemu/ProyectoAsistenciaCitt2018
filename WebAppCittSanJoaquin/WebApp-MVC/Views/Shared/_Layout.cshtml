@@ -51,7 +51,10 @@
             <p>&copy; @DateTime.Now.Year - Informaticos Sin Neumaticos</p>
         </footer>
 
-
+        @if (TempData["ModalMessage"]!=null)
+        {
+            ViewBag.ModalMessage = TempData["ModalMessage"];    
+        }
         @if (ViewBag.ModalMessage != null)
         {<!-- modal-->
             <script>
@@ -63,7 +66,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalMensajeLabel">Advertencia</h5>
+                            <h5 class="modal-title" id="modalMensajeLabel">Informacion</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                                 <span aria-hidden="true">&times;</span>
                             </button>

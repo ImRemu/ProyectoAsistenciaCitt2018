@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Estado Solicitud";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Estado de Solicitud</h2>
+<p>@ViewBag.IdConfirmacionCorreo</p>
+@{
+    string resultado ="Error al procesar la solicitud";
+    if (ViewBag.TipoMail != null)
+    {
+
+        switch ((int)ViewBag.TipoMail)
+        {
+            case 1:
+                resultado = "Se ha enviado un mail a tu correo para que confirmes tu cuenta";
+                break;
+            case 3:
+                resultado = "Se ha enviado un mail a tu correo para que confirmes el cambio de contraseña";
+                break;
+            default:
+                resultado = "Ha ocurrido un error, lamentamos el inconveniente";
+                break;
+        }
+    };
+}
+<h3>@resultado</h3>
