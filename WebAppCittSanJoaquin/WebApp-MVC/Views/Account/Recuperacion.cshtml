@@ -15,7 +15,9 @@
                     <h5>Se enviara un link para poder modificar tu contraseña</h5>
                 </div>
                 <div class="panel-body">
-                    @using (Html.BeginForm("CrearIdMail", "Mail"))
+                    @using (Html.BeginForm(
+                            "CrearMail", "Mail", new {
+                                tipo = WebApp_MVC.Controllers.TipoConfirmacion.Contrasena }))
                     {
                         <form class="form-horizontal" role="form">
                             <div class="form-group">

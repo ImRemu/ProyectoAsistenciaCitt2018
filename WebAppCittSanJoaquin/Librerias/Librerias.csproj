@@ -23,6 +23,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="contenidos-mail\contrasena-optimizado.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="contenidos-mail\contrasena-original.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="contenidos-mail\contrasena-plano.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="contenidos-mail\registro-original.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
