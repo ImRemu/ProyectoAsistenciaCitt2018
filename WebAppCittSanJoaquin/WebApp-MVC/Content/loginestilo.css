@@ -5,6 +5,9 @@
     -webkit-background-size: cover;
     -moz-background-size: cover;*/
     background-size: cover;
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    background-size: cover;
 }
 #navgeneral {
     background-color: rgba(0,38,62,0.5);
@@ -27,14 +30,14 @@
 h2{
     
 }
-footer{
+footer {
     position: fixed;
-    bottom: 0;
     left: 0;
-    right: 0;
-    background-color: rgba(208, 208, 208, 0.58);
-    height: 20px;
-    text-align: right;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffd11a;
+    color: black;
+    text-align: center;
 }
 
 .imagenesre{

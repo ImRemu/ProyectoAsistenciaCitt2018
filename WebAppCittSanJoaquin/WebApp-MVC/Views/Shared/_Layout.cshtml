@@ -31,12 +31,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Inicio Citt", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("INICIAR SESION", "Index", "Account")</li>
-                    <li>@Html.ActionLink("INICIO", "Index", "Home")</li>
                     <li>@Html.ActionLink("ACERCA DE", "About", "Home")</li>
                     <li>@Html.ActionLink("CONTACTO", "Contact", "Home")</li>
                     <li>@Html.ActionLink("LISTA TALLERES", "ListaTalleres", "Home")</li>
@@ -47,7 +46,7 @@
     <div class="container body-content">
         @RenderBody()
 
-        <footer class="">
+        <footer class="footer">
             <p>&copy; @DateTime.Now.Year - Informaticos Sin Neumaticos</p>
         </footer>
 
