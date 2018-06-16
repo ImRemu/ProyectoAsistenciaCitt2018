@@ -5,7 +5,10 @@
 }
 <div>
     <h2>Operaciones de horarios</h2>
-    
+    <div >
+        <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Volver al Perfil", "redirectPerfil", "Account") </a>
+        <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Agregar Horario", "agregarHorario", "Account") </a>
+    </div>
     <table class="table">
         <tr>
             <th>
@@ -22,6 +25,9 @@
             </th>
             <th>
                 Id Taller
+            </th>
+            <th>
+                Acciones
             </th>
         </tr>
         @foreach(modeloHorario h in ViewBag.lHor)
@@ -41,6 +47,10 @@
                 </td>
                 <td>
                     @Html.DisplayFor(x => h.taller_id_taller)
+                </td>
+                <td>
+                    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Modificar", "modHorario", new { id = h.id_horario })
+                    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Eliminar", "elimHorario", new { id = h.id_horario })
                 </td>
             </tr>
         }

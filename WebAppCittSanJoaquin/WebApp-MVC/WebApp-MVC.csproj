@@ -368,6 +368,16 @@
     <Content Include="Views\Account\modTaller.cshtml" />
     <Content Include="Views\Mail\IngresarCorreo.cshtml" />
     <Content Include="Views\Home\CambiarContrasena.cshtml" />
+    <Content Include="Views\Account\modHorario.cshtml" />
+    <Content Include="Views\Account\agregarHorario.cshtml" />
+    <Content Include="Views\Account\OperacionesUsuario.cshtml" />
+    <Content Include="Views\Account\OpUsAl.cshtml" />
+    <Content Include="Views\Account\modificarAl.cshtml" />
+    <Content Include="Views\Account\OpUsP.cshtml" />
+    <Content Include="Views\Account\ModificarP.cshtml" />
+    <Content Include="Views\Account\OpUsA.cshtml" />
+    <Content Include="Views\Account\modificarAd.cshtml" />
+    <Content Include="Views\Account\agregarAd.cshtml" />
     <None Include="Views\Mail\EstadoSolicitud.cshtml" />
     <Content Include="Views\Account\tomarAsistencia.cshtml" />
     <Content Include="Views\Account\OperacionesHorarios.cshtml" />

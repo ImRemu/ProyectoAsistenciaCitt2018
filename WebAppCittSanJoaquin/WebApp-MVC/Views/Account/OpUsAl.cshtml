@@ -1,0 +1,43 @@
+﻿@using WebApp_MVC.Models
+@{
+    ViewBag.Title = "Operaciones de Alumnos";
+}
+
+<div>
+    <h2>Operanciones de Alumnos</h2>
+    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Volver", "OperacionesUsuario", "Account") </a>
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Apellido
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+        @foreach (ModeloUsuario al in ViewBag.lAl)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => al.id_usuario)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => al.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(x => al.apellidos)
+                </td>
+                <td>
+                    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Modificar", "modificarAl", new { id = al.id_usuario })
+                    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Eliminar", "elimAl", new { id = al.id_usuario})
+                </td>
+            </tr>
+        }
+    </table>
+</div>
