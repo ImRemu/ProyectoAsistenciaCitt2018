@@ -47,7 +47,7 @@
             <PropertyRef Name="id_confirmacion" />
           </Key>
           <Property Name="id_confirmacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fecha" Type="date" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="habilitado" Type="bit" Nullable="false" />
           <Property Name="tipo" Type="int" Nullable="false" />
@@ -102,7 +102,7 @@
           <Property Name="descripcion" Type="varchar" MaxLength="100" />
           <Property Name="profesor_id_profesor" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_alumno_confirmacion_alumno">
+        <Association Name="FK__alumno_co__id_al__6FE99F9F">
           <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
           <End Role="alumno_confirmacion" Type="Self.alumno_confirmacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -114,7 +114,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_alumno_confirmacion_confirmacion">
+        <Association Name="FK__alumno_co__id_co__70DDC3D8">
           <End Role="confirmacion" Type="Self.confirmacion" Multiplicity="1" />
           <End Role="alumno_confirmacion" Type="Self.alumno_confirmacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -197,11 +197,11 @@
           <EntitySet Name="log_acciones" EntityType="Self.log_acciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="profesor" EntityType="Self.profesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="taller" EntityType="Self.taller" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_alumno_confirmacion_alumno" Association="Self.FK_alumno_confirmacion_alumno">
+          <AssociationSet Name="FK__alumno_co__id_al__6FE99F9F" Association="Self.FK__alumno_co__id_al__6FE99F9F">
             <End Role="alumno" EntitySet="alumno" />
             <End Role="alumno_confirmacion" EntitySet="alumno_confirmacion" />
           </AssociationSet>
-          <AssociationSet Name="FK_alumno_confirmacion_confirmacion" Association="Self.FK_alumno_confirmacion_confirmacion">
+          <AssociationSet Name="FK__alumno_co__id_co__70DDC3D8" Association="Self.FK__alumno_co__id_co__70DDC3D8">
             <End Role="confirmacion" EntitySet="confirmacion" />
             <End Role="alumno_confirmacion" EntitySet="alumno_confirmacion" />
           </AssociationSet>
@@ -420,7 +420,7 @@
             <PropertyRef Name="id_confirmacion" />
           </Key>
           <Property Name="id_confirmacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="guid" Type="Guid" Nullable="false" />
           <Property Name="habilitado" Type="Boolean" Nullable="false" />
           <Property Name="tipo" Type="Int32" Nullable="false" />

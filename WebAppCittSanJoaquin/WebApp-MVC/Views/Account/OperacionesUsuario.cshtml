@@ -1,0 +1,17 @@
+﻿@using WebApp_MVC.Models;
+
+@{
+    ViewBag.Title = "OperacionesUsuario";
+}
+
+<div>
+    <h2>Operaciones de usuarios</h2>
+    <hr />
+    <div>
+        <a class="btn btn-primary" @Html.ActionLink("Volver al Perfil", "redirectPerfil", "Account") </a>
+        <a class="btn btn-primary" @Html.ActionLink("Usuarios Alumnos", "OpUsAl", "Account")</a>
+        <a class="btn btn-primary" @Html.ActionLink("Usuarios Profesores", "OpUsP", "Account")</a>
+        <a class="btn btn-primary" @Html.ActionLink("Usuarios Administradores", "OpUsA", "Account")</a>
+    </div>
+</div>
+

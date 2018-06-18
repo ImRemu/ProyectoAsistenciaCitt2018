@@ -1,0 +1,69 @@
+﻿@using WebApp_MVC.Models;
+@{
+    ViewBag.Title = "Agregar Horario";
+}
+
+<div>
+    <div class="radio media-middle">
+        <h2>Agregar horario</h2>
+        <div>
+            <a class="btn btn-primary" @Html.ActionLink("Volver", "OperacionesHorarios", "Account")
+        </div>
+        <br />
+            <table class="table table-condensed">
+            @using (Html.BeginForm("horarioAgregado", "Account"))
+             {
+                <tr>
+                    <td>Ingrese dia de la semana:</td>
+                    <td>
+                        <select class="form-control" name="opt_diaSemana" id="opt_diaSemana">
+                            <option disabled selected value="">Seleccione un día</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miercoles">Miercoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hora Inicio:</td>
+                    <td>
+                        <input class="form-control" type="time" name="tm_inicio" id="tm_inicio" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hora Termino:</td>
+                    <td>
+                        <input class="form-control" type="time" name="tm_termino" id="tm_termino" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cupo: </td>
+                    <td>
+                        <input class="form-control" type="number" name="nm_cupo" id="nm_cupo" max="6" min="2" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Seleccione el Taller:</td>
+                    <td>
+                        <select class="form-control" name="opt_taller" id="opt_taller">
+                            <option disabled selected value="">Seleccione un taller</option>
+                            @foreach (ModeloTaller mT in ViewBag.lT)
+                            {
+                                <option value="@mT.id_taller">@mT.nombre</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input class="btn btn-primary" type="submit" name="btn_agregar" id="btn_agregar" value="Agregar"/>
+                    </td>
+                </tr>
+             }
+                
+        </table>
+    </div>
+</div>
