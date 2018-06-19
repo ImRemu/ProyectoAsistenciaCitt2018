@@ -252,7 +252,7 @@
           <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="habilitado" Type="Byte" Nullable="false" />
           <NavigationProperty Name="det_asist" Relationship="Self.det_asist_alumno_fk" FromRole="alumno" ToRole="det_asist" />
-          <NavigationProperty Name="confirmacion" Relationship="Satc2Model.alumno_confirmacion" FromRole="alumno" ToRole="confirmacion" />
+          <NavigationProperty Name="confirmacion" Relationship="Satc2Model.confirmacionalumno" FromRole="alumno" ToRole="confirmacion" />
         </EntityType>
         <EntityType Name="asistencia">
           <Key>
@@ -410,9 +410,9 @@
             <End Role="taller" EntitySet="taller" />
           </AssociationSet>
           <EntitySet Name="confirmacion" EntityType="Satc2Model.confirmacion" />
-          <AssociationSet Name="alumno_confirmacion" Association="Satc2Model.alumno_confirmacion">
-            <End Role="alumno" EntitySet="alumno" />
+          <AssociationSet Name="confirmacionalumno" Association="Satc2Model.confirmacionalumno">
             <End Role="confirmacion" EntitySet="confirmacion" />
+            <End Role="alumno" EntitySet="alumno" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="confirmacion">
@@ -424,11 +424,11 @@
           <Property Name="guid" Type="Guid" Nullable="false" />
           <Property Name="habilitado" Type="Boolean" Nullable="false" />
           <Property Name="tipo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="alumno" Relationship="Satc2Model.alumno_confirmacion" FromRole="confirmacion" ToRole="alumno" />
+          <NavigationProperty Name="alumno" Relationship="Satc2Model.confirmacionalumno" FromRole="confirmacion" ToRole="alumno" />
         </EntityType>
-        <Association Name="alumno_confirmacion">
-          <End Type="Satc2Model.alumno" Role="alumno" Multiplicity="*" />
+        <Association Name="confirmacionalumno">
           <End Type="Satc2Model.confirmacion" Role="confirmacion" Multiplicity="*" />
+          <End Type="Satc2Model.alumno" Role="alumno" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -534,12 +534,12 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="alumno_confirmacion" TypeName="Satc2Model.alumno_confirmacion" StoreEntitySet="alumno_confirmacion">
-            <EndProperty Name="confirmacion">
-              <ScalarProperty Name="id_confirmacion" ColumnName="id_confirmacion" />
-            </EndProperty>
+          <AssociationSetMapping Name="confirmacionalumno" TypeName="Satc2Model.confirmacionalumno" StoreEntitySet="alumno_confirmacion">
             <EndProperty Name="alumno">
               <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
+            </EndProperty>
+            <EndProperty Name="confirmacion">
+              <ScalarProperty Name="id_confirmacion" ColumnName="id_confirmacion" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

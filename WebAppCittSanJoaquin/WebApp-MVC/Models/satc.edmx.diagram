@@ -19,7 +19,7 @@
         <AssociationConnector Association="Satc2Model.horario_taller_fk" ManuallyRouted="false" />
         <AssociationConnector Association="Satc2Model.taller_profesor_fk" ManuallyRouted="false" />
         <EntityTypeShape EntityType="Satc2Model.confirmacion" Width="1.5" PointX="5.5" PointY="7.125" FillColor="192, 255, 192" />
-        <AssociationConnector Association="Satc2Model.alumno_confirmacion" />
+        <AssociationConnector Association="Satc2Model.confirmacionalumno" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
