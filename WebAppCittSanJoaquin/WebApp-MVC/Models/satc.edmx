@@ -321,7 +321,9 @@
           <NavigationProperty Name="profesor" Relationship="Self.taller_profesor_fk" FromRole="taller" ToRole="profesor" />
         </EntityType>
         <Association Name="det_asist_alumno_fk">
-          <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
+          <End Role="alumno" Type="Self.alumno" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="alumno">
@@ -333,7 +335,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="det_asist_asistencia_fk">
-          <End Role="asistencia" Type="Self.asistencia" Multiplicity="0..1" />
+          <End Role="asistencia" Type="Self.asistencia" Multiplicity="0..1" >
+          </End>
           <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="asistencia">
@@ -345,8 +348,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="det_asist_horario_fk">
-          <End Role="horario" Type="Self.horario" Multiplicity="1" />
-          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <End Role="horario" Type="Self.horario" Multiplicity="1" >
+          </End>
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" >
+          </End>
           <ReferentialConstraint>
             <Principal Role="horario">
               <PropertyRef Name="id_horario" />
@@ -357,7 +362,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="horario_taller_fk">
-          <End Role="taller" Type="Self.taller" Multiplicity="1" />
+          <End Role="taller" Type="Self.taller" Multiplicity="1" >
+          </End>
           <End Role="horario" Type="Self.horario" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="taller">
@@ -369,7 +375,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="taller_profesor_fk">
-          <End Role="profesor" Type="Self.profesor" Multiplicity="1" />
+          <End Role="profesor" Type="Self.profesor" Multiplicity="1" >
+          </End>
           <End Role="taller" Type="Self.taller" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="profesor">
@@ -427,8 +434,10 @@
           <NavigationProperty Name="alumno" Relationship="Satc2Model.confirmacionalumno" FromRole="confirmacion" ToRole="alumno" />
         </EntityType>
         <Association Name="confirmacionalumno">
-          <End Type="Satc2Model.confirmacion" Role="confirmacion" Multiplicity="*" />
-          <End Type="Satc2Model.alumno" Role="alumno" Multiplicity="*" />
+          <End Type="Satc2Model.confirmacion" Role="confirmacion" Multiplicity="*" >
+          </End>
+          <End Type="Satc2Model.alumno" Role="alumno" Multiplicity="*" >
+          </End>
         </Association>
       </Schema>
     </edmx:ConceptualModels>

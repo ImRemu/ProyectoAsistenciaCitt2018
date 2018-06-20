@@ -33,14 +33,18 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <a class="btn btn-primary"@Html.ActionLink("Talleres a Cargo", "talleresACargo", "Account")</a>
-                            <a class="btn btn-primary" @Html.ActionLink("Desactivar Cuenta", "DesactCuenta", "Account")</a>
-                            <a class="btn btn-primary" @Html.ActionLink("Volver a inicio", "redirectExito", "Account")</a>
+                            @Html.ActionLink("Talleres a Cargo", "talleresACargo", "Account", new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Desactivar Cuenta", "DesactCuenta", "Account", new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Volver a inicio", "redirectExito", "Account", new { @class = "btn btn-primary" })
                         </div>
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <a data-original-title="Cerrar Sesion" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-remove"></i></a>
+                    
+                    <a href="@Url.Action("LogOut","Account")"
+                       data-original-title="Cerrar Sesion" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </a>
                     <span class="pull-right">
                         <a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
                     </span>

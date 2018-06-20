@@ -35,7 +35,16 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("INICIAR SESION", "Index", "Account")</li>
+                    <li>
+                        @if (Session["user"] != null)
+                        {
+                            @Html.ActionLink("MENU BIENVENIDA", "redirectExito", "Account")
+                        }
+                        else
+                        {
+                            @Html.ActionLink("INICIAR SESION", "Index", "Account")
+                        }
+                    </li>
                     <li>@Html.ActionLink("ACERCA DE", "About", "Home")</li>
                     <li>@Html.ActionLink("CONTACTO", "Contact", "Home")</li>
                     <li>@Html.ActionLink("LISTA TALLERES", "ListaTalleres", "Home")</li>

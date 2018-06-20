@@ -50,6 +50,8 @@
                                 @Html.DisplayFor(x => al.nombre)
                             </td>
                             <td>
+                                @*@Html.CheckBox("chk_asist", @al.id_usuario);*@
+                                @*@Html.Hidden("chk_asist", @al.id_usuario)*@
                                 <input type="checkbox" id="chk_asist" name="chk_asist" value="@al.id_usuario" />
                             </td>
                         </tr>
