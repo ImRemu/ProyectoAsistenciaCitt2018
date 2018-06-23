@@ -243,8 +243,10 @@
     <Content Include="Content\img\back.png" />
     <Content Include="Content\img\back1.jpg" />
     <Content Include="Content\img\CITT.jpg" />
+    <Content Include="Content\img\duocSanJaoaquinREMASTER.png" />
     <Content Include="Content\img\duocsj.jpg" />
     <Content Include="Content\img\fondo-azul.jpg" />
+    <Content Include="Content\img\foto3.png" />
     <Content Include="Content\img\home.jpg" />
     <Content Include="Content\img\intento1.jpg" />
     <Content Include="Content\img\skull_normal1.cur" />
