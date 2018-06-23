@@ -10,18 +10,21 @@ namespace WebApp_MVC.Controllers
     public class AccountController : Controller
     {
         SatcEntities dtb = new SatcEntities();
+        public AccountController()
+        {
 
+        }
         // El index se accesa cuando no se
         // tiene ningun parametro cuando se acchgede al controlador
         public ActionResult Index()
         {
-            if (TempData["ModalMessage"]!= null)
+            if (TempData["ModalMessage"] != null)
             {
                 ViewBag.ModalMessage = TempData["ModalMessage"].ToString();
                 TempData.Remove("ModalMessage");
             }
 
-            if(Session["user"] != null)
+            if (Session["user"] != null)
             {
                 return RedirectToAction("redirectExito");
             }
@@ -32,7 +35,7 @@ namespace WebApp_MVC.Controllers
         public ActionResult FormLogin(string txt_email, string txt_pass)
         {
             //verifica q la info del usuario no este vacia.
-            if(!string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
+            if (!string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
             {
                 //busca al usuario segun su correo y password.
                 if (dtb.alumno.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
@@ -41,20 +44,21 @@ namespace WebApp_MVC.Controllers
                     var userE = from u in dtb.alumno
                                 where u.correo.Equals(txt_email) & u.password.Equals(txt_pass)
                                 select u;
-                    
+
                     //redireccion hacia exito con el correo del usuario.
-                    Session["user"] = new ModeloUsuario {
+                    Session["user"] = new ModeloUsuario
+                    {
                         apellidos = userE.FirstOrDefault().apellido,
                         nombre = userE.FirstOrDefault().nombre,
                         correo = userE.FirstOrDefault().correo,
                         id_usuario = userE.FirstOrDefault().id_alumno,
                         password = userE.FirstOrDefault().password,
                         tipo_usuario = "a"
-                    } ;
+                    };
 
-                    return RedirectToAction("Exito","Account");
+                    return RedirectToAction("Exito", "Account");
                 }
-                else if(dtb.profesor.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
+                else if (dtb.profesor.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
                 {
                     //busca al usuario y lo selecciona.
                     var userE = from u in dtb.profesor
@@ -73,8 +77,8 @@ namespace WebApp_MVC.Controllers
                     };
 
                     return RedirectToAction("exitoP", "Account");
-                } 
-                else if(dtb.administrador.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
+                }
+                else if (dtb.administrador.FirstOrDefault(u => u.correo.Equals(txt_email) && u.password.Equals(txt_pass)) != null)
                 {
                     //busca al usuario y lo selecciona.
                     var userE = from u in dtb.administrador
@@ -145,7 +149,7 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
         }
-                
+
         public ActionResult Exito()
         {
             //verifica que la session no sea nula.
@@ -158,13 +162,13 @@ namespace WebApp_MVC.Controllers
             {
                 return RedirectToAction("redirectExito");
             }
-            
-            
+
+
         }
 
         public ActionResult exitoAdmin()
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 return View("exitoAdmin");
             }
@@ -199,7 +203,7 @@ namespace WebApp_MVC.Controllers
         }
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> Registrarse(string txt_nombre,
-            string txt_apell, string txt_email, string txt_pass )
+            string txt_apell, string txt_email, string txt_pass)
         {
             try
             {
@@ -327,7 +331,7 @@ namespace WebApp_MVC.Controllers
                 }
                 return View();
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -344,10 +348,10 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult Perfil()
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 //redireccion a perfil con la session q contiene al usuario.
-                return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
+                return View("Perfil", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
             }
             else
             {
@@ -360,7 +364,7 @@ namespace WebApp_MVC.Controllers
             if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 //redireccion a perfil con la session q contiene al usuario.
-                return View("perfilAdm", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
+                return View("perfilAdm", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
             }
             else
             {
@@ -373,7 +377,7 @@ namespace WebApp_MVC.Controllers
             if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 //redireccion a perfil con la session q contiene al usuario.
-                return View("perfilP", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]) );
+                return View("perfilP", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
             }
             else
             {
@@ -390,7 +394,7 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult CambioPass()
         {
-            if(Session["user"] != null)
+            if (Session["user"] != null)
             {
                 //confirmacion de session.
                 return View("CambioPass", ((WebApp_MVC.Models.ModeloUsuario)Session["user"]));
@@ -400,7 +404,7 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult CPassConfirmacion(string p1, string p2)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a") )
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 if (p1.Equals(p2))
                 {
@@ -426,7 +430,7 @@ namespace WebApp_MVC.Controllers
                     return View("CambioPass");
                 }
             }
-            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p") )
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 if (p1.Equals(p2))
                 {
@@ -435,8 +439,8 @@ namespace WebApp_MVC.Controllers
 
                     //selecion del usuario que tiene inicida la sesion.
                     profesor usE = (from u in dtb.profesor
-                                  where u.id_profesor == id
-                                  select u).FirstOrDefault();
+                                    where u.id_profesor == id
+                                    select u).FirstOrDefault();
                     //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
                     usE.password = p1;
                     dtb.SaveChanges();
@@ -461,8 +465,8 @@ namespace WebApp_MVC.Controllers
 
                     //selecion del usuario que tiene inicida la sesion.
                     administrador usE = (from u in dtb.administrador
-                                    where u.id_admin == id
-                                    select u).FirstOrDefault();
+                                         where u.id_admin == id
+                                         select u).FirstOrDefault();
                     //se le cambia el password por al usuario encontrado de la bdd por el pass que entrega la vista.
                     usE.password = p1;
                     dtb.SaveChanges();
@@ -489,7 +493,7 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult DesactCuenta()
         {
-            if(Session["user"] != null)
+            if (Session["user"] != null)
             {
                 return View("DesactCuenta");
             }
@@ -528,7 +532,7 @@ namespace WebApp_MVC.Controllers
                     return View("DesactCuenta");
                 }
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 //se saca la pass de la session para compararla
                 string p2 = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).password;
@@ -539,8 +543,8 @@ namespace WebApp_MVC.Controllers
                     var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
                     //selecion del usuario que tiene inicida la sesion.
                     profesor usE = (from u in dtb.profesor
-                                  where u.id_profesor == id
-                                  select u).FirstOrDefault();
+                                    where u.id_profesor == id
+                                    select u).FirstOrDefault();
                     //se deshabilita el usuario
                     usE.habilitado = 0;
                     dtb.SaveChanges();
@@ -569,8 +573,8 @@ namespace WebApp_MVC.Controllers
                     var id = ((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).id_usuario;
                     //selecion del usuario que tiene inicida la sesion.
                     administrador usE = (from u in dtb.administrador
-                                  where u.id_admin == id
-                                  select u).FirstOrDefault();
+                                         where u.id_admin == id
+                                         select u).FirstOrDefault();
                     //se deshabilita el usuario
                     usE.habilitado = 0;
                     dtb.SaveChanges();
@@ -592,18 +596,18 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
-            
-            
+
+
+
         }
 
-        public ActionResult VerifTomaRamo( int id)
+        public ActionResult VerifTomaRamo(int id)
         {
-            
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 int idTaller = id;
-                return RedirectToAction("TomaRamo",new { id = idTaller});
+                return RedirectToAction("TomaRamo", new { id = idTaller });
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
@@ -611,7 +615,7 @@ namespace WebApp_MVC.Controllers
                 ViewBag.Error = TempData["tipoUser"];
                 return View("exitoP");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 TempData["tipoUser"] = "para tomar un taller debe ser un Alumno";
                 ViewBag.Error = TempData["tipoUser"];
@@ -678,7 +682,7 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
 
-            
+
         }
 
         public ActionResult TalleresTomados()
@@ -739,7 +743,7 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
 
-            
+
         }
 
         public ActionResult talleresACargo()
@@ -838,7 +842,7 @@ namespace WebApp_MVC.Controllers
                     return View("OperacionesTalleres");
                 }
             }
-            else if(Session["user"] != null && ((ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectExito");
             }
@@ -853,102 +857,46 @@ namespace WebApp_MVC.Controllers
 
 
 
-                return View();
-            
+            return View();
+
         }
 
         public ActionResult eliminarTaller(int id)
         {
             if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
-                var asistencias = (from a in dtb.asistencia
-                                   join dt in dtb.det_asist on a.id_asistencia equals dt.asistencia_id_asistencia
-                                   join h in dtb.horario on dt.horario_id_horario equals h.id_horario
-                                   join t in dtb.taller on h.taller_id_taller equals t.id_taller
-                                   where t.id_taller == id
-                                   select new
-                                   {
-                                       idAs = a.id_asistencia,
-                                       idT = t.id_taller
-                                   }).ToList();
-                var dts = (from dt in dtb.det_asist
-                           join h in dtb.horario on dt.horario_id_horario equals h.id_horario
-                           join t in dtb.taller on h.taller_id_taller equals t.id_taller
-                           where t.id_taller == id
-                           select new
-                           {
-                               idDts = dt.id_detalle
-                           }).ToList();
-
-                if (asistencias.Count() != 0)
+                try
                 {
-                    foreach (var asis in asistencias)
+                    // eliminar det_asist
+                    // eliminar asistencia (bonus)
+                    // eliminar horario
+                    // eliminar taller
+
+                    // en ese orden
+
+                    var taller = dtb.taller.FirstOrDefault(t => t.id_taller == id);
+                    foreach (var horario in taller.horario.ToList())
                     {
-
-                        asistencia asist = (from ast in dtb.asistencia
-                                            where ast.id_asistencia == asis.idAs
-                                            select ast).FirstOrDefault();
-
-                        taller tall = (from t in dtb.taller
-                                       where t.id_taller == id
-                                       select t).FirstOrDefault();
-
-                        horario hr = (from h in dtb.horario
-                                      where h.taller_id_taller == tall.id_taller
-                                      select h).FirstOrDefault();
-
-                        det_asist dt = (from dta in dtb.det_asist
-                                        where dta.horario_id_horario == hr.id_horario
-                                        select dta).FirstOrDefault();
-
-
-                        dtb.det_asist.Remove(dt);
-                        dtb.asistencia.Remove(asist);
-                        dtb.horario.Remove(hr);
-                        dtb.taller.Remove(tall);
-                        dtb.SaveChanges();
+                        foreach (var det in horario.det_asist.ToList())
+                        {
+                            dtb.det_asist.Remove(det);
+                        }
+                        dtb.horario.Remove(horario);
                     }
-
-                }
-                else if (dts.Count() != 0)
-                {
-
-
-                    taller tall = (from t in dtb.taller
-                                   where t.id_taller == id
-                                   select t).FirstOrDefault();
-
-                    horario hr = (from h in dtb.horario
-                                  where h.taller_id_taller == tall.id_taller
-                                  select h).FirstOrDefault();
-
-                    det_asist dt = (from dta in dtb.det_asist
-                                    where dta.horario_id_horario == hr.id_horario
-                                    select dta).FirstOrDefault();
-
-                    dtb.det_asist.Remove(dt);
-                    dtb.horario.Remove(hr);
-                    dtb.taller.Remove(tall);
+                    dtb.taller.Remove(taller);
                     dtb.SaveChanges();
-
+                    TempData["ModalMessage"] = "Se ha borrado el taller y la información asociada a él correctamente.";
                     return RedirectToAction("OperacionesTalleres");
                 }
-                else
+                catch (Exception ex)
                 {
-                    taller tall = (from t in dtb.taller
-                                   where t.id_taller == id
-                                   select t).FirstOrDefault();
-
-                    horario hr = (from h in dtb.horario
-                                  where h.taller_id_taller == tall.id_taller
-                                  select h).FirstOrDefault();
-
-                    dtb.horario.Remove(hr);
-                    dtb.taller.Remove(tall);
-                    dtb.SaveChanges();
-
+                    TempData["ModalMessage"] = "Ha ocurrido un error al eliminar el taller, no se realizaron cambios";
+                    System.Diagnostics.Trace.WriteLine($"[{DateTime.Now}] Excepcion ocurrida en Account/eliminarTaller");
+                    System.Diagnostics.Trace.WriteLine(ex.ToString());
                     return RedirectToAction("OperacionesTalleres");
                 }
+                
+
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
@@ -963,7 +911,6 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
 
-            return RedirectToAction("OperacionesTalleres");
         }
 
         public ActionResult crearTaller()
@@ -1000,7 +947,7 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
 
-            
+
         }
 
         public ActionResult creacionTaller(string txt_nombreTaller, string txt_descripcion, int? opt_encargado, TimeSpan? tm_inicio,
@@ -1050,8 +997,8 @@ namespace WebApp_MVC.Controllers
             {
                 List<ModeloTaller> list = new List<ModeloTaller>();
                 var eTall = (from t in dtb.taller
-                                            where t.id_taller == id
-                                            select t).ToList();
+                             where t.id_taller == id
+                             select t).ToList();
 
                 List<modeloProfesores> profesores = new List<modeloProfesores>();
 
@@ -1067,7 +1014,7 @@ namespace WebApp_MVC.Controllers
                     });
                 }
 
-                
+
 
                 foreach (var i in eTall)
                 {
@@ -1134,7 +1081,7 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult tomarAsistencia(int? id)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 List<ModeloUsuario> model = new List<ModeloUsuario>();
                 List<ModeloTaller> mTall = new List<ModeloTaller>();
@@ -1179,11 +1126,11 @@ namespace WebApp_MVC.Controllers
                 ViewBag.listaAl = model;
                 return View("tomarAsistencia");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1191,34 +1138,46 @@ namespace WebApp_MVC.Controllers
             {
                 return RedirectToAction("Index");
             }
-            
+
             return View();
         }
 
         public ActionResult tomaAsistencia(List<int> chk_asist, int? hddn_id)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p")
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p")
                 && hddn_id != null)
             {
-                foreach (int x in chk_asist)
+                try
                 {
-                    det_asist dtAs = new det_asist();
-                    asistencia asist = new asistencia();
+                    chk_asist = chk_asist ?? new List<int>();
+                    foreach (int x in chk_asist)
+                    {
+                        det_asist dtAs = new det_asist();
+                        asistencia asist = new asistencia();
 
-                    asist.fecha = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy hh:mm:ss"));
-                    dtb.asistencia.Add(asist);
+                        asist.fecha = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy hh:mm:ss"));
+                        dtb.asistencia.Add(asist);
 
-                    int idHr = (from h in dtb.horario
-                                where h.taller_id_taller == hddn_id
-                                select h.id_horario).FirstOrDefault();
+                        int idHr = (from h in dtb.horario
+                                    where h.taller_id_taller == hddn_id
+                                    select h.id_horario).FirstOrDefault();
 
-                    dtAs.alumno_id_alumno = x;
-                    dtAs.asistencia_id_asistencia = asist.id_asistencia;
-                    dtAs.horario_id_horario = idHr;
-                    dtb.det_asist.Add(dtAs);
-                    dtb.SaveChanges();
+                        dtAs.alumno_id_alumno = x;
+                        dtAs.asistencia_id_asistencia = asist.id_asistencia;
+                        dtAs.horario_id_horario = idHr;
+                        dtb.det_asist.Add(dtAs);
+                        dtb.SaveChanges();
+                    }
+                    TempData["ModalMessage"] = "La asistencia se ha guardado correctamente!";
+                    return RedirectToAction("talleresACargo");
                 }
-                return RedirectToAction("talleresACargo");
+                catch (Exception ex)
+                {
+                    TempData["ModalMessage"] = "Ha ocurrido un error al guardar la asistencia. Lamentamos las molestias";
+                    System.Diagnostics.Trace.WriteLine($"[{DateTime.Now}] Una excepcion ha ocurrido en Account/TomaAsistencia");
+                    System.Diagnostics.Trace.WriteLine(ex.ToString());
+                    return RedirectToAction("talleresACargo");
+                }
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
@@ -1233,12 +1192,12 @@ namespace WebApp_MVC.Controllers
                 return View("Index");
             }
 
-            
+
         }
 
         public ActionResult OperacionesHorarios()
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 List<modeloHorario> model = new List<modeloHorario>();
 
@@ -1261,11 +1220,11 @@ namespace WebApp_MVC.Controllers
                 ViewBag.lHor = model;
                 return View("OperacionesHorarios");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1273,12 +1232,12 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
+
         }
 
         public ActionResult modHorario(int? id)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
             {
                 List<modeloHorario> hr = new List<modeloHorario>();
 
@@ -1304,11 +1263,11 @@ namespace WebApp_MVC.Controllers
 
                 return View("modHorario");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1316,12 +1275,12 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
+
         }
 
         public ActionResult horarioModificado(int? txt_id, string opt_diaSemana, TimeSpan? tm_inicio, TimeSpan? tm_termino, int? nm_cupo)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && txt_id != null
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && txt_id != null
                && tm_inicio != null && tm_termino != null && nm_cupo != null)
             {
                 horario hrE = (from h in dtb.horario
@@ -1336,11 +1295,11 @@ namespace WebApp_MVC.Controllers
                 dtb.SaveChanges();
                 return RedirectToAction("OperacionesHorarios");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1348,37 +1307,37 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
+
         }
 
         public ActionResult elimHorario(int? id)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 List<asistencia> asistE = (from dt in dtb.det_asist
-                              join a in dtb.asistencia on dt.asistencia_id_asistencia equals a.id_asistencia
-                              where dt.horario_id_horario == id
-                              select a).ToList();
+                                           join a in dtb.asistencia on dt.asistencia_id_asistencia equals a.id_asistencia
+                                           where dt.horario_id_horario == id
+                                           select a).ToList();
 
                 List<det_asist> detE = (from dt in dtb.det_asist
-                              where dt.horario_id_horario == id
-                              select dt).ToList();
+                                        where dt.horario_id_horario == id
+                                        select dt).ToList();
 
-                if(asistE.Count() != 0 && detE.Count() != 0)
+                if (asistE.Count() != 0 && detE.Count() != 0)
                 {
-                    
+
 
                     horario hE = (from h in dtb.horario
-                                   where h.id_horario == id
-                                   select h).FirstOrDefault();
+                                  where h.id_horario == id
+                                  select h).FirstOrDefault();
 
-                    
-                    foreach(det_asist dt in detE)
+
+                    foreach (det_asist dt in detE)
                     {
                         dtb.det_asist.Remove(dt);
                     }
 
-                    foreach(asistencia a in asistE)
+                    foreach (asistencia a in asistE)
                     {
                         dtb.asistencia.Remove(a);
                     }
@@ -1387,9 +1346,9 @@ namespace WebApp_MVC.Controllers
 
                     dtb.SaveChanges();
                     return RedirectToAction("OperacionesHorarios");
-                    
+
                 }
-                else if(detE.Count() != 0 && asistE.Count() == 0)
+                else if (detE.Count() != 0 && asistE.Count() == 0)
                 {
                     foreach (det_asist dt in detE)
                     {
@@ -1416,13 +1375,13 @@ namespace WebApp_MVC.Controllers
                     return RedirectToAction("OperacionesHorarios");
                 }
 
-                
+
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1430,12 +1389,12 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
+
         }
 
         public ActionResult agregarHorario()
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 List<ModeloTaller> lTall = new List<ModeloTaller>();
 
@@ -1445,7 +1404,7 @@ namespace WebApp_MVC.Controllers
                               id = t.id_taller,
                               nombre = t.nombre,
                               desc = t.descripcion,
-                              id_p = t.profesor_id_profesor == null ? (int?)null: 0
+                              id_p = t.profesor_id_profesor == null ? (int?)null : 0
                           }
                           ).ToList();
 
@@ -1461,11 +1420,11 @@ namespace WebApp_MVC.Controllers
                 ViewBag.lT = lTall;
                 return View();
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1473,13 +1432,13 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
-            
+
+
         }
 
         public ActionResult horarioAgregado(string opt_diaSemana, TimeSpan? tm_inicio, TimeSpan? tm_termino, int? nm_cupo, int? opt_taller)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && tm_inicio != null
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && tm_inicio != null
                 && tm_termino != null && nm_cupo != null && opt_taller != null)
             {
                 horario hr = new horario();
@@ -1495,11 +1454,11 @@ namespace WebApp_MVC.Controllers
 
                 return RedirectToAction("OperacionesHorarios");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1511,15 +1470,15 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult OperacionesUsuario()
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 return View();
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1527,12 +1486,12 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
+
         }
 
         public ActionResult OpUsAl()
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A"))
             {
                 List<ModeloUsuario> lAl = new List<ModeloUsuario>();
                 var uAl = (from al in dtb.alumno
@@ -1555,11 +1514,11 @@ namespace WebApp_MVC.Controllers
 
                 return View();
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1567,12 +1526,12 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
+
         }
 
         public ActionResult modificarAl(int? id)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
             {
                 List<ModeloUsuario> al = new List<ModeloUsuario>();
 
@@ -1580,7 +1539,7 @@ namespace WebApp_MVC.Controllers
                            where alu.id_alumno == id
                            select alu).ToList();
 
-                foreach(var x in uAl)
+                foreach (var x in uAl)
                 {
                     al.Add(new ModeloUsuario
                     {
@@ -1597,11 +1556,11 @@ namespace WebApp_MVC.Controllers
 
                 return View();
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1609,7 +1568,7 @@ namespace WebApp_MVC.Controllers
             {
                 return View("Index");
             }
-            
+
         }
 
         public ActionResult AlModificado(int? txt_id, string txt_nombre, string txt_apell, string txt_correo, string txt_contra,
@@ -1622,7 +1581,7 @@ namespace WebApp_MVC.Controllers
                              where a.id_alumno == txt_id
                              select a).FirstOrDefault();
 
-                
+
                 al.nombre = txt_nombre;
                 al.apellido = txt_apell;
                 al.correo = txt_correo;
@@ -1649,69 +1608,97 @@ namespace WebApp_MVC.Controllers
 
         public ActionResult elimAl(int? id)
         {
-            if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
+            if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
             {
-                List<asistencia> asistE = (from a in dtb.asistencia join dt in dtb.det_asist 
-                                           on a.id_asistencia equals dt.asistencia_id_asistencia
+                try
+                {
+                    List<asistencia> asistE = (from a in dtb.asistencia
+                                               join dt in dtb.det_asist
+                  on a.id_asistencia equals dt.asistencia_id_asistencia
+                                               where dt.alumno_id_alumno == id
+                                               select a).ToList();
+
+                    List<det_asist> dtE = (from dt in dtb.det_asist
                                            where dt.alumno_id_alumno == id
-                                           select a).ToList();
+                                           select dt).ToList();
 
-                List<det_asist> dtE = (from dt in dtb.det_asist
-                                       where dt.alumno_id_alumno == id
-                                       select dt).ToList();
+                    // 19.jun.18(jorge) borrar confirmaciones del alumno especificado
+                    var confirmaciones = (from al in dtb.alumno
+                                          where al.id_alumno == id
+                                          from conf in al.confirmacion
 
-                if (asistE.Count() != 0 && dtE.Count() != 0)
-                {
-                    foreach(det_asist dt in dtE)
+                                          select conf).ToList();
+                    if (confirmaciones.Count > 0)
                     {
-                        dtb.det_asist.Remove(dt);
+                        foreach (var confirmacion in confirmaciones)
+                        {
+                            dtb.confirmacion.Remove(confirmacion);
+                        }
+                        dtb.SaveChanges();
                     }
 
-                    foreach(asistencia a in asistE)
+                    if (asistE.Count() != 0 && dtE.Count() != 0)
                     {
-                        dtb.asistencia.Remove(a);
+                        foreach (det_asist dt in dtE)
+                        {
+                            dtb.det_asist.Remove(dt);
+                        }
+
+                        foreach (asistencia a in asistE)
+                        {
+                            dtb.asistencia.Remove(a);
+                        }
+
+                        alumno al = (from a in dtb.alumno
+                                     where a.id_alumno == id
+                                     select a).FirstOrDefault();
+
+
+                        dtb.alumno.Remove(al);
+                        dtb.SaveChanges();
+                        return RedirectToAction("OpUsAl");
+                    }
+                    else if (dtE.Count() != 0)
+                    {
+                        foreach (det_asist dt in dtE)
+                        {
+                            dtb.det_asist.Remove(dt);
+                        }
+                        alumno al = (from a in dtb.alumno
+                                     where a.id_alumno == id
+                                     select a).FirstOrDefault();
+
+                        dtb.alumno.Remove(al);
+                        dtb.SaveChanges();
+                        return RedirectToAction("OpUsAl");
+                    }
+                    else
+                    {
+                        alumno al = (from a in dtb.alumno
+                                     where a.id_alumno == id
+                                     select a).FirstOrDefault();
+
+                        dtb.alumno.Remove(al);
+                        dtb.SaveChanges();
+                        return RedirectToAction("OpUsAl");
                     }
 
-                    alumno al = (from a in dtb.alumno
-                                 where a.id_alumno == id
-                                 select a).FirstOrDefault();
-
-                    dtb.alumno.Remove(al);
-                    dtb.SaveChanges();
-                    return RedirectToAction("OpUsAl");
                 }
-                else if(dtE.Count() != 0)
+                catch (Exception ex)
                 {
-                    foreach (det_asist dt in dtE)
-                    {
-                        dtb.det_asist.Remove(dt);
-                    }
-                    alumno al = (from a in dtb.alumno
-                                 where a.id_alumno == id
-                                 select a).FirstOrDefault();
+                    TempData["ModalMessage"] = "Ha ocurrido un error al realizar los cambios en la aplicacion.";
+                    System.Diagnostics.Trace.WriteLine($"[{DateTime.Now}] Excepcion en Account/ElimAl");
+                    System.Diagnostics.Trace.WriteLine(ex.ToString());
 
-                    dtb.alumno.Remove(al);
-                    dtb.SaveChanges();
-                    return RedirectToAction("OpUsAl");
-                }
-                else
-                {
-                    alumno al = (from a in dtb.alumno
-                                 where a.id_alumno == id
-                                 select a).FirstOrDefault();
-
-                    dtb.alumno.Remove(al);
-                    dtb.SaveChanges();
-                    return RedirectToAction("OpUsAl");
+                    return View("Error");
                 }
 
-                
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
             {
                 return RedirectToAction("redirectPerfil");
             }
-            else if(Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
+            else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("p"))
             {
                 return RedirectToAction("redirectPerfil");
             }
@@ -1727,7 +1714,7 @@ namespace WebApp_MVC.Controllers
             {
                 List<ModeloUsuario> lP = new List<ModeloUsuario>();
                 var uP = (from p in dtb.profesor
-                           select p).ToList();
+                          select p).ToList();
 
                 foreach (var p in uP)
                 {
@@ -1767,8 +1754,8 @@ namespace WebApp_MVC.Controllers
                 List<ModeloUsuario> lP = new List<ModeloUsuario>();
 
                 var uP = (from p in dtb.profesor
-                           where p.id_profesor == id
-                           select p).ToList();
+                          where p.id_profesor == id
+                          select p).ToList();
 
                 foreach (var x in uP)
                 {
@@ -1808,8 +1795,8 @@ namespace WebApp_MVC.Controllers
                 && nm_habilitado != null)
             {
                 profesor uP = (from p in dtb.profesor
-                             where p.id_profesor == txt_id
-                             select p).FirstOrDefault();
+                               where p.id_profesor == txt_id
+                               select p).FirstOrDefault();
 
 
                 uP.nombre = txt_nombre;
@@ -1836,66 +1823,54 @@ namespace WebApp_MVC.Controllers
             }
         }
 
-        //falta terminarlo.
+
         public ActionResult eliminarP(int? id)
         {
             if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
             {
-                List<asistencia> asistE = (from a in dtb.asistencia
-                                           join dt in dtb.det_asist
-                  on a.id_asistencia equals dt.asistencia_id_asistencia
-                                           where dt.alumno_id_alumno == id
-                                           select a).ToList();
-
-                List<det_asist> dtE = (from dt in dtb.det_asist
-                                       where dt.alumno_id_alumno == id
-                                       select dt).ToList();
-
-                if (asistE.Count() != 0 && dtE.Count() != 0)
+                try
                 {
-                    foreach (det_asist dt in dtE)
+                    // borrar det_asist
+                    // borrar horariohttp://localhost:63598/Account/eliminarP/21
+                    // borrar taller
+                    // borrar profesor
+
+                    // en ese orden.
+                    var profesor = (from p in dtb.profesor
+                                    where p.id_profesor == id
+                                    select p).FirstOrDefault();
+                    var talleres = (from t in dtb.taller
+                                    where t.profesor_id_profesor == profesor.id_profesor
+                                    select t);
+                    var taller = profesor.taller.ToList();
+
+                    foreach (var t in profesor.taller.ToList())
                     {
-                        dtb.det_asist.Remove(dt);
+                        foreach (var h in t.horario.ToList())
+                        {
+                            foreach (var d in h.det_asist.ToList())
+                            {
+                                dtb.det_asist.Remove(d);
+                            }
+                            dtb.horario.Remove(h);
+                        }
+                        dtb.taller.Remove(t);
                     }
+                    dtb.profesor.Remove(profesor);
 
-                    foreach (asistencia a in asistE)
-                    {
-                        dtb.asistencia.Remove(a);
-                    }
-
-                    alumno al = (from a in dtb.alumno
-                                 where a.id_alumno == id
-                                 select a).FirstOrDefault();
-
-                    dtb.alumno.Remove(al);
                     dtb.SaveChanges();
-                    return RedirectToAction("OpUsAl");
+                    TempData["ModalMessage"] = "Se ha eliminado correctamente el profesor especificado y todas sus dependencias";
+                    return RedirectToAction("OpUsP");
                 }
-                else if (dtE.Count() != 0)
+                catch (Exception ex)
                 {
-                    foreach (det_asist dt in dtE)
-                    {
-                        dtb.det_asist.Remove(dt);
-                    }
-                    alumno al = (from a in dtb.alumno
-                                 where a.id_alumno == id
-                                 select a).FirstOrDefault();
+                    TempData["ModalMessage"] = "Ha ocurrido un error al realizar la operacion, no se han generado cambios.";
 
-                    dtb.alumno.Remove(al);
-                    dtb.SaveChanges();
-                    return RedirectToAction("OpUsAl");
+                    System.Diagnostics.Trace.WriteLine($"[{DateTime.Now}] Ocurrio una excepcion en Account/OpUsP");
+                    System.Diagnostics.Trace.WriteLine(ex.ToString());
+                    return RedirectToAction("OpUsP");
+
                 }
-                else
-                {
-                    alumno al = (from a in dtb.alumno
-                                 where a.id_alumno == id
-                                 select a).FirstOrDefault();
-
-                    dtb.alumno.Remove(al);
-                    dtb.SaveChanges();
-                    return RedirectToAction("OpUsAl");
-                }
-
 
             }
             else if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("a"))
@@ -1918,7 +1893,7 @@ namespace WebApp_MVC.Controllers
             {
                 List<ModeloUsuario> lAd = new List<ModeloUsuario>();
                 var uAd = (from ad in dtb.administrador
-                          select ad).ToList();
+                           select ad).ToList();
 
                 foreach (var ad in uAd)
                 {
@@ -1958,8 +1933,8 @@ namespace WebApp_MVC.Controllers
                 List<ModeloUsuario> lAd = new List<ModeloUsuario>();
 
                 var uAd = (from p in dtb.administrador
-                          where p.id_admin == id
-                          select p).ToList();
+                           where p.id_admin == id
+                           select p).ToList();
 
                 foreach (var x in uAd)
                 {
@@ -1999,8 +1974,8 @@ namespace WebApp_MVC.Controllers
                 && nm_habilitado != null)
             {
                 administrador uAd = (from ad in dtb.administrador
-                               where ad.id_admin == txt_id
-                               select ad).FirstOrDefault();
+                                     where ad.id_admin == txt_id
+                                     select ad).FirstOrDefault();
 
 
                 uAd.nombre = txt_nombre;
@@ -2084,8 +2059,8 @@ namespace WebApp_MVC.Controllers
             if (Session["user"] != null && ((WebApp_MVC.Models.ModeloUsuario)Session["user"]).tipo_usuario.Equals("A") && id != null)
             {
                 administrador ad = (from a in dtb.administrador
-                             where a.id_admin == id
-                             select a).FirstOrDefault();
+                                    where a.id_admin == id
+                                    select a).FirstOrDefault();
 
                 dtb.administrador.Remove(ad);
                 dtb.SaveChanges();
