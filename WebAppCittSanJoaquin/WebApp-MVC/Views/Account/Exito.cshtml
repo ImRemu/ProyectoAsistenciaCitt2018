@@ -5,18 +5,37 @@
 }
 <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
 
-<div style="background-color:white">
-    <a class="btn btn-primary" @Html.ActionLink("Cerrar Sesion", "LogOut", "Account")</a>
-    <a class="btn btn-primary" @Html.ActionLink("Cambiar Contraseña", "CambioPass", "Account")</a>
-    
-    <h3>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).correo)</h3>
+<div style="align-content:center; text-align:center; background-color:ghostwhite; padding: 5px;border-radius: 10px;">
 
-    
-    <a class="btn btn-primary" @Html.ActionLink("Perfil usuario", "Perfil", "Account")</a>
-    
-    
 
-    
+    <div class="row">
+        <div class="col-sm">
+            <h3>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).correo)</h3>
+            <br />
+
+
+            <div class="row">
+                <div class="col-sm">
+                    <p>♠Perfil usuario mostrara las acciones que usted dispone.</p>
+                </div>
+                <div class="col-sm">
+                    <p>♠Cambiar contraseña le permitira cambiar su credencial de acceso.</p>
+                </div>
+                <div class="col-sm">
+                    <p>♠Cerrar Sesión cerrara su sesión actual.</p>
+                </div>
+            </div>
+
+
+
+
+
+            <a class="btn btn-primary" @Html.ActionLink("Perfil usuario", "Perfil", "Account")</a>
+            <a class="btn btn-primary" @Html.ActionLink("Cambiar Contraseña", "CambioPass", "Account")</a>
+            <a class="btn btn-primary" @Html.ActionLink("Cerrar Sesion", "LogOut", "Account")</a>
+        </div>
+    </div>
+
 
 </div>
 

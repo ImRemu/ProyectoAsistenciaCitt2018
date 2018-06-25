@@ -258,6 +258,7 @@
     <Content Include="Content\img\telefono.png" />
     <Content Include="Content\img\telefono2.png" />
     <Content Include="Content\img\telefono3.png" />
+    <Content Include="Content\img\textura.jpg" />
     <Content Include="Content\img\user.png" />
     <Content Include="Content\loginestilo.css" />
     <Content Include="favicon.ico" />
