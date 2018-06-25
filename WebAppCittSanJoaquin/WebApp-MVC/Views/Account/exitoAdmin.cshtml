@@ -5,15 +5,15 @@
 
 }
 <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
-<div class="container body-content">
+<div class="container body-content" style="justify-content:center;align-items:center;">
     <div class="row">
-        <div class="col-sm" style="justify-content:center;align-items:center;">
+        <div class="col-sm" ">
             
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-content">
                         <div class="card-header-blue">
-                            <h3>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).correo)</h3>
+                            <h3>Bienvenido, @(((WebApp_MVC.Models.ModeloUsuario)(Session["user"])).nombre)</h3>
                         </div>
                         <div class="card-body">
                             <p class="card-p">
