@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "DesactCuenta";
+}
+
+<link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
+<div class="container body-content" style="background-color:white">
+    
+    <h2>Desactivar Cuenta</h2>
+    @using (Html.BeginForm("CuentaDesct", "Account"))
+    {
+        <div>
+            <h2>¿Esta seguro de Desactivar la cuenta?</h2>
+            <div>
+                <table>
+                    <tr>
+                        <td><label>Ingrese la contraseña:</label></td>
+                        <td>
+                            <input class="form-control" type="password" name="txt_pass" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <input type="submit" class="btn btn-primary" name="btn_desactivar" value="Descactivar Cuenta" />
+                            <a class="btn btn-primary" @Html.ActionLink("Volver al perfil", "redirectPerfil", "Account")
+                        </td>
+
+
+
+                    </tr>
+                </table>
+                @ViewBag.Error
+            </div>
+        </div>
+    }
+</div>
+

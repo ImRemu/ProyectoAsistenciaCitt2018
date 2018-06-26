@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "CambiarContrasena";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CambiarContrasena</h2>
+@using (Html.BeginForm("CambiarContrasena", "Home",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Contraseña nueva:
+                <input class="form-control" type="password" name="p1" id="p">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                Repita Contraseña:
+                <input class="form-control" type="password" name="p2" id="p2">
+
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Cambiar Contraseña" />
+        @*<a class="btn btn-primary" href="@Html.ActionLink("Volver a inicio", "redirectExito")"></a>*@
+
+        <br>
+        @ViewBag.Error
+    </div>
+
+}

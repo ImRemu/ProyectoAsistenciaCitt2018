@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e8214601f6aa4f9893c431ecc8ab93fc" Name="Diagram1">
+        <EntityTypeShape EntityType="Satc2Model.administrador" Width="1.5" PointX="5.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.alumno" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.asistencia" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.det_asist" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.horario" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.log_acciones" Width="1.5" PointX="5.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.profesor" Width="1.5" PointX="1.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Satc2Model.taller" Width="1.5" PointX="1.5" PointY="11.625" IsExpanded="true" />
+        <AssociationConnector Association="Satc2Model.det_asist_alumno_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="Satc2Model.det_asist_asistencia_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="Satc2Model.det_asist_horario_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="Satc2Model.horario_taller_fk" ManuallyRouted="false" />
+        <AssociationConnector Association="Satc2Model.taller_profesor_fk" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Satc2Model.confirmacion" Width="1.5" PointX="5.5" PointY="7.125" FillColor="192, 255, 192" />
+        <AssociationConnector Association="Satc2Model.confirmacionalumno" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

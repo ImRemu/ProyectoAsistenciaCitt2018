@@ -1,0 +1,61 @@
+﻿@using WebApp_MVC.Models;
+@{
+    ViewBag.Title = "ModificarP";
+}
+
+<div>
+    <h2>Modificar Profesor</h2>
+
+    @using (Html.BeginForm("pModificado", "Account"))
+    {
+        <table class="table-condensed">
+            @foreach (ModeloUsuario p in ViewBag.lUP)
+            {
+                <tr>
+                    <td>Id:</td>
+                    <td>
+                        <input class="form-control" type="text" name="txt_id" id="txt_id" readonly value="@p.id_usuario " />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Nombre: </td>
+                    <td>
+                        <input class="form-control" type="text" name="txt_nombre" id="txt_nombre" value="@p.nombre" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Apellidos:</td>
+                    <td>
+                        <input class="form-control" type="text" name="txt_apell" id="txt_apell" value="@p.apellidos" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Correo: </td>
+                    <td>
+                        <input class="form-control" type="email" name="txt_correo" id="txt_correo" value="@p.correo" required />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Contraseña: </td>
+                    <td>
+                        <input class="form-control" type="password" name="txt_contra" id="txt_contra" required />
+                    </td>
+                </tr>
+                <tr>    
+                    <td>Habilitado: </td>
+                    <td>
+                        <input class="form-control" type="number" name="nm_habilitado" id="nm_habilitado" required value="@p.habilitado" />
+                    </td>
+                    <td><p>* 0 = no habilitado, 1 > = habilitado.</p></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input class="btn btn-primary" type="submit" name="btn_modificar" id="btn_modificar" value="Modificar" />
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+</div>

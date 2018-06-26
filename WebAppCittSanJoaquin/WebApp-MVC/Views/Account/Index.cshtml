@@ -1,14 +1,18 @@
-﻿
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-
+﻿    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
 @* PARA HACER COMENTARIOS VELOZMENTE USAD ctrl + k, ctrl + c
     Y PARA DESCOMENTAR ctrl + k, ctrl + u
 *@
 @* Aqui va el modelo que usaremos para la etiqueta HTML "form"
     Notese la palabra clave "model"
 *@
-@model WebApp_MVC.Models.FormModel
+@model WebApp_MVC.Models.alumno
+
+@{
+    ViewBag.Title = "Login";
+}
+
 @* Usaremos Ajax para manejar los forms
     FormLogin es el nombre del metodo que controlara el formulario
     AccountController es el nombre del controlador
@@ -21,6 +25,7 @@
 @using (Ajax.BeginForm("FormLogin", "Account",
     new AjaxOptions { LoadingElementId = "Loader", OnSuccess = "Success" }))
 {
+    #region codigo antiguo
     /**
      * Hay un archivo de recursos en una carpeta llamada
      * App_GlobalResources, esta carpeta es accesible en todo
@@ -58,51 +63,63 @@
     //<span>@Recursos.Resources.Campo3Label</span>@Html.TextBoxFor(m => m.CheckBoxData)<br />
     //<br /><input type="submit" name="name" value="Subir datos nulos" />
     /**Desde este punto introduzco  login nuevo**/
+    #endregion
     <div class="container">
         <div class="row">
-            <div class="col-md-4 col-md-offset-7">
+            <div class="col-md-4 col-md-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span class="glyphicon glyphicon-lock"></span> <h2>Inicio de Sesion</h2>
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label for="email" class="col-sm-3 control-label">
-                                    Email
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="email" class="form-control" id="email" placeholder="Email..." required>
+                        @using (Html.BeginForm())
+                        {
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-3 control-label">
+                                        Email:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="email" name="txt_email" id="txt_email" placeholder="Email..." required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="password" class="col-sm-3 control-label">
-                                    Password
-                                </label>
-                                <div class="col-sm-9">
-                                    <input type="password" class="form-control" id="password" placeholder="Contraseña..." required>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-3 control-label">
+                                        Password:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control" type="password" name="txt_pass" id="txt_pass" placeholder="Constraseña..." required>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <div class="olvidaste">
-                                        <label>
-                                            @Html.ActionLink("¿Olvidaste tu contraseña?", "Recuperacion", "Account")
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <div class="olvidaste">
+                                            <label>
+                                                @Html.ActionLink("¿Olvidaste tu contraseña?", "Recuperacion", "Account")
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group last">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-success btn-sm">
+                                            Ingresar
+                                        </button>
+                                        <button type="reset" class="btn btn-default btn-sm">
+                                            Limpiar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group last">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                        <label for="error">
+                                            @ViewBag.Error
+
                                         </label>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group last">
-                                <div class="col-sm-offset-3 col-sm-9">
-                                    <button type="submit" class="btn btn-success btn-sm">
-                                        Ingresar
-                                    </button>
-                                    <button type="reset" class="btn btn-default btn-sm">
-                                        Limpiar
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        }
                     </div>
                     <div class="panel-footer">
                         @Html.ActionLink("¿No estas Registrado?", "Registrarse", "Account")
@@ -112,9 +129,3 @@
         </div>
     </div>
 }
-
-
-@{
-
-}
-

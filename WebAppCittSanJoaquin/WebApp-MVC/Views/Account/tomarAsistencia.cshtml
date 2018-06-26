@@ -1,0 +1,68 @@
+﻿@using WebApp_MVC.Models;
+@{
+    ViewBag.Title = "Toma de Asistencia";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div align="center">
+                <a class="btn btn-primary" @Html.ActionLink("Volver", "talleresACargo", "Account")</a>
+            </div>
+            <h1>Toma de Asistencia</h1>
+            <hr />
+            @using (Html.BeginForm("tomaAsistencia", "Account"))
+             {
+                foreach(ModeloTaller t in ViewBag.iTall)
+                {
+                    <input type="hidden" name="hddn_id" id="hddn_id" value="@t.id_taller"/>
+                    <div align="center">
+                        <h2>
+                            @Html.DisplayFor(x => t.nombre)
+                        </h2>
+                    </div>
+                    
+                    <div align="center">
+                        <h3>
+                            @Html.DisplayFor(x => t.descripcion)
+                        </h3>
+                    </div>
+                }
+                <table class="table">
+                    <tr>
+                        <th>
+                            id:
+                        </th>
+                        <th>
+                            Nombre:
+                        </th>
+                        <th>
+                            Asistencia:
+                        </th>
+                    </tr>
+                    @foreach (ModeloUsuario al in ViewBag.listaAl)
+                     {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(x => al.id_usuario)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(x => al.nombre)
+                            </td>
+                            <td>
+                                @*@Html.CheckBox("chk_asist", @al.id_usuario);*@
+                                @*@Html.Hidden("chk_asist", @al.id_usuario)*@
+                                <input type="checkbox" id="chk_asist" name="chk_asist" value="@al.id_usuario" />
+                            </td>
+                        </tr>
+                     }
+                </table>
+                <div align="center">
+                    <input class="btn btn-primary" type="submit" name="btn_ingAsist" id="btn_ingAsist" value="Ingresar Asistencia" />
+                </div>
+             }
+        </div>
+    </div>
+</div>
+
+

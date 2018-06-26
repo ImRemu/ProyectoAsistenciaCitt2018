@@ -1,0 +1,579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Satc2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="administrador">
+          <Key>
+            <PropertyRef Name="id_admin" />
+          </Key>
+          <Property Name="id_admin" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellidos" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="habilitado" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="alumno">
+          <Key>
+            <PropertyRef Name="id_alumno" />
+          </Key>
+          <Property Name="id_alumno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellido" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="habilitado" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="alumno_confirmacion">
+          <Key>
+            <PropertyRef Name="id_alumno" />
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_alumno" Type="int" Nullable="false" />
+          <Property Name="id_confirmacion" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="asistencia">
+          <Key>
+            <PropertyRef Name="id_asistencia" />
+          </Key>
+          <Property Name="id_asistencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="confirmacion">
+          <Key>
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_confirmacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="habilitado" Type="bit" Nullable="false" />
+          <Property Name="tipo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="det_asist">
+          <Key>
+            <PropertyRef Name="id_detalle" />
+          </Key>
+          <Property Name="id_detalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="alumno_id_alumno" Type="int" Nullable="false" />
+          <Property Name="asistencia_id_asistencia" Type="int" />
+          <Property Name="horario_id_horario" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="horario">
+          <Key>
+            <PropertyRef Name="id_horario" />
+          </Key>
+          <Property Name="id_horario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hora_inicio" Type="time" Precision="7" Nullable="false" />
+          <Property Name="hora_termino" Type="time" Precision="7" Nullable="false" />
+          <Property Name="dia_semana" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="cupo" Type="int" Nullable="false" />
+          <Property Name="taller_id_taller" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="log_acciones">
+          <Key>
+            <PropertyRef Name="id_acciones" />
+          </Key>
+          <Property Name="id_acciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+          <Property Name="accion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="nombre_ejecucion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_ejecutor" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="profesor">
+          <Key>
+            <PropertyRef Name="id_profesor" />
+          </Key>
+          <Property Name="id_profesor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="apellidos" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="char" MaxLength="32" Nullable="false" />
+          <Property Name="habilitado" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="taller">
+          <Key>
+            <PropertyRef Name="id_taller" />
+          </Key>
+          <Property Name="id_taller" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="100" />
+          <Property Name="profesor_id_profesor" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__alumno_co__id_al__6FE99F9F">
+          <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
+          <End Role="alumno_confirmacion" Type="Self.alumno_confirmacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="id_alumno" />
+            </Principal>
+            <Dependent Role="alumno_confirmacion">
+              <PropertyRef Name="id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__alumno_co__id_co__70DDC3D8">
+          <End Role="confirmacion" Type="Self.confirmacion" Multiplicity="1" />
+          <End Role="alumno_confirmacion" Type="Self.alumno_confirmacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="confirmacion">
+              <PropertyRef Name="id_confirmacion" />
+            </Principal>
+            <Dependent Role="alumno_confirmacion">
+              <PropertyRef Name="id_confirmacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_det_asist_alumno_fk">
+          <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="id_alumno" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="alumno_id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_det_asist_asistencia_fk">
+          <End Role="asistencia" Type="Self.asistencia" Multiplicity="0..1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="asistencia">
+              <PropertyRef Name="id_asistencia" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="asistencia_id_asistencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_det_asist_horario_fk">
+          <End Role="horario" Type="Self.horario" Multiplicity="1" />
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="horario">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="horario_id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_horario_taller_fk">
+          <End Role="taller" Type="Self.taller" Multiplicity="1" />
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taller">
+              <PropertyRef Name="id_taller" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="taller_id_taller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taller_profesor_fk">
+          <End Role="profesor" Type="Self.profesor" Multiplicity="1" />
+          <End Role="taller" Type="Self.taller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="profesor">
+              <PropertyRef Name="id_profesor" />
+            </Principal>
+            <Dependent Role="taller">
+              <PropertyRef Name="profesor_id_profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Satc2ModelStoreContainer">
+          <EntitySet Name="administrador" EntityType="Self.administrador" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="alumno" EntityType="Self.alumno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="alumno_confirmacion" EntityType="Self.alumno_confirmacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="asistencia" EntityType="Self.asistencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="confirmacion" EntityType="Self.confirmacion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="det_asist" EntityType="Self.det_asist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="horario" EntityType="Self.horario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log_acciones" EntityType="Self.log_acciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="profesor" EntityType="Self.profesor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="taller" EntityType="Self.taller" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__alumno_co__id_al__6FE99F9F" Association="Self.FK__alumno_co__id_al__6FE99F9F">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="alumno_confirmacion" EntitySet="alumno_confirmacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__alumno_co__id_co__70DDC3D8" Association="Self.FK__alumno_co__id_co__70DDC3D8">
+            <End Role="confirmacion" EntitySet="confirmacion" />
+            <End Role="alumno_confirmacion" EntitySet="alumno_confirmacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_det_asist_alumno_fk" Association="Self.FK_det_asist_alumno_fk">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_det_asist_asistencia_fk" Association="Self.FK_det_asist_asistencia_fk">
+            <End Role="asistencia" EntitySet="asistencia" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_det_asist_horario_fk" Association="Self.FK_det_asist_horario_fk">
+            <End Role="horario" EntitySet="horario" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_horario_taller_fk" Association="Self.FK_horario_taller_fk">
+            <End Role="taller" EntitySet="taller" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taller_profesor_fk" Association="Self.FK_taller_profesor_fk">
+            <End Role="profesor" EntitySet="profesor" />
+            <End Role="taller" EntitySet="taller" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Satc2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="administrador">
+          <Key>
+            <PropertyRef Name="id_admin" />
+          </Key>
+          <Property Name="id_admin" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidos" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="habilitado" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="alumno">
+          <Key>
+            <PropertyRef Name="id_alumno" />
+          </Key>
+          <Property Name="id_alumno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="habilitado" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="det_asist" Relationship="Self.det_asist_alumno_fk" FromRole="alumno" ToRole="det_asist" />
+          <NavigationProperty Name="confirmacion" Relationship="Satc2Model.confirmacionalumno" FromRole="alumno" ToRole="confirmacion" />
+        </EntityType>
+        <EntityType Name="asistencia">
+          <Key>
+            <PropertyRef Name="id_asistencia" />
+          </Key>
+          <Property Name="id_asistencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="det_asist" Relationship="Self.det_asist_asistencia_fk" FromRole="asistencia" ToRole="det_asist" />
+        </EntityType>
+        <EntityType Name="det_asist">
+          <Key>
+            <PropertyRef Name="id_detalle" />
+          </Key>
+          <Property Name="id_detalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="alumno_id_alumno" Type="Int32" Nullable="false" />
+          <Property Name="asistencia_id_asistencia" Type="Int32" />
+          <Property Name="horario_id_horario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="alumno" Relationship="Self.det_asist_alumno_fk" FromRole="det_asist" ToRole="alumno" />
+          <NavigationProperty Name="asistencia" Relationship="Self.det_asist_asistencia_fk" FromRole="det_asist" ToRole="asistencia" />
+          <NavigationProperty Name="horario" Relationship="Self.det_asist_horario_fk" FromRole="det_asist" ToRole="horario" />
+        </EntityType>
+        <EntityType Name="horario">
+          <Key>
+            <PropertyRef Name="id_horario" />
+          </Key>
+          <Property Name="id_horario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hora_inicio" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="hora_termino" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="dia_semana" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cupo" Type="Int32" Nullable="false" />
+          <Property Name="taller_id_taller" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="det_asist" Relationship="Self.det_asist_horario_fk" FromRole="horario" ToRole="det_asist" />
+          <NavigationProperty Name="taller" Relationship="Self.horario_taller_fk" FromRole="horario" ToRole="taller" />
+        </EntityType>
+        <EntityType Name="log_acciones">
+          <Key>
+            <PropertyRef Name="id_acciones" />
+          </Key>
+          <Property Name="id_acciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="accion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre_ejecucion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_ejecutor" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="profesor">
+          <Key>
+            <PropertyRef Name="id_profesor" />
+          </Key>
+          <Property Name="id_profesor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellidos" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="32" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="habilitado" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="taller" Relationship="Self.taller_profesor_fk" FromRole="profesor" ToRole="taller" />
+        </EntityType>
+        <EntityType Name="taller">
+          <Key>
+            <PropertyRef Name="id_taller" />
+          </Key>
+          <Property Name="id_taller" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="profesor_id_profesor" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="horario" Relationship="Self.horario_taller_fk" FromRole="taller" ToRole="horario" />
+          <NavigationProperty Name="profesor" Relationship="Self.taller_profesor_fk" FromRole="taller" ToRole="profesor" />
+        </EntityType>
+        <Association Name="det_asist_alumno_fk">
+          <End Role="alumno" Type="Self.alumno" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="alumno">
+              <PropertyRef Name="id_alumno" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="alumno_id_alumno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="det_asist_asistencia_fk">
+          <End Role="asistencia" Type="Self.asistencia" Multiplicity="0..1" >
+          </End>
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="asistencia">
+              <PropertyRef Name="id_asistencia" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="asistencia_id_asistencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="det_asist_horario_fk">
+          <End Role="horario" Type="Self.horario" Multiplicity="1" >
+          </End>
+          <End Role="det_asist" Type="Self.det_asist" Multiplicity="*" >
+          </End>
+          <ReferentialConstraint>
+            <Principal Role="horario">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="det_asist">
+              <PropertyRef Name="horario_id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="horario_taller_fk">
+          <End Role="taller" Type="Self.taller" Multiplicity="1" >
+          </End>
+          <End Role="horario" Type="Self.horario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taller">
+              <PropertyRef Name="id_taller" />
+            </Principal>
+            <Dependent Role="horario">
+              <PropertyRef Name="taller_id_taller" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="taller_profesor_fk">
+          <End Role="profesor" Type="Self.profesor" Multiplicity="1" >
+          </End>
+          <End Role="taller" Type="Self.taller" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="profesor">
+              <PropertyRef Name="id_profesor" />
+            </Principal>
+            <Dependent Role="taller">
+              <PropertyRef Name="profesor_id_profesor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SatcEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="administrador" EntityType="Self.administrador" />
+          <EntitySet Name="alumno" EntityType="Self.alumno" />
+          <EntitySet Name="asistencia" EntityType="Self.asistencia" />
+          <EntitySet Name="det_asist" EntityType="Self.det_asist" />
+          <EntitySet Name="horario" EntityType="Self.horario" />
+          <EntitySet Name="log_acciones" EntityType="Self.log_acciones" />
+          <EntitySet Name="profesor" EntityType="Self.profesor" />
+          <EntitySet Name="taller" EntityType="Self.taller" />
+          <AssociationSet Name="det_asist_alumno_fk" Association="Self.det_asist_alumno_fk">
+            <End Role="alumno" EntitySet="alumno" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="det_asist_asistencia_fk" Association="Self.det_asist_asistencia_fk">
+            <End Role="asistencia" EntitySet="asistencia" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="det_asist_horario_fk" Association="Self.det_asist_horario_fk">
+            <End Role="horario" EntitySet="horario" />
+            <End Role="det_asist" EntitySet="det_asist" />
+          </AssociationSet>
+          <AssociationSet Name="horario_taller_fk" Association="Self.horario_taller_fk">
+            <End Role="taller" EntitySet="taller" />
+            <End Role="horario" EntitySet="horario" />
+          </AssociationSet>
+          <AssociationSet Name="taller_profesor_fk" Association="Self.taller_profesor_fk">
+            <End Role="profesor" EntitySet="profesor" />
+            <End Role="taller" EntitySet="taller" />
+          </AssociationSet>
+          <EntitySet Name="confirmacion" EntityType="Satc2Model.confirmacion" />
+          <AssociationSet Name="confirmacionalumno" Association="Satc2Model.confirmacionalumno">
+            <End Role="confirmacion" EntitySet="confirmacion" />
+            <End Role="alumno" EntitySet="alumno" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="confirmacion">
+          <Key>
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_confirmacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="habilitado" Type="Boolean" Nullable="false" />
+          <Property Name="tipo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="alumno" Relationship="Satc2Model.confirmacionalumno" FromRole="confirmacion" ToRole="alumno" />
+        </EntityType>
+        <Association Name="confirmacionalumno">
+          <End Type="Satc2Model.confirmacion" Role="confirmacion" Multiplicity="*" >
+          </End>
+          <End Type="Satc2Model.alumno" Role="alumno" Multiplicity="*" >
+          </End>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Satc2ModelStoreContainer" CdmEntityContainer="SatcEntities">
+          <EntitySetMapping Name="administrador">
+            <EntityTypeMapping TypeName="Satc2Model.administrador">
+              <MappingFragment StoreEntitySet="administrador">
+                <ScalarProperty Name="id_admin" ColumnName="id_admin" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="habilitado" ColumnName="habilitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="alumno">
+            <EntityTypeMapping TypeName="Satc2Model.alumno">
+              <MappingFragment StoreEntitySet="alumno">
+                <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="habilitado" ColumnName="habilitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="asistencia">
+            <EntityTypeMapping TypeName="Satc2Model.asistencia">
+              <MappingFragment StoreEntitySet="asistencia">
+                <ScalarProperty Name="id_asistencia" ColumnName="id_asistencia" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="det_asist">
+            <EntityTypeMapping TypeName="Satc2Model.det_asist">
+              <MappingFragment StoreEntitySet="det_asist">
+                <ScalarProperty Name="id_detalle" ColumnName="id_detalle" />
+                <ScalarProperty Name="alumno_id_alumno" ColumnName="alumno_id_alumno" />
+                <ScalarProperty Name="asistencia_id_asistencia" ColumnName="asistencia_id_asistencia" />
+                <ScalarProperty Name="horario_id_horario" ColumnName="horario_id_horario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="horario">
+            <EntityTypeMapping TypeName="Satc2Model.horario">
+              <MappingFragment StoreEntitySet="horario">
+                <ScalarProperty Name="id_horario" ColumnName="id_horario" />
+                <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+                <ScalarProperty Name="hora_termino" ColumnName="hora_termino" />
+                <ScalarProperty Name="dia_semana" ColumnName="dia_semana" />
+                <ScalarProperty Name="cupo" ColumnName="cupo" />
+                <ScalarProperty Name="taller_id_taller" ColumnName="taller_id_taller" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_acciones">
+            <EntityTypeMapping TypeName="Satc2Model.log_acciones">
+              <MappingFragment StoreEntitySet="log_acciones">
+                <ScalarProperty Name="id_acciones" ColumnName="id_acciones" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="accion" ColumnName="accion" />
+                <ScalarProperty Name="nombre_ejecucion" ColumnName="nombre_ejecucion" />
+                <ScalarProperty Name="id_ejecutor" ColumnName="id_ejecutor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="profesor">
+            <EntityTypeMapping TypeName="Satc2Model.profesor">
+              <MappingFragment StoreEntitySet="profesor">
+                <ScalarProperty Name="id_profesor" ColumnName="id_profesor" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellidos" ColumnName="apellidos" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="habilitado" ColumnName="habilitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="taller">
+            <EntityTypeMapping TypeName="Satc2Model.taller">
+              <MappingFragment StoreEntitySet="taller">
+                <ScalarProperty Name="id_taller" ColumnName="id_taller" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="profesor_id_profesor" ColumnName="profesor_id_profesor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="confirmacion">
+            <EntityTypeMapping TypeName="Satc2Model.confirmacion">
+              <MappingFragment StoreEntitySet="confirmacion">
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="habilitado" ColumnName="habilitado" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="id_confirmacion" ColumnName="id_confirmacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="confirmacionalumno" TypeName="Satc2Model.confirmacionalumno" StoreEntitySet="alumno_confirmacion">
+            <EndProperty Name="alumno">
+              <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
+            </EndProperty>
+            <EndProperty Name="confirmacion">
+              <ScalarProperty Name="id_confirmacion" ColumnName="id_confirmacion" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="True" />
+        <DesignerProperty Name="SynchronizePropertyFacets" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,16 +1,29 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="~/Content/loginestilo.css" rel="stylesheet" id="login-css">
+
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <style>
+        li {
+            font-family: myriad-pro-condensed, sans-serif;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 13px;
+            color: #FFFFFF;
+            src: url("~/Content/font/911Fonts.com_MyriadProSemiboldSemiExtended__-_911fonts.com_fonts_hPxq.ttf");
+        }
+    </style>
 </head>
-<body>  
-    <div class="navbar navbar-inverse navbar-fixed-top">
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" id="navgeneral">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,28 +31,77 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nombre de aplicación", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Inicio Citt", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Iniciar Sesion", "Index","Account")</li>
-                    <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>
+                    <li>
+                        @if (Session["user"] != null)
+                        {
+                            @Html.ActionLink("MENU BIENVENIDA", "redirectExito", "Account")
+                        }
+                        else
+                        {
+                            @Html.ActionLink("INICIAR SESION", "Index", "Account")
+                        }
+                    </li>
+                    <li>@Html.ActionLink("ACERCA DE", "About", "Home")</li>
+                    <li>@Html.ActionLink("CONTACTO", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("LISTA TALLERES", "ListaTalleres", "Home")</li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
-        
-        <footer class="">
+
+        <footer class="footer">
             <p>&copy; @DateTime.Now.Year - Informaticos Sin Neumaticos</p>
         </footer>
+
+        @if (TempData["ModalMessage"]!=null)
+        {
+            ViewBag.ModalMessage = TempData["ModalMessage"];    
+        }
+        @if (ViewBag.ModalMessage != null)
+        {<!-- modal-->
+            <script>
+                $().ready(function () {
+                    $('#modalMensaje').modal("show");
+                });
+            </script>
+            <div class="modal fade" id="modalMensaje" tabindex="-1" role="dialog" aria-labelledby="modalMensajeLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalMensajeLabel">Informacion</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @if (ViewBag.ModalMessage != null)
+                            {
+                                @ViewBag.ModalMessage
+                            }
+                            else
+                            {
+                                @Html.Raw(@"Usaste el modal pero no diste atributos...")
+                            }
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            @*<button type="button" class="btn btn-primary">Save changes</button>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- fin modal-->
+        }
+
+
+
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

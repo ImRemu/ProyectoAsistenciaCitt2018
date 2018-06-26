@@ -1,0 +1,55 @@
+﻿@using WebApp_MVC.Models;
+@{
+    ViewBag.Title = "Agregar Administrador";
+}
+
+<div>
+    <h2>Ingresar Administrador</h2>
+    <a class="btn btn-primary" style="padding:3px" @Html.ActionLink("Volver", "OpUsA", "Account") </a>
+    @using (Html.BeginForm("AdAgregado", "Account"))
+    {
+        <table class="table-condensed">
+
+
+            <tr>
+                <td>Nombre: </td>
+                <td>
+                    <input class="form-control" type="text" name="txt_nombre" id="txt_nombre" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Apellidos:</td>
+                <td>
+                    <input class="form-control" type="text" name="txt_apell" id="txt_apell" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Correo: </td>
+                <td>
+                    <input class="form-control" type="email" name="txt_correo" id="txt_correo" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Contraseña: </td>
+                <td>
+                    <input class="form-control" type="password" name="txt_contra" id="txt_contra" required />
+                </td>
+            </tr>
+            <tr>
+                <td>Habilitado: </td>
+                <td>
+                    <input class="form-control" type="number" name="nm_habilitado" id="nm_habilitado" required />
+                </td>
+                <td><p>* 0 = no habilitado, 1 > = habilitado.</p></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input class="btn btn-primary" type="submit" name="btn_modificar" id="btn_modificar" value="Modificar" />
+                </td>
+            </tr>
+
+
+        </table>
+    }
+</div>

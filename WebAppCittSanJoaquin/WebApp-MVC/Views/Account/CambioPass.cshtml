@@ -1,0 +1,42 @@
+﻿@model WebApp_MVC.Models.ModeloUsuario
+
+@{
+    ViewBag.Title = "CambioPass";
+}
+<link href="~/Content/baseestilo.css" rel="stylesheet" />
+<div class="container body-content" style="background-color:white">
+    <h2>Cambio de Contraseña</h2>
+
+    @using (Html.BeginForm("CPassConfirmacion", "Account"))
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @ViewBag.Hecho
+        <hr />
+
+        <div class="form-group">
+            <div class="col-md-10">
+                Contraseña nueva:
+                <input class="form-control" type="password" name="p1" id="p">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                Repita Contraseña:
+                <input class="form-control" type="password" name="p2" id="p2">
+
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Cambiar Contraseña" />
+        @*<a class="btn btn-primary" href="@Html.ActionLink("Volver a inicio", "redirectExito")"></a>*@
+            
+            <br>
+            @ViewBag.Error
+    </div>
+
+    }
+
+    
+</div>
+

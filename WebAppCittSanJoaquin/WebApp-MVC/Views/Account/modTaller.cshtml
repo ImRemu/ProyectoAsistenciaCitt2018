@@ -1,0 +1,65 @@
+﻿@using WebApp_MVC.Models;
+@{
+    ViewBag.Title = "modTaller";
+}
+
+<div>
+    <div class="radio media-middle" align="center">
+        <a class="btn btn-primary" @Html.ActionLink("Volver", "OperacionesTalleres", "Account")</a>
+        <h2>Modificacion de Taller</h2>
+        @using (Html.BeginForm("modificTaller", "Account"))
+        {
+
+            <hr />
+            <table class="table-condensed">
+                @foreach (ModeloTaller item in ViewBag.lTall)
+                {
+                    <tr>
+                        <td>Id taller: </td>
+                        <td>
+                            <input class="form-control" type="number" id="txt_idT" name="txt_idT" value="@item.id_taller" readonly/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nombre: </td>
+                        <td>
+                            <input class="form-control" type="text" id="txt_nombre" name="txt_nombre" value="@item.nombre" required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Descripcion: </td>
+                        <td>
+                            <input class="form-control" type="text" id="txt_descripcion" name="txt_descripcion" value="@item.descripcion" required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Id Encargado</td>
+                        <td>
+                            <input class="form-control" type="number" id="txt_idE" name="txt_idE" value="@item.id_encargado" readonly/>
+                        </td>
+                    </tr>
+                    
+                }
+                <tr>
+                    <td>Elija el nuevo Encargado:</td>
+                    <td>
+                        <select class="form-control"     name="opt_encargado" id="opt_encargado" required>
+                            <option disabled selected value="">Seleccione un encargado</option>
+                            @foreach (modeloProfesores p in ViewBag.lP)
+                            {
+                                <option value="@p.id_profesor">@p.nombre</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input class="btn btn-primary" type="submit" id="btn_mod" name="btn_mod" value="Modificar"/>
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+</div>
+
