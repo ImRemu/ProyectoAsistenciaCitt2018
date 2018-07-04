@@ -1,4 +1,4 @@
-﻿using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +38,7 @@ namespace WebApp_MVC.Controllers
                     {
                         throw new Exception("No existe un alumno con el correo establecido");
                     }
+
                     switch ((TipoConfirmacion)confirmacion.tipo)
                     {
                         case TipoConfirmacion.ConfirmacionMail:
@@ -63,7 +64,6 @@ namespace WebApp_MVC.Controllers
                         default:
                             throw new Exception("Excepcion al recuperar el tipo de confirmacion de la base de datos");
                     }
-
                 }
             }
             catch (Exception ex)
@@ -154,6 +154,7 @@ namespace WebApp_MVC.Controllers
                 System.Diagnostics.Trace.WriteLine(ex.Message);
                 System.Diagnostics.Trace.WriteLine(ex.ToString());
                 ViewBag.ModalMessage = ex.Message;
+
                 telemetry.TrackException(ex, new Dictionary<string, string> { { "Controlador: ", "MailController" } });
 
                 return View("Error");
@@ -161,7 +162,22 @@ namespace WebApp_MVC.Controllers
             }
         }
 
-
+        /// <summary>
+        /// crea un codigo de confirmacion para el cambio de contraseña
+        /// </summary>
+        [HttpPost]
+        public async Task<ActionResult> CrearMailCambio(string txtMail)
+        {
+            throw new NotImplementedException("Modulo cambio contraseña mail");
+            if (!FuncionesEmail.IsValidEmail(txtMail))
+            {
+                throw new ArgumentException("Email");
+            }
+            using (Models.SatcEntities entity = new SatcEntities())
+            {
+                return null;
+            }
+        }
     }
     public enum TipoConfirmacion
     {

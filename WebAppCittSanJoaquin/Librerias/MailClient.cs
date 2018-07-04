@@ -9,7 +9,7 @@ namespace Librerias
 {
     public class MailClient
     {
-        const string API_KEY = "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";
+        const string API_KEY = "**REMOVED**";
         const string MAIL_ENVIADOR_CORREO = "jorgito@talleres.citt.cl";
         const string NOMBRE_ENVIADOR_CORREO = "Bot Jorgito";
         const string NOMBRE_ALUMNO = "Alumno";

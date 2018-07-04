@@ -203,9 +203,19 @@ namespace WebApp_MVC.Controllers
         }
         [HttpPost]
         public async System.Threading.Tasks.Task<ActionResult> Registrarse(string txt_nombre,
-            string txt_apell, string txt_email, string txt_pass)
+
+            string txt_apell, string txt_email, string txt_pass )
         {
-            try
+            log_acciones log = new log_acciones();
+        try {
+            if (!FuncionesEmail.IsValidEmail(txt_email))
+            {
+                throw new Exception("Email invalido");
+            }
+
+            //verifica si recibe nulos o vacios.
+            if(!string.IsNullOrEmpty(txt_nombre) && !string.IsNullOrEmpty(txt_apell) &&
+               !string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
             {
                 log_acciones log = new log_acciones();
 
@@ -218,71 +228,60 @@ namespace WebApp_MVC.Controllers
                 if (!string.IsNullOrEmpty(txt_nombre) && !string.IsNullOrEmpty(txt_apell) &&
                    !string.IsNullOrEmpty(txt_email) && !string.IsNullOrEmpty(txt_pass))
                 {
-                    if (dtb.alumno.FirstOrDefault(u => u.correo.Equals(txt_email)) != null)
+
+                    //se genera un log de accion
+                    log.fecha = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy hh:mm:ss"));
+                    log.accion = "Creacion de Usuario Alumno";
+                    log.nombre_ejecucion = "Usuario Nuevo";
+                    log.id_ejecutor = 0;
+                    //se le da la habilitacion, 0 = no habilitado, y el tipo usuario.
+                    alumno userAl = new alumno
                     {
-                        //en el caso de algun error manda un mensaje que se muestra en la vista registrarse.
-                        TempData["error"] = "El email ya esta en uso";
-                        ViewBag.Error = TempData["error"];
-                        return View("Registrarse");
-                    }
-                    else
+                        nombre = txt_nombre,
+                        apellido = txt_apell,
+                        correo = txt_email,
+                        password = txt_pass,
+                        habilitado = 0
+                    };
+                    #region confirmacion email
+                    Guid guid = Guid.NewGuid();
+
+                    string url = "http://" + this.Request.Url.Authority + "/Confirmar/";
+                    System.Diagnostics.Trace.WriteLine($"[{DateTime.Now}] Enviando mail con URL {url + guid}");
+
+                    confirmacion conf = new confirmacion
                     {
-                        //se genera un log de accion
-                        log.fecha = Convert.ToDateTime(DateTime.Now.ToString("dd-MM-yy hh:mm:ss"));
-                        log.accion = "Creacion de Usuario Alumno";
-                        log.nombre_ejecucion = "Usuario Nuevo";
-                        log.id_ejecutor = 0;
-                        //se le da la habilitacion, 0 = no habilitado, y el tipo usuario.
-                        alumno userAl = new alumno
-                        {
-                            nombre = txt_nombre,
-                            apellido = txt_apell,
-                            correo = txt_email,
-                            password = txt_pass,
-                            habilitado = 0
-                        };
-                        #region confirmacion email
-                        Guid guid = Guid.NewGuid();
+                        alumno = new List<alumno>() { userAl },
+                        fecha = DateTime.Now,
+                        guid = guid,
+                        habilitado = true,
+                        tipo = (int)TipoConfirmacion.ConfirmacionMail,
+                    };
+                    var tarea = await Librerias.MailClient.EnviarMensajeRegistro(txt_email, url, guid.ToString().ToUpper());
 
-                        string url = "http://" + this.Request.Url.Authority + "/Confirmar/";
-                        System.Diagnostics.Trace.WriteLine($"[{DateTime.Now}] Enviando mail con URL {url + guid}");
-
-                        confirmacion conf = new confirmacion
-                        {
-
-
-                            fecha = DateTime.Now,
-                            guid = guid,
-                            habilitado = true,
-                            tipo = (int)TipoConfirmacion.ConfirmacionMail,
-                        };
-                        conf.alumno.Add(userAl);
-                        var tarea = await Librerias.MailClient.EnviarMensajeRegistro(txt_email, url, guid.ToString().ToUpper());
-
-                        if (!tarea)
-                        {
-                            throw new Exception("Error al enviar el mail al correo especificado");
-                        }
-
-
-
-                        #endregion
-
-
-                        //se guardan los cambios en la base de datos.
-                        dtb.alumno.Add(userAl);
-
-                        dtb.confirmacion.Add(conf);
-
-                        dtb.log_acciones.Add(log);
-                        dtb.SaveChanges();
-                        //se retorna el mensaje correspondiente.
-                        TempData["creado"] = "El Usuario se ha registrado exitosamente.";
-                        ViewBag.Registrado = TempData["creado"];
-                        ViewBag.ModalMessage = "Verifica tu cuenta haciendo click en el vinculo enviado a tu correo electronico<br>" +
-                            "¡Asegúrate de revisar la carpeta de Spam!";
-                        return View("Registrado");
+                    if (!tarea)
+                    {
+                        throw new Exception("Error al enviar el mail al correo especificado");
                     }
+
+                    
+
+                    #endregion
+
+
+                    //se guardan los cambios en la base de datos.
+                    dtb.alumno.Add(userAl);
+                    dtb.confirmacion.Add(conf);
+
+                    dtb.log_acciones.Add(log);
+                    dtb.SaveChanges();
+                    //se retorna el mensaje correspondiente.
+                    TempData["creado"] = "El Usuario se ha registrado exitosamente.";
+                    ViewBag.Registrado = TempData["creado"];
+                    ViewBag.ModalMessage = "Verifica tu cuenta haciendo click en el vinculo enviado a tu correo electronico<br>" +
+                        "¡Asegúrate de revisar la carpeta de Spam!";
+                     return View("Registrado");
+                }
 
                 }
                 return View();

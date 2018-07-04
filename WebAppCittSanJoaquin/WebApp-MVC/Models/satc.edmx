@@ -47,7 +47,8 @@
             <PropertyRef Name="id_confirmacion" />
           </Key>
           <Property Name="id_confirmacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="fecha" Type="datetime" Nullable="false" />
+
+          <Property Name="fecha" Type="date" Nullable="false" />
           <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="habilitado" Type="bit" Nullable="false" />
           <Property Name="tipo" Type="int" Nullable="false" />
@@ -102,7 +103,9 @@
           <Property Name="descripcion" Type="varchar" MaxLength="100" />
           <Property Name="profesor_id_profesor" Type="int" Nullable="false" />
         </EntityType>
+
         <Association Name="FK__alumno_co__id_al__6FE99F9F">
+
           <End Role="alumno" Type="Self.alumno" Multiplicity="1" />
           <End Role="alumno_confirmacion" Type="Self.alumno_confirmacion" Multiplicity="*" />
           <ReferentialConstraint>
@@ -543,6 +546,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <AssociationSetMapping Name="confirmacionalumno" TypeName="Satc2Model.confirmacionalumno" StoreEntitySet="alumno_confirmacion">
             <EndProperty Name="alumno">
               <ScalarProperty Name="id_alumno" ColumnName="id_alumno" />
