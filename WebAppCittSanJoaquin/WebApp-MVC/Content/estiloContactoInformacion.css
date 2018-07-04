@@ -1,0 +1,70 @@
+﻿body {
+    background-image: url(img/FondoContacto.png);
+    background-repeat: repeat-x;
+    /*
+    -webkit-background-size: cover;
+    -moz-background-size: cover;*/
+    background-size: cover;
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    background-size: cover;
+    color: white;
+}
+#sectionContacto{
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, .7);
+    align-content: center;
+    text-align: center;
+}
+iframe{
+    border-radius: 10px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+}
+#navgeneral {
+    background-color: rgba(0,38,62,1);
+    border-color: transparent;
+}
+
+.panel-default {
+    opacity: 0.9;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+#panels {
+    background-color: transparent;
+    border-radius: 10px;
+}
+
+.form-group.last {
+    margin-bottom: 0px;
+}
+
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #ffd11a;
+    color: black;
+    text-align: center;
+}
+
+.imagenesre {
+    max-height: 400px;
+    width: 100%;
+}
+
+img{
+    border-radius: 5px;
+}

@@ -1,18 +1,15 @@
-﻿@model WebApp_MVC.Models.ModeloUsuario
-
+﻿
 @{
-    ViewBag.Title = "CambioPass";
+    ViewBag.Title = "CambiarContrasena";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link href="~/Content/baseestilo.css" rel="stylesheet" />
-<div class="container body-content" style="background-color:white">
-    <h2>Cambio de Contraseña</h2>
 
-    @using (Html.BeginForm("CPassConfirmacion", "Account"))
-    {
-        @Html.AntiForgeryToken()
+<h2>CambiarContrasena</h2>
+@using (Html.BeginForm("CambiarContrasena", "Home",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        @ViewBag.Hecho
         <hr />
 
         <div class="form-group">
@@ -30,13 +27,9 @@
         </div>
         <input type="submit" class="btn btn-primary" value="Cambiar Contraseña" />
         @*<a class="btn btn-primary" href="@Html.ActionLink("Volver a inicio", "redirectExito")"></a>*@
-            
-            <br>
-            @ViewBag.Error
+
+        <br>
+        @ViewBag.Error
     </div>
 
-    }
-
-    
-</div>
-
+}

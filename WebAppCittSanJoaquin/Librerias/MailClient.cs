@@ -21,6 +21,10 @@ namespace Librerias
         const string REGISTRO_PLANO = "registro-plano.txt";
         const string REGISTRO_HTML = "registro-optimizado.html";
 
+        const string ASUNTO_CORREO_CONTRASENA = "Contraseña perdida";
+        const string CONTRASENA_PLANO = "contrasena-plano.txt";
+        const string CONTRASENA_HTML = "contrasena-optimizado.html";
+
         public MailClient()
         {
 
@@ -64,11 +68,7 @@ namespace Librerias
         /// identifica la operacion</returns>
         public static async Task<bool> EnviarMensajeRegistro(string destinatario, string url, string id)
         {
-            var a = AppDomain.CurrentDomain.BaseDirectory;
-            if (!a.Contains("bin" + System.IO.Path.DirectorySeparatorChar))
-            {
-                a += "bin" + System.IO.Path.DirectorySeparatorChar;
-            }
+            var a = ObtenerLugarEjecucion();
 
             string textoPlano = System.IO.File.ReadAllText(
                     $"{a}" +
@@ -84,8 +84,39 @@ namespace Librerias
             textoPlano += "\n" + url;
 
             return await EnviarEmail(destinatario,
-                textoPlano, textoHTML, NOMBRE_ALUMNO, ASUNTO_CORREO_REGISTRO); 
+                textoPlano, textoHTML, NOMBRE_ALUMNO, ASUNTO_CORREO_REGISTRO);
         }
 
+        public static async Task<bool> EnviarMensajeContrasena(string destinatario, string url, string id)
+        {
+            var a = ObtenerLugarEjecucion();
+
+            string textoPlano = System.IO.File.ReadAllText(
+                    $"{a}" +
+                    $"{DIRECTORIO_PLANTILLAS_CORREO}{System.IO.Path.DirectorySeparatorChar}" +
+                    $"{CONTRASENA_PLANO}");
+
+            string textoHTML = System.IO.File.ReadAllText(
+                $"{a}" +
+                $"{DIRECTORIO_PLANTILLAS_CORREO}{System.IO.Path.DirectorySeparatorChar}" +
+                $"{CONTRASENA_HTML}");
+
+            url += id;
+            textoHTML = textoHTML.Replace(CADENA_REEMPLAZABLE, url);
+            textoPlano += "\n" + url;
+
+            return await EnviarEmail(destinatario,
+                textoPlano, textoHTML, NOMBRE_ALUMNO, ASUNTO_CORREO_REGISTRO);
+        }
+
+        private static string ObtenerLugarEjecucion()
+        {
+            var a = AppDomain.CurrentDomain.BaseDirectory;
+            if (!a.Contains("bin" + System.IO.Path.DirectorySeparatorChar))
+            {
+                a += "bin" + System.IO.Path.DirectorySeparatorChar;
+            }
+            return a;
+        }
     }
 }

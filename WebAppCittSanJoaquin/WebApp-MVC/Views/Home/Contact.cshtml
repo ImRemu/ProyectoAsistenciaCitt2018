@@ -1,18 +1,30 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contacto";
 }
-<link href="~/Content/baseestilo.css" rel="stylesheet" id="login-css">
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+@{ 
+    ViewBag.Message = "Informacion de Contacto";
+}
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<body id="bodyContacto">
+    <section id="sectionContacto">
+        <link href="~/Content/estiloContactoInformacion.css" rel="stylesheet" id="login-css">
+        <h2>@ViewBag.Title.</h2>
+        <h3>@ViewBag.Message</h3>
+
+        <address>
+            <img src="@Url.Content("~/Content/img/email2.png")" alt="Email" width="64px" height="64px">   <strong>Coordinador Citt sede San Joaquin: Diego Rivera</strong>   <a href="mailto:DIEG.RIVERA@PROFESOR.DUOC.CL">DIEG.RIVERA@PROFESOR.DUOC.CL</a><br />
+        </address>
+        <address>
+            <img src="@Url.Content("~/Content/img/telefono3.png")" alt="Telefono" width="64px" height="64px">  <strong>Mesa de servicios DuocUC San Joaquin: 2 2999 3862  Opción 3.</strong>
+        </address>
+        <br />
+        <address>
+            Av. Vicuña Mackenna 4917, Santiago, San Joaquín, Región Metropolitana<br />
+        </address>
+
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.0560976877077!2d-70.6186557848562!3d-33.49991758075984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d00be4a5fa81%3A0xcd8eaf5b1d547f64!2sDuoc+UC%3A+Sede+San+Joaqu%C3%ADn!5e0!3m2!1ses-419!2scl!4v1529716309642" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe><br />
+
+    </section>
+   
+</body>

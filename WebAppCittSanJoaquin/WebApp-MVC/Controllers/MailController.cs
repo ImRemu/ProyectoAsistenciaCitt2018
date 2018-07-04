@@ -1,4 +1,5 @@
-﻿using System;
+using Microsoft.ApplicationInsights;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,8 @@ namespace WebApp_MVC.Controllers
             if (string.IsNullOrEmpty(identificadorRegistro))
             {
                 // retornar a algun lado
-                return View("IngresarCorreo");
+                TempData["ModalMessage"] = "No puedes ingresar a esta pagina directamente! Te hemos redireccionado al Inicio";
+                return RedirectToAction("Index", "Home");
             }
             try
             {
@@ -36,11 +38,32 @@ namespace WebApp_MVC.Controllers
                     {
                         throw new Exception("No existe un alumno con el correo establecido");
                     }
-                    al.habilitado = 1;
-                    confirmacion.habilitado = false;
-                    entity.SaveChanges();
-                    TempData["ModalMessage"] = "Has confirmado tu cuenta correctamente. Ingresa tus credenciales para comenzar.";
-                    return RedirectToAction("Index", "Account");
+
+                    switch ((TipoConfirmacion)confirmacion.tipo)
+                    {
+                        case TipoConfirmacion.ConfirmacionMail:
+                            al.habilitado = 1;
+                            confirmacion.habilitado = false;
+                            entity.SaveChanges();
+                            TempData["ModalMessage"] = "Has confirmado tu cuenta correctamente. Ingresa tus credenciales para comenzar.";
+                            return RedirectToAction("Index", "Account");
+                        case TipoConfirmacion.Contrasena:
+                            Session["usuario"] = new ModeloUsuario
+                            {
+                                apellidos = al.apellido,
+                                nombre = al.nombre,
+                                correo = al.correo,
+                                id_usuario = al.id_alumno,
+                                password = al.password,
+                                tipo_usuario = "a"
+                            };
+                            return RedirectToAction("CambiarContrasena","Home");
+
+                        case TipoConfirmacion.DesactivacionCuenta:
+                            throw new NotImplementedException("Falta controlar las desactivaciones de cuentas");
+                        default:
+                            throw new Exception("Excepcion al recuperar el tipo de confirmacion de la base de datos");
+                    }
                 }
             }
             catch (Exception ex)
@@ -55,13 +78,14 @@ namespace WebApp_MVC.Controllers
 
         }
         /// <summary>
-        /// Crea un codigo de confirmacion para la cuenta especificada
+        /// Crea un codigo de confirmacion o cambio de contraseña para la cuenta especificada
         /// </summary>
         /// <param name="txtMail"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CrearIdMail(string txtMail)
+        public async Task<ActionResult> CrearMail(string txtMail, TipoConfirmacion tipo)
         {
+            var telemetry = new TelemetryClient();
             try
             {
                 Guid id = Guid.NewGuid();
@@ -80,17 +104,39 @@ namespace WebApp_MVC.Controllers
                     {
                         throw new ArgumentOutOfRangeException("No hay alumnos con ese correo registrados");
                     }
-                    entity.confirmacion.Add(new confirmacion
+                    var c = new confirmacion
                     {
-                        tipo = (int)TipoConfirmacion.ConfirmacionMail,
+                        tipo = (int)tipo,
                         fecha = DateTime.Now,
                         guid = id,
                         alumno = new List<alumno>() { a },
                         habilitado = true,
 
-                    });
-                    var tarea = await Librerias.MailClient.EnviarMensajeRegistro(txtMail, url, id.ToString());
+                    };
+                    entity.confirmacion.Add(c);
+                    bool tarea = false;
+                    Exception ex = null;
+                    switch (tipo)
+                    {
 
+                        case TipoConfirmacion.NO_ESPECIFICADO:
+                            ex = new Exception("Tipo de mail para enviar no especificado");
+                            goto default;
+                        case TipoConfirmacion.ConfirmacionMail:
+                            tarea = await Librerias.MailClient.EnviarMensajeRegistro(txtMail, url, id.ToString());
+                            break;
+                        case TipoConfirmacion.DesactivacionCuenta:
+                            ex = new NotImplementedException("tipo de mail 'desactivarCuenta' no implementado");
+                            goto default;
+
+                        case TipoConfirmacion.Contrasena:
+                            tarea = await Librerias.MailClient.EnviarMensajeContrasena(txtMail, url, id.ToString());
+                            break;
+                        default:
+                            telemetry.TrackException(ex, new Dictionary<string, string> { { "Controlador: ", "MailController" } });
+                            throw ex;
+
+                    }
                     if (!tarea)
                     {
                         throw new Exception("Error al enviar el mail al correo especificado");
@@ -98,7 +144,8 @@ namespace WebApp_MVC.Controllers
 
                     entity.SaveChanges();
                 }
-                return View("Confirmar");
+                ViewBag.TipoMail = (int)tipo;
+                return View("EstadoSolicitud");
 
             }
             catch (Exception ex)
@@ -107,6 +154,9 @@ namespace WebApp_MVC.Controllers
                 System.Diagnostics.Trace.WriteLine(ex.Message);
                 System.Diagnostics.Trace.WriteLine(ex.ToString());
                 ViewBag.ModalMessage = ex.Message;
+
+                telemetry.TrackException(ex, new Dictionary<string, string> { { "Controlador: ", "MailController" } });
+
                 return View("Error");
                 //throw ex;
             }
